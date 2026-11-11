@@ -1,0 +1,7 @@
+# 本地个人词库模板；仅在目标文件不存在时复制，不覆盖已有词条。
+# 用户词库
+---
+name: flypy.user
+version: "10.13.2"
+use_preset_vocabulary: false
+...

@@ -1,0 +1,27 @@
+# 本地个人词库模板；仅在目标文件不存在时复制，不覆盖已有词条。
+# Rime dictionary: tiger.extended
+# encoding: utf-8
+
+---
+name: tigress.extended
+version: "2.0"
+sort: by_weight
+import_tables:
+  - tigress
+  - tigress_ci
+  - tigress_simp_ci  # 在-前面加上#号，即可关闭简词
+  
+columns:
+  - text
+  - code
+  - weight
+  - stem
+encoder:
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaCb"
+    - length_in_range: [4, 99]
+      formula: "AaBaCaZa"
+...

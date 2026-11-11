@@ -1,0 +1,35 @@
+# Rime 编译结果、同步副本和本机状态
+/build/
+/sync/
+/*.userdb/
+/*.userdb.txt
+/installation.yaml
+/user.yaml
+*.log
+
+# 本地归档、回滚备份
+/archive/
+/backups/
+/.build-next/
+
+# 可从 sources/lansan/ 重新生成的合并词库
+/lansan_merged.dict.yaml
+
+# 手工维护的个人词条；仓库提供 templates/local/ 空模板
+/lansan_user.dict.yaml
+/jaroomaji.user.dict.yaml
+/tiger.extended.dict.yaml
+/tigress.extended.dict.yaml
+/flypy/flypy.user.dict.yaml
+/flypy/flypy.user.top.dict.yaml
+
+# 本机工具、编辑器和 Python 临时文件
+/.agents/
+/.codex/
+/.aws/
+__pycache__/
+*.py[cod]
+.DS_Store
+*~
+*.swp
+*.swo

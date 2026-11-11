@@ -1,0 +1,10 @@
+* text=auto
+*.yaml text eol=lf
+*.lua text eol=lf
+*.py text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+*.ocd2 binary
+*.bin binary

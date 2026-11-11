@@ -1,0 +1,14 @@
+# 本地个人词库模板；仅在目标文件不存在时复制，不覆盖已有词条。
+# Rime dictionary
+# encoding: utf-8
+#
+# ユーザー辞書ファイル
+# CreateUserDict.pyを使用すると簡単にこのファイルを作成できます
+#
+
+---
+name: jaroomaji.user
+version: "1.0"
+sort: by_weight
+use_preset_vocabulary: false
+...
