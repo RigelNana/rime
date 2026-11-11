@@ -7,7 +7,7 @@ version: "1.0"
 sort: by_weight
 use_preset_vocabulary: false
 import_tables:
-  - jaroomaji.user
+  # 个人词库由 scripts/prepare.py 生成的 jaroomaji.local 单独接入。
   - jaroomaji.kana_kigou
   - jaroomaji.mozc
   - jaroomaji.jmdict

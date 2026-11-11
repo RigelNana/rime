@@ -1,7 +1,8 @@
 -- 与虎码共用 extended_char：true 为常用字，false 为全字集。
 -- 额外隔离补充表，确保其中被 core2022 收录的字也不会改变常用模式。
 local function init(env)
-  env.extensions = ReverseDb("build/flypy_ext.reverse.bin")
+  local dictionary = env.engine.schema.config:get_string("flypy_ext_lookup/dictionary") or "flypy_ext"
+  env.extensions = ReverseDb("build/" .. dictionary .. ".reverse.bin")
 end
 
 local function filter(input, env)

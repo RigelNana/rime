@@ -106,6 +106,7 @@ speller:
 
 translator:
   dictionary: flypy
+  __patch: local:/flypy?
   enable_charset_filter: false
   enable_completion: false # 只显示当前完整编码，不补全后续编码的字词
   enable_sentence: false
@@ -226,6 +227,7 @@ flypy_lookup:
 flypy_ext_lookup:
   tag: flypy_lookup
   dictionary: flypy_ext
+  __patch: local:/flypy_ext?
   target: translator
   prefix: "~"
   tips: "〔小鹤通配〕"

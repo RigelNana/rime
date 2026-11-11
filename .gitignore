@@ -12,11 +12,9 @@
 /backups/
 /.build-next/
 
-# 可从 sources/lansan/ 重新生成的合并词库
-/lansan_merged.dict.yaml
-
-# 从 sources/flypy/ 提取的小鹤扩展区补充表
-/flypy_ext.dict.yaml
+# 公共生成词库随源码发布；本机个人入口和生成表不上传
+/local.yaml
+/*.local.dict.yaml
 
 # 手工维护的个人词条；仓库提供 templates/local/ 空模板
 /lansan_user.dict.yaml

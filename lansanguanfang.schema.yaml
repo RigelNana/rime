@@ -94,6 +94,7 @@ speller:
 
 translator:
   dictionary: lansan_merged
+  __patch: local:/lansanguanfang?
   enable_charset_filter: false
   enable_completion: false # 只显示当前完整编码，不补全后续编码的字词
   enable_sentence: false

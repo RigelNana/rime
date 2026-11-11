@@ -4,7 +4,7 @@ name: flypy
 version: "10.12"
 sort: original
 import_tables:
-  - 'flypy/flypy.user.top'                # 用户置顶词
+  # 个人词库由 scripts/prepare.py 生成的 flypy.local 单独接入。
   # - 'flypy/flypy.full.top'              # 全码置顶词
   - 'flypy/flypy.fast.symbols'            # 快符
   - 'flypy/flypy.primary'                 # 首选字词
@@ -19,6 +19,5 @@ import_tables:
   - 'flypy/flypy.whimsicality'            # 随心所欲
   # - 'flypy/flypy.full.char'             # 全码字
   # - 'flypy/flypy.full'                  # 全码词
-  - 'flypy/flypy.user'                    # 用户词库
   - flypy_ext                            # 扩展区补充，仅“全字集”模式显示
 ...

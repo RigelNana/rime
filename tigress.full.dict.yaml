@@ -1,0 +1,19 @@
+# 公共虎码词库入口；无需本机个人词库即可部署。
+---
+name: tigress.full
+version: "1.0"
+sort: by_weight
+import_tables:
+  - tigress
+  - tigress_ci
+  - tigress_simp_ci
+columns: [text, code, weight, stem]
+encoder:
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaCb"
+    - length_in_range: [4, 99]
+      formula: "AaBaCaZa"
+...

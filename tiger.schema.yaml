@@ -119,6 +119,7 @@ speller:
 
 translator:
   dictionary: tiger
+  __patch: local:/tiger?
   enable_charset_filter: false
   enable_encoder: false
   enable_sentence: false

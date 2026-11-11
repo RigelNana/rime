@@ -72,7 +72,7 @@ def dictionary_rows(path):
     return lists.get("import_tables", []), rows
 
 
-def existing_characters(root):
+def existing_characters(root, include_personal=False):
     seen, chars = set(), set()
 
     def visit(name):
@@ -86,12 +86,16 @@ def existing_characters(root):
             visit(child)
 
     visit("flypy")
+    if include_personal:
+        for name in ("flypy/flypy.user.top", "flypy/flypy.user"):
+            if (root / (name + ".dict.yaml")).exists():
+                visit(name)
     return chars
 
 
-def build(root):
+def build(root, include_personal=False):
     source = root / "sources" / "flypy" / "rare_chars.txt"
-    existing = existing_characters(root)
+    existing = existing_characters(root, include_personal)
     rows, seen, skipped, normalized = [], set(), set(), []
     for number, line in enumerate(source.read_text(encoding="utf-8-sig").splitlines(), 1):
         if not line.strip() or line.startswith("#"):
@@ -112,11 +116,12 @@ def build(root):
         if pair not in seen:
             seen.add(pair)
             rows.append(pair)
-    output = root / "flypy_ext.dict.yaml"
+    name = "flypy_ext.local" if include_personal else "flypy_ext"
+    output = root / (name + ".dict.yaml")
     content = (
         "# 由 scripts/build_flypy_ext.py 生成；请勿直接编辑。\n"
         "# 来源与固定版本见 sources/flypy/README.md。\n"
-        "---\nname: flypy_ext\nversion: \"1.0\"\nsort: original\n"
+        f"---\nname: {name}\nversion: \"1.0\"\nsort: original\n"
         "use_preset_vocabulary: false\ncolumns: [text, code, weight]\n...\n\n"
         + "".join(f"{char}\t{code}\t1\n" for char, code in rows)
     )

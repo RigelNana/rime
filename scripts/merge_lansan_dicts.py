@@ -36,7 +36,8 @@ def main():
     args = parser.parse_args()
     official = read_rows(SOURCES / "lansan_guanfang.dict.yaml")
     standard = read_rows(SOURCES / "ls_ci.dict.yaml")
-    personal = read_rows(ROOT / "lansan_user.dict.yaml")
+    personal_path = ROOT / "lansan_user.dict.yaml"
+    personal = read_rows(personal_path) if personal_path.exists() else []
 
     # 保留官方单字记录的编码、原始顺序和未填写词频的状态。
     # 包括来源文件里含非字母符号的编码；此脚本只合并词组，不修订字表。
@@ -69,14 +70,12 @@ def main():
 # encoding: utf-8
 # 自动生成：python scripts/merge_lansan_dicts.py
 # 官方单字表 + ls_ci 带词频词组 + 官方独有词组（词频 1）。
-# 按“词＋编码”去重；同词异码保留；个人词库仅导入一次。
+# 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
 version: "2026.11.12"
 sort: by_weight
-import_tables:
-  - lansan_user
 columns:
   - text
   - code
@@ -111,7 +110,7 @@ encoder:
     report = {
         "output": str(args.output),
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
-                          for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml", ROOT / "lansan_user.dict.yaml"]},
+                          for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml"]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,

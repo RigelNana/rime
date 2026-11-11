@@ -1,0 +1,9 @@
+# PY_c 的笔画反查索引，不依赖手机上额外安装其他方案。
+schema:
+  schema_id: stroke
+  name: 笔画反查索引
+  version: "1.0"
+
+translator:
+  dictionary: stroke
+  enable_user_dict: false

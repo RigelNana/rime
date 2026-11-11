@@ -119,7 +119,8 @@ speller:
   # 若要添加四码上屏功能，在  ^;\w+ 后面 加上  |^\w{4}$  即可
 
 translator:
-  dictionary: tigress
+  dictionary: tigress.full
+  __patch: local:/tigress?
   enable_charset_filter: false
   enable_encoder: false
   enable_sentence: false

@@ -237,6 +237,8 @@ speller:
 # # # # # # # # # # # # # # # # # # # #
 translator:
   dictionary: jaroomaji
+  __patch: local:/jaroomaji?
+  user_dict: jaroomaji # 个人入口切换不改变原有学习词库的名称
   enable_user_dict: true  # 学習機能ON
   enable_completion: false
   preedit_format:

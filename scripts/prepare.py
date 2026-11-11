@@ -7,6 +7,8 @@ import shutil
 import subprocess
 import sys
 
+from prepare_local import prepare_local
+
 
 def main():
     root = Path(__file__).resolve().parent.parent
@@ -42,6 +44,8 @@ def main():
     print(f"小鹤扩展表完成：{report['characters']:,} 个新增扩展字；"
           f"{report['rows']:,} 条编码记录；跳过原库已有的 "
           f"{report['skipped_existing_characters']:,} 个字。")
+    prepare_local(root)
+    print("已生成本机个人词库入口 local.yaml；公共词库可以独立部署。")
 
 
 if __name__ == "__main__":
