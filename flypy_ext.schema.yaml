@@ -1,0 +1,12 @@
+# 只供字集过滤器生成反查索引，不加入输入方案菜单。
+schema:
+  schema_id: flypy_ext
+  name: 小鹤扩展字索引
+  version: "1.0"
+
+translator:
+  dictionary: flypy_ext
+  enable_user_dict: false
+
+speller:
+  __include: flypydz.schema:/speller

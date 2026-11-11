@@ -5,7 +5,7 @@
 schema:
   schema_id: flypy
   name: 小鹤音形
-  version: "10.13.3"
+  version: "10.13.4"
   author:
     - 方案设计：何海峰 flypy.cc
   description: |
@@ -13,8 +13,10 @@ schema:
     反引号 ` 引导拼音反查，候选注释显示小鹤音形码。
     单引号 ' 引导临时英文，方括号 [ 或 ] 重复上屏。
     ~ 引导原小鹤通配反查，例如 ~ni``，反引号代表未知码位。
+    “全字集”启用社区扩展区补充；“常用字”保持原有候选。
   dependencies:
     - flypydz
+    - flypy_ext
     - core2022
     - PY_c
     - easy_english
@@ -71,6 +73,7 @@ engine:
     - punct_translator
     - reverse_lookup_translator
     - reverse_lookup_translator@flypy_lookup
+    - reverse_lookup_translator@flypy_ext_lookup
     - table_translator
     - table_translator@easy_english
     - history_translator@history
@@ -83,6 +86,7 @@ engine:
     - lua_translator@*flypy_date_translator
     - lua_translator@*flypy_time_translator
   filters:
+    - lua_filter@*flypy_ext_filter
     - lua_filter@*core2022_filter
     - simplifier@simplification
     - simplifier@pinyin
@@ -216,6 +220,16 @@ flypy_lookup:
   target: translator
   prefix: "~"
   tips: "〔小鹤通配〕"
+  comment_format:
+    - "xform/^/ /"
+
+flypy_ext_lookup:
+  tag: flypy_lookup
+  dictionary: flypy_ext
+  target: translator
+  prefix: "~"
+  tips: "〔小鹤通配〕"
+  initial_quality: -1 # 扩展字反查排在原有反查候选之后
   comment_format:
     - "xform/^/ /"
 

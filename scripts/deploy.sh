@@ -11,7 +11,7 @@ case "${1:-}" in
   --reload) reload=true ;;
   -h|--help)
     echo "用法：bash scripts/deploy.sh [--reload]"
-    echo "准备个人词库、生成蓝三词库并编译；--reload 同时重新加载当前用户的 Fcitx5 Rime。"
+    echo "准备个人词库、生成蓝三与小鹤扩展词库并编译；--reload 同时重新加载当前用户的 Fcitx5 Rime。"
     exit 0
     ;;
   *)

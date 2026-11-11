@@ -15,6 +15,9 @@
 # 可从 sources/lansan/ 重新生成的合并词库
 /lansan_merged.dict.yaml
 
+# 从 sources/flypy/ 提取的小鹤扩展区补充表
+/flypy_ext.dict.yaml
+
 # 手工维护的个人词条；仓库提供 templates/local/ 空模板
 /lansan_user.dict.yaml
 /jaroomaji.user.dict.yaml
