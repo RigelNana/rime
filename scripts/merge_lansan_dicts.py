@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""合并蓝三官方字表、ls_ci 词频词库及官方补充词，不改动来源文件。"""
+"""合并蓝三字词表，使用固定版本的万象词频重排词组，不改动来源编码。"""
 
 import argparse
 from collections import Counter, defaultdict
@@ -30,6 +30,20 @@ def read_rows(path):
     return rows
 
 
+def read_frequencies(path):
+    frequencies = {}
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line or line.startswith("#"):
+            continue
+        cells = line.split("\t")
+        if len(cells) != 2 or len(cells[0]) < 2 or not cells[1].isdigit():
+            raise ValueError(f"{path.name}:{number}: 无效词频")
+        if cells[0] in frequencies:
+            raise ValueError(f"{path.name}:{number}: 重复词条")
+        frequencies[cells[0]] = int(cells[1])
+    return frequencies
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "lansan_merged.dict.yaml")
@@ -55,11 +69,22 @@ def main():
     for row in official:
         key = tuple(row[:2])
         if len(row[0]) > 1 and key not in phrases:
-            # 官方无显式词频；补充项使用 1，低于 ls_ci 当前最低词频 10。
+            # 此处的旧权重仅用于万象权重相同时保持原有词组优先级。
             phrases[key] = [row[0], row[1], "1", *row[3:]]
             supplements += 1
 
-    rows = characters + list(phrases.values())
+    frequency_path = SOURCES / "wanxiang_frequency.txt"
+    frequencies = read_frequencies(frequency_path)
+    phrase_words = {row[0] for row in phrases.values()}
+    if frequencies.keys() - phrase_words:
+        raise ValueError("万象词频子集含当前蓝三词库之外的词，请重新提取子集")
+    # 先固定旧权重的次序；同频时由稳定排序保留该次序。
+    # 统一加 1 保留上游 0 与正权重的相对大小，并给未覆盖词留出兜底权重 1。
+    ranked_phrases = sorted(phrases.values(), key=lambda row: -int(row[2]))
+    ranked_phrases = [[row[0], row[1], str(frequencies.get(row[0], 0) + 1), *row[3:]]
+                      for row in ranked_phrases]
+    ranked_phrases.sort(key=lambda row: -int(row[2]))
+    rows = characters + ranked_phrases
     keys = [tuple(row[:2]) for row in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("合并结果仍包含重复的词＋编码")
@@ -69,7 +94,9 @@ def main():
     header = """# Rime dictionary
 # encoding: utf-8
 # 自动生成：python scripts/merge_lansan_dicts.py
-# 官方单字表 + ls_ci 带词频词组 + 官方独有词组（词频 1）。
+# 官方单字表 + ls_ci 词组 + 官方独有词组；词组统一使用万象词频。
+# 万象数据：amzxyz/rime-wanxiang-data，CC-BY-4.0；来源及修改见 sources/lansan/README.md。
+# 词组权重 = 万象权重 + 1；未覆盖项为 1；同频沿用旧词组优先级。
 # 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
@@ -110,12 +137,16 @@ encoder:
     report = {
         "output": str(args.output),
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
-                          for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml"]},
+                          for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml",
+                                       frequency_path]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,
         "duplicate_phrase_rows_removed": sum(len(row[0]) > 1 for row in official) + len(standard) - len(phrases),
         "merged_phrase_rows": len(phrases),
+        "frequency_source": "wanxiang",
+        "frequency_covered_words": len(phrase_words & frequencies.keys()),
+        "frequency_missing_words": len(phrase_words - frequencies.keys()),
         "unique_phrases_including_personal": len({row[0] for row in rows + personal if len(row[0]) > 1}),
         "maximum_phrases_per_code": max(code_counts.values()),
         "different_codes_preserved": conflicts,

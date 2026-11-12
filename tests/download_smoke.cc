@@ -74,9 +74,16 @@ int main(int argc, char** argv) {
     check("n", "现在");
     select("lansanguanfang");
     check("n", "你");
+    // 空格提交首选，覆盖新词频排序，也覆盖“未按主观喜好改频”的同码组。
+    check("tjaf{space}", "魔法");
+    check("dmjv{space}", "屋子");
+    check("obwc{space}", "格式");
+    check("hjsm{space}", "就不是");
+    check("eohn{space}", "询问");
+    check("nrnd{space}", "唱着");
     select("jaroomaji");
     check("nihon", "日本");
-    std::cout << "PASS: five schemas, Flypy charset switching, reverse lookup and Unicode comments\n";
+    std::cout << "PASS: five schemas, Lansan phrase order, Flypy charset switching, reverse lookup and Unicode comments\n";
   } catch (const std::exception& error) {
     std::cerr << error.what() << '\n';
     result = 1;

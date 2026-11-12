@@ -1,0 +1,35 @@
+{
+  "repository": "https://github.com/amzxyz/rime-wanxiang-data",
+  "revision": "722eb52b5c233dbe136ffcb3942eee32d02082b4",
+  "authors": "amzxyz and rime-wanxiang-data contributors",
+  "license": "CC-BY-4.0",
+  "files": [
+    {
+      "path": "dicts/jichu.dict.yaml",
+      "sha256": "e776cce5577a969db0d608f7fbbc48088270976e701544a2897dc6de63eeb1c8",
+      "bytes": 50635622
+    },
+    {
+      "path": "dicts/duoyin.dict.yaml",
+      "sha256": "dd41608239d3260655bc0326aefadd131dc1301a7d5231679cf301d9c6f92ffb",
+      "bytes": 137513
+    },
+    {
+      "path": "dicts/diming.dict.yaml",
+      "sha256": "34939c7ae4bcfa35b311627c0804c955c3ff30d19d4d378420e4570180c1a4e6",
+      "bytes": 3306889
+    },
+    {
+      "path": "dicts/mingren.dict.yaml",
+      "sha256": "2c8b1828e699a2a5975e1b75d6d0ed658076679c608c8a47e8946f206dddf82b",
+      "bytes": 667364
+    },
+    {
+      "path": "dicts/yiren.dict.yaml",
+      "sha256": "1cf4d2ba38f8a4024eb39dc2d1a20d4add55b565aa95750d58e7636766e3ffa4",
+      "bytes": 423875
+    }
+  ],
+  "extraction": "Exact existing Blue Three phrase text only; ignore pronunciation; use maximum weight across readings and tables. Rows without explicit weight are skipped.",
+  "output": "wanxiang_frequency.txt"
+}

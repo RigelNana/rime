@@ -32,6 +32,8 @@ def main():
     report = json.loads(result.stdout)
     print(f"蓝三合并完成：{report['merged_phrase_rows']:,} 条词组编码记录；"
           f"{report['unique_phrases_including_personal']:,} 个不同词组（含本机个人词库）。")
+    print(f"万象词频覆盖 {report['frequency_covered_words']:,} 个公共词组；"
+          f"{report['frequency_missing_words']:,} 个未覆盖词使用低权重兜底。")
 
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "build_flypy_ext.py")],

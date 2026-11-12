@@ -30,7 +30,7 @@
 | 根目录 `*.schema.yaml`、`*.custom.yaml`、公共 `*.dict.yaml` | 当前方案和 Rime 需要按名称查找的资源 | 是 |
 | `flypy/` | 小鹤分表 | 公共分表是；个人词条否 |
 | `lua/`、`opencc/` | 共用功能与转换资源 | 是 |
-| `sources/lansan/` | 蓝三官方原表、标准词频表 | 是 |
+| `sources/lansan/` | 蓝三原表、万象词频子集与来源记录 | 是 |
 | `sources/flypy/` | 小鹤社区生僻字原表与版本记录 | 是 |
 | `sources/prelude/` | 随包公共配置的来源和许可证 | 是 |
 | `scripts/`、`tests/` | 准备、部署及源码下载回归检查 | 是 |
@@ -81,11 +81,12 @@ python3 scripts/prepare.py
 输入为 `sources/lansan/lansan_guanfang.dict.yaml` 和 `sources/lansan/ls_ci.dict.yaml`，输出为根目录 `lansan_merged.dict.yaml`：
 
 - 单字记录沿用官方字表。
-- 标准词组保留原始词频；官方补充词的词频设为 `1`，排在标准词组之后。
+- 两份词表的词组统一按万象词频排序，不再让官方补充词一律排在标准词组后面。
+- 万象覆盖 144,009 个现有词组（85.77%）；未覆盖的 23,895 个词继续保留，使用低权重兜底。同频时沿用旧词组优先级。
 - 按“词条＋编码”去重，同词异码保留。
 - `lansan_user.dict.yaml` 只在可选的本机入口中导入一次。
 
-更新来源词库后运行准备或部署脚本，将公共生成表与来源改动一并提交。不要直接修改生成表或 `build/` 下的文件。
+词频固定版本、许可证、覆盖范围和同频规则见 [蓝三词频来源](sources/lansan/README.md)。更新来源词库后运行准备或部署脚本，将公共生成表与来源改动一并提交。不要直接修改生成表或 `build/` 下的文件。
 
 ## 个人词条与版本控制
 
@@ -108,7 +109,7 @@ python3 tests/check_download.py
 python3 tests/check_download.py --index
 ```
 
-检查额外需要 C++ 编译器、librime 开发头文件和 librime-lua 动态库；非默认动态库路径通过 `--lua-library` 指定。检查覆盖五个主方案、小鹤字集切换、反查和 Unicode 注释。
+检查额外需要 C++ 编译器、librime 开发头文件和 librime-lua 动态库；非默认动态库路径通过 `--lua-library` 指定。检查覆盖五个主方案、蓝三词组首选、小鹤字集切换、反查和 Unicode 注释。
 
 ```sh
 git status
