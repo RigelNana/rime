@@ -36,7 +36,9 @@ def main():
           f"{report['frequency_missing_words']:,} 个未覆盖词使用低权重兜底。")
     print(f"已统一调整 {report['frequency_order']['phrase_reordered_codes']:,} 个编码的词序；"
           f"{report['frequency_order']['gb2312_promoted_rows']} 条 GB2312 单字最简码提至前三。"
-          "单字内部顺序不变，有简码的长码仍在词后，同频词保持原序。")
+          "有简码的长码仍在词后，同频词保持原序。")
+    print(f"规范字分层调整 {report['charset_order']['changed_codes']:,} 组；"
+          f"纯单字恢复表保护 {report['charset_order']['pure_order_restored_codes']} 组原字序。")
     print(f"另保留 {report['frequency_order']['manual_phrase_codes']} 组用户指定词序。")
 
     result = subprocess.run(

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""合并蓝三字词表，保护 GB2312 最简码前三选，再统一同码词频顺序。"""
+"""合并蓝三字词表：保护 GB2312 最简码，表外字后置，保留纯单字顺序。"""
 
 import argparse
 from collections import Counter, defaultdict
@@ -43,6 +43,16 @@ def read_frequencies(path):
             raise ValueError(f"{path.name}:{number}: 重复词条")
         frequencies[cells[0]] = int(cells[1])
     return frequencies
+
+
+def read_tgh_characters(path, manifest_path):
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if hashlib.sha256(path.read_bytes()).hexdigest() != manifest["extract_sha256"]:
+        raise ValueError("8105 规范字表校验失败，请复核来源")
+    chars = path.read_text(encoding="utf-8").strip()
+    if len(chars) != 8105 or len(set(chars)) != 8105:
+        raise ValueError("规范字表必须恰好包含 8105 个不重复的汉字")
+    return set(chars)
 
 
 def apply_legacy_order(official, characters, ranked_phrases):
@@ -291,9 +301,60 @@ def apply_frequency_order(rows, frequencies, phrase_orders=None):
     return result, stats
 
 
+def apply_charset_order(rows, tgh_characters):
+    """混输中表外字置于全部词后；GB2312 最简码保留现有位置。"""
+    groups, shortest = defaultdict(list), {}
+    for row in rows:
+        text, code = row[:2]
+        groups[code].append(row)
+        if len(text) == 1 and re.fullmatch(r"[a-z]+", code):
+            shortest[text] = min(shortest.get(text, len(code)), len(code))
+    overrides, pure_orders = {}, {}
+    stats = {"changed_codes": 0, "demoted_character_rows": 0,
+             "promoted_phrase_rows": 0, "pure_order_restored_codes": 0}
+    for code, group in groups.items():
+        if not re.fullmatch(r"[a-z]{1,4}", code) or not any(len(r[0]) > 1 for r in group):
+            continue
+        ordered = sorted(group, key=lambda r: -int(r[2]) if len(r) > 2 else 0)
+        cold = {r[0] for r in ordered if len(r[0]) == 1 and r[0] not in tgh_characters
+                and not (is_gb2312_han(r[0]) and len(code) == shortest[r[0]])}
+        adjusted = [r for r in ordered if r[0] not in cold] + [r for r in ordered if r[0] in cold]
+        if adjusted == ordered:
+            continue
+        old_chars = [r[0] for r in ordered if len(r[0]) == 1]
+        new_chars = [r[0] for r in adjusted if len(r[0]) == 1]
+        if old_chars != new_chars:
+            pure_orders[code] = "".join(old_chars)
+        old_ranks = {r[0]: i for i, r in enumerate(ordered)}
+        for i, row in enumerate(adjusted):
+            text = row[0]
+            if len(text) == 1 and is_gb2312_han(text) and len(code) == shortest[text] and i >= 3:
+                raise ValueError(f"{code}: 表外字后置后 {text} 超出前三选")
+            overrides[tuple(row[:2])] = len(adjusted) - i
+            stats["demoted_character_rows"] += len(text) == 1 and i > old_ranks[text]
+            stats["promoted_phrase_rows"] += len(text) > 1 and i < old_ranks[text]
+        stats["changed_codes"] += 1
+    stats["pure_order_restored_codes"] = len(pure_orders)
+    result = []
+    for row in rows:
+        weight = overrides.get(tuple(row[:2]))
+        result.append([row[0], row[1], str(weight), *row[3:]] if weight is not None else row)
+    return result, pure_orders, stats
+
+
+def write_pure_orders(path, orders):
+    lines = ["-- 自动生成：scripts/merge_lansan_dicts.py；仅用于纯单字恢复原顺序。", "return {"]
+    for code, chars in sorted(orders.items()):
+        lines.append(f"  [{json.dumps(code)}] = {json.dumps(chars, ensure_ascii=False)},")
+    lines.append("}")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "lansan_merged.dict.yaml")
+    parser.add_argument("--single-order-output", type=Path,
+                        help="纯单字顺序恢复表；自定义词库输出时默认写在该输出旁边")
     args = parser.parse_args()
     official = read_rows(SOURCES / "lansan_guanfang.dict.yaml")
     standard = read_rows(SOURCES / "ls_ci.dict.yaml")
@@ -346,6 +407,9 @@ def main():
     phrase_order_path = SOURCES / "phrase_order_overrides.json"
     phrase_orders = json.loads(phrase_order_path.read_text(encoding="utf-8"))["orders"]
     rows, frequency_order_stats = apply_frequency_order(rows, frequencies, phrase_orders)
+    tgh_path, tgh_manifest = SOURCES / "tgh2013.txt", SOURCES / "tgh-source.json"
+    rows, pure_orders, charset_order_stats = apply_charset_order(
+        rows, read_tgh_characters(tgh_path, tgh_manifest))
     keys = [tuple(row[:2]) for row in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("合并结果仍包含重复的词＋编码")
@@ -362,13 +426,14 @@ def main():
 # 用户指定词序优先于词频，见 sources/lansan/phrase_order_overrides.json。
 # 用户排除词组的全部编码不导出，见 sources/lansan/phrase_exclusions.json。
 # 705 组评议只用于重建基线位置，最终排序不强制保留旧字词配对关系。
-# 单字内部顺序不变；满足以上约束时尽量保留其原位置。
+# 8105 规范字表之外的单字排在全部词后，GB2312 最简码例外。
+# 纯单字原顺序由 lua/lansan_single_order.lua 和对应过滤器恢复。
 # 混合编码使用组内排序权重；纯词编码使用万象权重 + 1，未覆盖项为 1。
 # 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.12.6"
+version: "2026.11.12.7"
 sort: by_weight
 columns:
   - text
@@ -388,6 +453,10 @@ encoder:
 ...
 """
     args.output.write_text(header + "".join("\t".join(row) + "\n" for row in rows), encoding="utf-8")
+    single_output = args.single_order_output or (
+        ROOT / "lua/lansan_single_order.lua" if args.output.resolve() == ROOT / "lansan_merged.dict.yaml"
+        else args.output.with_suffix(".single_order.lua"))
+    write_pure_orders(single_output, pure_orders)
 
     official_codes, standard_codes = defaultdict(set), defaultdict(set)
     for row in official:
@@ -405,7 +474,8 @@ encoder:
         "output": str(args.output),
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml",
-                                       frequency_path, review_path, phrase_order_path, exclusion_path]},
+                                       frequency_path, review_path, phrase_order_path, exclusion_path,
+                                       tgh_path, tgh_manifest]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,
@@ -419,6 +489,8 @@ encoder:
         "legacy_order": legacy_stats,
         "char_word_order": order_stats,
         "frequency_order": frequency_order_stats,
+        "charset_order": charset_order_stats,
+        "single_order_output": str(single_output),
         "unique_phrases_including_personal": len({row[0] for row in rows + personal if len(row[0]) > 1}),
         "maximum_phrases_per_code": max(code_counts.values()),
         "different_codes_preserved": conflicts,

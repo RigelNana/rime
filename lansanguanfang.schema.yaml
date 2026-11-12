@@ -82,6 +82,7 @@ engine:
   filters:
     - lua_filter@*core2022_filter
     - lua_filter@*dz_ci_filter
+    - lua_filter@*lansan_single_order_filter
     - simplifier@simplification
     - simplifier@pinyin
     - simplifier@emoji_cn

@@ -1,0 +1,11 @@
+{
+  "url": "https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip",
+  "sha256": "f7a48b2b545acfaa77b2d607ae28747404ce02baefee16396c5d2d7a8ef34b5e",
+  "property": "kTGH",
+  "year": 2013,
+  "count": 8105,
+  "extract_sha256": "19f152e95312be3d708e6da4f3742fc4efb6998f2ff0e4dd42aab29e5ee77823",
+  "description": "Unicode 17.0.0 Unihan kTGH 的 2013 年通用规范汉字表，按规范序号 1–8105 排列。仅提取字形，不使用上游读音或频率。",
+  "license": "Unicode-3.0",
+  "documentation": "https://www.unicode.org/reports/tr38/#kTGH"
+}

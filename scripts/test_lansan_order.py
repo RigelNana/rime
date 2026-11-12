@@ -2,7 +2,9 @@
 
 import unittest
 
-from merge_lansan_dicts import apply_char_word_order, apply_frequency_order, is_gb2312_han
+from merge_lansan_dicts import (
+    apply_char_word_order, apply_frequency_order, apply_charset_order, is_gb2312_han,
+)
 
 
 def group(code, texts):
@@ -53,6 +55,45 @@ class CharWordOrderTests(unittest.TestCase):
     def test_stale_review_fails(self):
         with self.assertRaisesRegex(ValueError, '不存在'):
             apply_char_word_order(group('abcd', ['甲', '甲词']), {'abcd': [('甲', '不存在', 'word')]})
+
+
+class CharsetOrderTests(unittest.TestCase):
+    def test_rare_characters_no_longer_separate_phrases(self):
+        rows = group('admf', ['漏', '𥄪', '漏雨', '泪雨'])
+        result, pure, stats = apply_charset_order(rows, {'漏'})
+        self.assertEqual(candidates(result, 'admf'), ['漏', '漏雨', '泪雨', '𥄪'])
+        self.assertEqual(pure, {})
+        self.assertEqual(stats['promoted_phrase_rows'], 2)
+
+    def test_gb2312_shortest_code_is_protected_outside_tgh(self):
+        rows = group('shhd', ['摺', '据闻', '接事', '撒手闭眼'])
+        result, pure, _ = apply_charset_order(rows, set())
+        self.assertEqual(result, rows)
+        self.assertEqual(pure, {})
+
+    def test_gb2312_long_code_has_no_protection(self):
+        rows = group('ab', ['摺']) + group('abcd', ['摺', '甲词', '乙词'])
+        result, _, _ = apply_charset_order(rows, set())
+        self.assertEqual(candidates(result, 'abcd'), ['甲词', '乙词', '摺'])
+
+    def test_pure_order_is_recorded_when_characters_cross(self):
+        rows = group('abcd', ['㐀', '甲', '甲词'])
+        result, pure, stats = apply_charset_order(rows, {'甲'})
+        self.assertEqual(candidates(result, 'abcd'), ['甲', '甲词', '㐀'])
+        self.assertEqual(pure, {'abcd': '㐀甲'})
+        self.assertEqual(stats['pure_order_restored_codes'], 1)
+
+    def test_word_order_and_rare_character_order_are_stable(self):
+        rows = group('abcd', ['㐀', '乙词', '㐁', '甲词'])
+        result, _, _ = apply_charset_order(rows, set())
+        self.assertEqual(candidates(result, 'abcd'), ['乙词', '甲词', '㐀', '㐁'])
+        self.assertEqual({tuple(r[:2]) for r in result}, {tuple(r[:2]) for r in rows})
+
+    def test_pure_and_special_codes_are_unchanged(self):
+        rows = group('abcd', ['㐀', '甲']) + group('a[', ['㐀', '甲词'])
+        result, pure, _ = apply_charset_order(rows, {'甲'})
+        self.assertEqual(result, rows)
+        self.assertEqual(pure, {})
 
 
 class FrequencyOrderTests(unittest.TestCase):
