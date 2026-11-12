@@ -6,7 +6,7 @@ schema:
     - PY_c  # 拼音方案
     - easy_english # 英文
   description: |
-    虎码官方词库
+    虎码字词模式的词库依赖；主菜单统一使用 tiger 的字词开关。
     敲 ` 鍵進入拼音反查
   name: "虎码官方词库"
   schema_id: tigress

@@ -5,12 +5,13 @@ schema:
     - core2022  #自定义字集工具方案
     - PY_c  # 拼音方案
     - easy_english # 英文
+    - tigress # 编译字词模式词库；不在方案选单中单独显示
   description: |
-    虎码官方单字
+    虎码官方，方案选单可切换纯单字与字词混输。
     敲 ` 鍵進入拼音反查
-  name: "虎码官方单字"
+  name: "虎码官方"
   schema_id: tiger
-  version: 0.9
+  version: "1.0"
 
 
 switches: # 0 默认关，1 默认开
@@ -20,6 +21,9 @@ switches: # 0 默认关，1 默认开
   - name: extended_char  #自定义字集
     reset: 1
     states: [ 全字集 , 常用字 ]
+  - name: dz_ci
+    reset: 1
+    states: [ 字词混输, 纯单字 ]
   - name: pinyin  #拼音滤镜
     reset: 0
     states: [ 拼, pīn ]
@@ -47,9 +51,6 @@ switches: # 0 默认关，1 默认开
   - name: ascii_punct
     reset: 0
     states: [ 。，, ．， ]
-  # - name: dz_ci  #过滤词组
-  #   reset: 0
-  #   states: [ 词组, 单字 ]
   - options: [_keyboard_default, _keyboard_defaultzj]
     reset: 0
     states: [ 助记关, 助记开 ]
@@ -81,7 +82,7 @@ engine:
   translators:
     - punct_translator
     - reverse_lookup_translator #拼音反查
-    - table_translator
+    - lua_translator@*tiger_mode_translator
     - table_translator@easy_english #临时英文
     - history_translator@historyDM # 重复上屏 电脑
     - history_translator@historyDM2 # 重复上屏 电脑2
@@ -94,7 +95,7 @@ engine:
 
   filters:
     - lua_filter@core2022  #自定义字集过滤lua；放在最上面完美解决简繁滤镜出错的问题
-    # - lua_filter@dz_ci  #过滤词组lua，单字模式
+    - lua_filter@*dz_ci_filter # 只过滤正常编码的多字候选，保留辅助功能
     # - charset_filter@utf8
     # - charset_filter@gbk
     # - charset_filter@gb2312
@@ -168,6 +169,7 @@ key_binder:
     - { accept: "Control+y", toggle: udpf_switch, when: composing }  #PC Unicode编码开关
     - { accept: "Control+h", toggle: extended_char, when: composing } # PC 自定字集开关
     - { accept: "Control+Shift+H", toggle: extended_char, when: composing } # PC 自定字集开关2
+    - { when: always, accept: "Control+Shift+D", toggle: dz_ci }
     - { accept: "Control+j", toggle: chaifen, when: composing } # PC 拆分滤镜开关
     # - { when: composing, accept: '&', toggle: emoji_cn } # 手机 emoji开关
     # - { when: composing, accept: '*', toggle: simplification } # 手机 繁简开关

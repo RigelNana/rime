@@ -2,7 +2,6 @@ patch:
   schema_list:
     - {schema: flypy}
     - {schema: tiger}
-    - {schema: tigress}
     - {schema: lansanguanfang}
     # 日语方案：https://github.com/lazyfoxchan/rime-jaroomaji
     - {schema: jaroomaji}

@@ -5,7 +5,7 @@
 schema:
   schema_id: lansanguanfang
   name: "蓝三官方"
-  version: "1.2"
+  version: "1.3"
   author:
     - KyleBing
   description: |
@@ -26,6 +26,9 @@ switches:
   - name: extended_char
     reset: 1
     states: [ 全字集, 常用字 ]
+  - name: dz_ci
+    reset: 0
+    states: [ 字词混输, 纯单字 ]
   - name: pinyin
     reset: 0
     states: [ 拼, pīn ]
@@ -78,6 +81,7 @@ engine:
     - lua_translator@*shijian2
   filters:
     - lua_filter@*core2022_filter
+    - lua_filter@*dz_ci_filter
     - simplifier@simplification
     - simplifier@pinyin
     - simplifier@emoji_cn
@@ -131,6 +135,7 @@ key_binder:
     - { when: composing, accept: "Control+y", toggle: udpf_switch }
     - { when: composing, accept: "Control+h", toggle: extended_char }
     - { when: composing, accept: "Control+Shift+H", toggle: extended_char }
+    - { when: always, accept: "Control+Shift+D", toggle: dz_ci }
     - { when: has_menu, accept: Right, send: Down }
     - { when: has_menu, accept: Left, send: Up }
     - { when: always, accept: "Control+period", toggle: ascii_punct }

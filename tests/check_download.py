@@ -4,6 +4,7 @@
 import argparse
 import io
 from pathlib import Path
+import shutil
 import subprocess
 import tarfile
 import tempfile
@@ -11,7 +12,9 @@ import tempfile
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--index", action="store_true", help="检查暂存区，否则检查 HEAD")
+    source_group = parser.add_mutually_exclusive_group()
+    source_group.add_argument("--index", action="store_true", help="检查暂存区，否则检查 HEAD")
+    source_group.add_argument("--worktree", action="store_true", help="检查工作区公共文件，排除 Git 忽略的本机数据")
     parser.add_argument("--lua-library", type=Path, help="librime-lua.so 路径")
     args = parser.parse_args()
     root = Path(__file__).resolve().parent.parent
@@ -29,7 +32,17 @@ def main():
         source, shared = work / "source", work / "shared"
         source.mkdir()
         shared.mkdir()
-        if args.index:
+        if args.worktree:
+            paths = subprocess.check_output(
+                ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=root)
+            for name in set(paths.decode().split("\0")) - {""}:
+                original = root / name
+                if not original.is_file():
+                    continue
+                target = source / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(original, target)
+        elif args.index:
             subprocess.run(["git", "checkout-index", "--all", "--prefix=" + str(source) + "/"],
                            cwd=root, check=True)
         else:
