@@ -131,12 +131,27 @@ int main(int argc, char** argv) {
     check("hjsm{space}", "就不是");
     check("eohn{space}", "询问");
     check("nrnd{space}", "唱着");
-    // 恢复旧官方字词位置，同时保护原本词在字前的编码。
+    // 未触及前三选约束的单字维持原位置。
     check("tonm{space}", "狗");
     check("komb{space}", "侵");
     check("hofq{space}", "朵");
     check("hepi{space}", "豆蔻");
-    check("aipg;", "淙");  // 演示、淙、泳帽：保留字夹在两段词之间的位置。
+    check("aipg;", "淙");  // 演示、淙、泳帽：淙仍是二选。
+    // 词频可跨单字；GB2312 最简码保持前三，不再强制旧配对关系。
+    exact("alyw", {"法国人", "河南人", "泅", "湖南人", "欺人"});
+    check("alyw'", "泅");
+    exact("ofrm", {"那一日", "橹", "氇", "本日", "栢"});
+    check("ofrm'", "氇");
+    check("afin'", "泫");
+    check("oavv'", "椹");
+    check("yeyw'", "赅");
+    check("fjsm{space}", "而不是");
+    api->set_option(session, "extended_char", false);
+    check("afin'", "泫");
+    check("oavv'", "椹");
+    check("ofrm'", "氇");
+    check("yeyw'", "赅");
+    api->set_option(session, "extended_char", true);
     // 无更短码的字保留原关系；有简码的全码后置，纯单字开关再隐藏词组。
     check("eiiu{space}", "慈");
     check("yjjw{space}", "身正不怕影子斜");

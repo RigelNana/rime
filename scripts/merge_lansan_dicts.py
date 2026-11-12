@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""合并蓝三字词表，固定词序后按简码和逐项评议调整字词关系。"""
+"""合并蓝三字词表，保护 GB2312 最简码前三选，再统一同码词频顺序。"""
 
 import argparse
 from collections import Counter, defaultdict
@@ -46,7 +46,7 @@ def read_frequencies(path):
 
 
 def apply_legacy_order(official, characters, ranked_phrases):
-    """重建 4e6fb8a 的排序基线，后续调整不得改变其中的词序、字序。"""
+    """重建 4e6fb8a 的历史基线，供后续最小改动使用。"""
     original_groups, phrase_groups = defaultdict(list), defaultdict(list)
     for row in official:
         original_groups[row[1]].append(row)
@@ -114,7 +114,7 @@ def read_order_reviews(path):
 
 
 def apply_char_word_order(rows, reviews):
-    """只移动字词的相对位置；两类候选各自的内部次序保持不变。"""
+    """重建 705 组评议后的历史基线；最终词序不再受这些配对约束。"""
     groups = defaultdict(list)
     shortest = {}
     for row in rows:
@@ -195,6 +195,102 @@ def apply_char_word_order(rows, reviews):
     return result, stats
 
 
+def is_gb2312_han(character):
+    if len(character) != 1 or not "\u4e00" <= character <= "\u9fff":
+        return False
+    try:
+        return len(character.encode("gb2312")) == 2
+    except UnicodeEncodeError:
+        return False
+
+
+def apply_frequency_order(rows, frequencies, phrase_orders=None):
+    """GB2312 最简码前三选优先；词频排序允许指定词序例外。"""
+    phrase_orders = phrase_orders or {}
+    groups = defaultdict(list)
+    shortest = {}
+    for row in rows:
+        text, code = row[:2]
+        groups[code].append(row)
+        if len(text) == 1 and re.fullmatch(r"[a-z]+", code):
+            shortest[text] = min(shortest.get(text, len(code)), len(code))
+
+    for code, words in phrase_orders.items():
+        current_words = [row[0] for row in groups.get(code, []) if len(row[0]) > 1]
+        if (not re.fullmatch(r"[a-z]{1,4}", code) or not words
+                or len(words) != len(set(words)) or set(words) != set(current_words)):
+            raise ValueError(f"{code}: 手动词序必须完整列出该编码的全部词组，请复核来源更新")
+
+    overrides = {}
+    stats = {"changed_codes": 0, "phrase_reordered_codes": 0,
+             "gb2312_protected_rows": 0, "gb2312_promoted_rows": 0,
+             "moved_character_rows": 0, "manual_phrase_codes": len(phrase_orders)}
+    for code, group in groups.items():
+        ordered = sorted(group, key=lambda row: -int(row[2]) if len(row) > 2 else 0)
+        characters = [row for row in ordered if len(row[0]) == 1]
+        words = [row for row in ordered if len(row[0]) > 1]
+        if not characters and code not in phrase_orders:
+            # 纯词编码已在合并阶段统一按万象词频排序。
+            continue
+        original_slots, preceding_words = [], 0
+        for row in ordered:
+            if len(row[0]) == 1:
+                original_slots.append(preceding_words)
+            else:
+                preceding_words += 1
+
+        lower, upper = [0] * len(characters), [len(words)] * len(characters)
+        protected = set()
+        for i, row in enumerate(characters):
+            text = row[0]
+            if not re.fullmatch(r"[a-z]+", code):
+                continue
+            if shortest[text] < len(code):
+                lower[i] = len(words)
+            elif is_gb2312_han(text):
+                # 总名次 = 前面的词数 + 本字在单字序列中的名次。
+                # 按全字集约束，常用集过滤后也不会超过第三。
+                protected.add(i)
+                upper[i] = min(upper[i], 3 - (i + 1))
+                stats["gb2312_protected_rows"] += 1
+        for i in range(1, len(characters)):
+            lower[i] = max(lower[i], lower[i - 1])
+        for i in range(len(characters) - 2, -1, -1):
+            upper[i] = min(upper[i], upper[i + 1])
+        if any(lo > hi for lo, hi in zip(lower, upper)):
+            raise ValueError(f"{code}: GB2312 最简码前三选与固定单字顺序、简码后置冲突")
+        slots = [max(lo, min(hi, old))
+                 for lo, hi, old in zip(lower, upper, original_slots)]
+
+        # 稳定排序：旧官方的单字分段不再阻挡词频，同频词不额外换位。
+        ranked_words = sorted(words, key=lambda row: -frequencies.get(row[0], 0))
+        if code in phrase_orders:
+            by_text = {row[0]: row for row in words}
+            ranked_words = [by_text[text] for text in phrase_orders[code]]
+        buckets = [[] for _ in range(len(words) + 1)]
+        for row, slot in zip(characters, slots):
+            buckets[slot].append(row)
+        adjusted = []
+        for i, word in enumerate(ranked_words):
+            adjusted.extend(buckets[i])
+            adjusted.append(word)
+        adjusted.extend(buckets[-1])
+        if adjusted == ordered:
+            continue
+        for i, row in enumerate(adjusted):
+            overrides[tuple(row[:2])] = len(adjusted) - i
+        stats["changed_codes"] += 1
+        stats["phrase_reordered_codes"] += ranked_words != words
+        stats["gb2312_promoted_rows"] += sum(slots[i] < original_slots[i] for i in protected)
+        stats["moved_character_rows"] += sum(a != b for a, b in zip(slots, original_slots))
+
+    result = []
+    for row in rows:
+        weight = overrides.get(tuple(row[:2]))
+        result.append([row[0], row[1], str(weight), *row[3:]] if weight is not None else row)
+    return result, stats
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "lansan_merged.dict.yaml")
@@ -238,6 +334,9 @@ def main():
     rows, legacy_stats = apply_legacy_order(official, characters, ranked_phrases)
     review_path = SOURCES / "char_word_order.json"
     rows, order_stats = apply_char_word_order(rows, read_order_reviews(review_path))
+    phrase_order_path = SOURCES / "phrase_order_overrides.json"
+    phrase_orders = json.loads(phrase_order_path.read_text(encoding="utf-8"))["orders"]
+    rows, frequency_order_stats = apply_frequency_order(rows, frequencies, phrase_orders)
     keys = [tuple(row[:2]) for row in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("合并结果仍包含重复的词＋编码")
@@ -249,15 +348,17 @@ def main():
 # 自动生成：python scripts/merge_lansan_dicts.py
 # 官方单字表 + ls_ci 词组 + 官方独有词组。
 # 万象数据：amzxyz/rime-wanxiang-data，CC-BY-4.0；来源及修改见 sources/lansan/README.md。
-# 先重建旧官方位置及万象词频基线，再固定词序、字序调整字词关系。
-# 有简码的单字长码置于同码词组之后；其余按 char_word_order.json 评议。
-# 混合编码使用组内排序权重；不改变词组之间或单字之间的次序。
-# 纯词编码：权重 = 万象权重 + 1，未覆盖项为 1；同频沿用旧词组优先级。
+# GB2312 单字的最短字母编码保证前三选；有简码的长码仍在全部同码词后。
+# 同码词组默认按万象词频排序，可跨过单字；同频保持历史基线次序。
+# 用户指定词序优先于词频，见 sources/lansan/phrase_order_overrides.json。
+# 705 组评议只用于重建基线位置，最终排序不强制保留旧字词配对关系。
+# 单字内部顺序不变；满足以上约束时尽量保留其原位置。
+# 混合编码使用组内排序权重；纯词编码使用万象权重 + 1，未覆盖项为 1。
 # 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.12.3"
+version: "2026.11.12.5"
 sort: by_weight
 columns:
   - text
@@ -294,7 +395,7 @@ encoder:
         "output": str(args.output),
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml",
-                                       frequency_path, review_path]},
+                                       frequency_path, review_path, phrase_order_path]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,
@@ -305,6 +406,7 @@ encoder:
         "frequency_missing_words": len(phrase_words - frequencies.keys()),
         "legacy_order": legacy_stats,
         "char_word_order": order_stats,
+        "frequency_order": frequency_order_stats,
         "unique_phrases_including_personal": len({row[0] for row in rows + personal if len(row[0]) > 1}),
         "maximum_phrases_per_code": max(code_counts.values()),
         "different_codes_preserved": conflicts,

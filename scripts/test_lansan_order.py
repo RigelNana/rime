@@ -2,7 +2,7 @@
 
 import unittest
 
-from merge_lansan_dicts import apply_char_word_order
+from merge_lansan_dicts import apply_char_word_order, apply_frequency_order, is_gb2312_han
 
 
 def group(code, texts):
@@ -53,6 +53,52 @@ class CharWordOrderTests(unittest.TestCase):
     def test_stale_review_fails(self):
         with self.assertRaisesRegex(ValueError, '不存在'):
             apply_char_word_order(group('abcd', ['甲', '甲词']), {'abcd': [('甲', '不存在', 'word')]})
+
+
+class FrequencyOrderTests(unittest.TestCase):
+    def test_global_frequency_can_cross_character_without_old_pair_constraint(self):
+        rows = group('alyw', ['法国人', '欺人', '泅', '河南人', '湖南人'])
+        result, _ = apply_frequency_order(rows, {'法国人': 9433, '河南人': 1784,
+                                                '湖南人': 1140, '欺人': 373})
+        self.assertEqual(candidates(result, 'alyw'), ['法国人', '河南人', '泅', '湖南人', '欺人'])
+
+    def test_second_gb2312_character_also_fits_top_three(self):
+        rows = group('ofrm', ['本日', '橹', '那一日', '氇', '栢'])
+        result, stats = apply_frequency_order(rows, {'本日': 1, '那一日': 2})
+        self.assertEqual(candidates(result, 'ofrm'), ['那一日', '橹', '氇', '本日', '栢'])
+        self.assertEqual(stats['gb2312_promoted_rows'], 1)
+
+    def test_long_code_keeps_demotion_even_for_gb2312(self):
+        rows = group('a', ['甲']) + group('abcd', ['乙词', '甲词', '甲'])
+        result, _ = apply_frequency_order(rows, {'甲词': 2, '乙词': 1})
+        self.assertEqual(candidates(result, 'a'), ['甲'])
+        self.assertEqual(candidates(result, 'abcd'), ['甲词', '乙词', '甲'])
+
+    def test_equal_frequencies_keep_current_order(self):
+        rows = group('abcd', ['甲词', '甲', '乙词', '丙词'])
+        result, _ = apply_frequency_order(rows, {'甲词': 10, '乙词': 10, '丙词': 10})
+        self.assertEqual(result, rows)
+
+    def test_uncovered_words_keep_current_order(self):
+        rows = group('abcd', ['甲词', '甲', '乙词', '丙词'])
+        result, _ = apply_frequency_order(rows, {'丙词': 10})
+        self.assertEqual(candidates(result, 'abcd'), ['丙词', '甲', '甲词', '乙词'])
+
+    def test_non_gb2312_character_moves_only_to_preserve_character_order(self):
+        rows = group('abcd', ['甲词', '乙词', '𠀀', '丙词', '甲'])
+        result, _ = apply_frequency_order(rows, {'甲词': 3, '乙词': 2, '丙词': 1})
+        self.assertEqual(candidates(result, 'abcd'), ['甲词', '𠀀', '甲', '乙词', '丙词'])
+        self.assertFalse(is_gb2312_han('𠀀'))
+        self.assertFalse(is_gb2312_han('㵘'))
+
+    def test_pure_character_collision_cannot_silently_break_top_three(self):
+        with self.assertRaisesRegex(ValueError, '前三选.*冲突'):
+            apply_frequency_order(group('abcd', ['甲', '乙', '丙', '丁']), {})
+
+    def test_incompatible_shortcode_rule_cannot_silently_break_top_three(self):
+        rows = group('a', ['甲']) + group('abcd', ['甲词', '乙词', '甲', '乙'])
+        with self.assertRaisesRegex(ValueError, '前三选.*冲突'):
+            apply_frequency_order(rows, {'甲词': 2, '乙词': 1})
 
 
 if __name__ == '__main__':

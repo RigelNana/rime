@@ -34,8 +34,10 @@ def main():
           f"{report['unique_phrases_including_personal']:,} 个不同词组（含本机个人词库）。")
     print(f"万象词频覆盖 {report['frequency_covered_words']:,} 个公共词组；"
           f"{report['frequency_missing_words']:,} 个未覆盖词使用低权重兜底。")
-    print(f"已在原排序基线上调整 {report['char_word_order']['changed_codes']:,} 个混合编码；"
-          "有简码的单字长码后置，并应用逐项评议，词序和字序保持不变。")
+    print(f"已统一调整 {report['frequency_order']['phrase_reordered_codes']:,} 个编码的词序；"
+          f"{report['frequency_order']['gb2312_promoted_rows']} 条 GB2312 单字最简码提至前三。"
+          "单字内部顺序不变，有简码的长码仍在词后，同频词保持原序。")
+    print(f"另保留 {report['frequency_order']['manual_phrase_codes']} 组用户指定词序。")
 
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "build_flypy_ext.py")],
