@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""合并蓝三字词表，使用固定版本的万象词频重排词组，不改动来源编码。"""
+"""合并蓝三字词表，保留官方字词先后关系，在词组段内按万象词频排序。"""
 
 import argparse
 from collections import Counter, defaultdict
@@ -44,6 +44,57 @@ def read_frequencies(path):
     return frequencies
 
 
+def apply_legacy_order(official, characters, ranked_phrases):
+    """旧词不能跨越单字；新增词放在末个单字之后。纯词编码不作改动。"""
+    original_groups, phrase_groups = defaultdict(list), defaultdict(list)
+    for row in official:
+        original_groups[row[1]].append(row)
+    for row in ranked_phrases:
+        phrase_groups[row[1]].append(row)
+
+    overrides = {}
+    stats = {"mixed_codes": 0, "old_mixed_codes": 0,
+             "new_phrase_rows_after_characters": 0, "weighted_character_rows": 0}
+    for code, phrase_rows in phrase_groups.items():
+        original = original_groups[code]
+        single_rows = [row for row in original if len(row[0]) == 1]
+        if not single_rows:
+            continue
+        stats["mixed_codes"] += 1
+        stats["weighted_character_rows"] += len(single_rows)
+        slots = {}
+        preceding_characters = 0
+        for row in original:
+            if len(row[0]) == 1:
+                preceding_characters += 1
+            else:
+                slots[tuple(row[:2])] = preceding_characters
+        stats["old_mixed_codes"] += bool(slots)
+        buckets = [[] for _ in range(len(single_rows) + 1)]
+        # phrase_rows 已按万象权重和原同频次序排列；分段时保留该次序。
+        for row in phrase_rows:
+            key = tuple(row[:2])
+            slot = slots.get(key, len(single_rows))
+            buckets[slot].append(row)
+            stats["new_phrase_rows_after_characters"] += key not in slots
+
+        ordered = []
+        for index, row in enumerate(single_rows):
+            ordered.extend(buckets[index])
+            ordered.append(row)
+        ordered.extend(buckets[-1])
+        # 精确编码匹配时，单调递减的排序权重可落实旧字词关系。
+        # 这是组内优先级，不再将混合编码的 weight 当作语料词频。
+        for index, row in enumerate(ordered):
+            overrides[tuple(row[:2])] = len(ordered) - index
+
+    result = []
+    for row in characters + ranked_phrases:
+        weight = overrides.get(tuple(row[:2]))
+        result.append([row[0], row[1], str(weight), *row[3:]] if weight is not None else row)
+    return result, stats
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "lansan_merged.dict.yaml")
@@ -53,8 +104,8 @@ def main():
     personal_path = ROOT / "lansan_user.dict.yaml"
     personal = read_rows(personal_path) if personal_path.exists() else []
 
-    # 保留官方单字记录的编码、原始顺序和未填写词频的状态。
-    # 包括来源文件里含非字母符号的编码；此脚本只合并词组，不修订字表。
+    # 保留官方单字编码和单字间的原始次序；混合编码稍后写入排序权重。
+    # 包括来源文件里含非字母符号的编码；此脚本不修订字表编码。
     characters = [row for row in official if len(row[0]) == 1]
     phrases = {}
     for row in standard:
@@ -84,7 +135,7 @@ def main():
     ranked_phrases = [[row[0], row[1], str(frequencies.get(row[0], 0) + 1), *row[3:]]
                       for row in ranked_phrases]
     ranked_phrases.sort(key=lambda row: -int(row[2]))
-    rows = characters + ranked_phrases
+    rows, legacy_stats = apply_legacy_order(official, characters, ranked_phrases)
     keys = [tuple(row[:2]) for row in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("合并结果仍包含重复的词＋编码")
@@ -94,14 +145,16 @@ def main():
     header = """# Rime dictionary
 # encoding: utf-8
 # 自动生成：python scripts/merge_lansan_dicts.py
-# 官方单字表 + ls_ci 词组 + 官方独有词组；词组统一使用万象词频。
+# 官方单字表 + ls_ci 词组 + 官方独有词组。
 # 万象数据：amzxyz/rime-wanxiang-data，CC-BY-4.0；来源及修改见 sources/lansan/README.md。
-# 词组权重 = 万象权重 + 1；未覆盖项为 1；同频沿用旧词组优先级。
+# 字词同码：保留旧官方字词相对位置，各词组段按万象词频排序。
+# 新增词无旧位置时放在末个单字之后；混合编码使用组内排序权重。
+# 纯词编码：权重 = 万象权重 + 1，未覆盖项为 1；同频沿用旧词组优先级。
 # 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.12"
+version: "2026.11.12.2"
 sort: by_weight
 columns:
   - text
@@ -147,6 +200,7 @@ encoder:
         "frequency_source": "wanxiang",
         "frequency_covered_words": len(phrase_words & frequencies.keys()),
         "frequency_missing_words": len(phrase_words - frequencies.keys()),
+        "legacy_order": legacy_stats,
         "unique_phrases_including_personal": len({row[0] for row in rows + personal if len(row[0]) > 1}),
         "maximum_phrases_per_code": max(code_counts.values()),
         "different_codes_preserved": conflicts,

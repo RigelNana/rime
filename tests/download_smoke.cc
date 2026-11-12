@@ -81,6 +81,15 @@ int main(int argc, char** argv) {
     check("hjsm{space}", "就不是");
     check("eohn{space}", "询问");
     check("nrnd{space}", "唱着");
+    // 恢复旧官方字词位置，同时保护原本词在字前的编码。
+    check("tonm{space}", "狗");
+    check("komb{space}", "侵");
+    check("hofq{space}", "朵");
+    check("hepi{space}", "豆蔻");
+    check("aipg;", "淙");  // 演示、淙、泳帽：保留字夹在两段词之间的位置。
+    // 旧表仅有单字的编码，新增词不能挤到该字之前。
+    check("eiiu{space}", "慈");
+    check("yjjw{space}", "个");
     select("jaroomaji");
     check("nihon", "日本");
     std::cout << "PASS: five schemas, Lansan phrase order, Flypy charset switching, reverse lookup and Unicode comments\n";
