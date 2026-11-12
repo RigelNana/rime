@@ -342,6 +342,57 @@ def apply_charset_order(rows, tgh_characters):
     return result, pure_orders, stats
 
 
+def apply_candidate_prefixes(rows, prefixes, tgh_characters):
+    """应用明确的字词优先例外，保持字序、词序和既有保护约束。"""
+    groups, shortest = defaultdict(list), {}
+    for row in rows:
+        text, code = row[:2]
+        groups[code].append(row)
+        if len(text) == 1 and re.fullmatch(r"[a-z]+", code):
+            shortest[text] = min(shortest.get(text, len(code)), len(code))
+    overrides = {}
+    stats = {"configured_codes": len(prefixes), "changed_codes": 0,
+             "new_phrase_first_codes": 0, "new_character_first_codes": 0}
+    for code, prefix in prefixes.items():
+        if (not re.fullmatch(r"[a-z]{1,4}", code) or not isinstance(prefix, list)
+                or not prefix or any(not isinstance(t, str) or not t for t in prefix)
+                or len(prefix) != len(set(prefix))):
+            raise ValueError(f"{code}: 无效或重复的手动候选前缀")
+        ordered = sorted(groups.get(code, []), key=lambda r: -int(r[2]) if len(r) > 2 else 0)
+        by_text = {r[0]: r for r in ordered}
+        if any(t not in by_text for t in prefix):
+            raise ValueError(f"{code}: 手动前缀引用不存在的候选，请复核来源更新")
+        adjusted = [by_text[t] for t in prefix] + [r for r in ordered if r[0] not in prefix]
+        for single, label in [(True, "单字"), (False, "词组")]:
+            if ([r[0] for r in ordered if (len(r[0]) == 1) == single]
+                    != [r[0] for r in adjusted if (len(r[0]) == 1) == single]):
+                raise ValueError(f"{code}: 手动前缀改变了{label}内部顺序，请复核")
+        last_word = max((i for i, r in enumerate(adjusted) if len(r[0]) > 1), default=-1)
+        for i, row in enumerate(adjusted):
+            text = row[0]
+            if len(text) != 1:
+                continue
+            shortest_code = len(code) == shortest[text]
+            protected = is_gb2312_han(text) and shortest_code
+            if protected and i >= 3:
+                raise ValueError(f"{code}: 手动前缀使 GB2312 最简码 {text} 超出前三选")
+            if i < last_word and (not shortest_code or (text not in tgh_characters and not protected)):
+                raise ValueError(f"{code}: 手动前缀违反简码长码后置或表外字后置规则")
+        if adjusted == ordered:
+            continue
+        for i, row in enumerate(adjusted):
+            overrides[tuple(row[:2])] = len(adjusted) - i
+        stats["changed_codes"] += 1
+        if adjusted[0][0] != ordered[0][0]:
+            stats["new_phrase_first_codes"] += len(adjusted[0][0]) > 1
+            stats["new_character_first_codes"] += len(adjusted[0][0]) == 1
+    result = []
+    for row in rows:
+        weight = overrides.get(tuple(row[:2]))
+        result.append([row[0], row[1], str(weight), *row[3:]] if weight is not None else row)
+    return result, stats
+
+
 def write_pure_orders(path, orders):
     lines = ["-- 自动生成：scripts/merge_lansan_dicts.py；仅用于纯单字恢复原顺序。", "return {"]
     for code, chars in sorted(orders.items()):
@@ -408,8 +459,12 @@ def main():
     phrase_orders = json.loads(phrase_order_path.read_text(encoding="utf-8"))["orders"]
     rows, frequency_order_stats = apply_frequency_order(rows, frequencies, phrase_orders)
     tgh_path, tgh_manifest = SOURCES / "tgh2013.txt", SOURCES / "tgh-source.json"
+    tgh_characters = read_tgh_characters(tgh_path, tgh_manifest)
     rows, pure_orders, charset_order_stats = apply_charset_order(
-        rows, read_tgh_characters(tgh_path, tgh_manifest))
+        rows, tgh_characters)
+    candidate_prefix_path = SOURCES / "candidate_prefix_overrides.json"
+    candidate_prefixes = json.loads(candidate_prefix_path.read_text(encoding="utf-8"))["prefixes"]
+    rows, candidate_prefix_stats = apply_candidate_prefixes(rows, candidate_prefixes, tgh_characters)
     keys = [tuple(row[:2]) for row in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("合并结果仍包含重复的词＋编码")
@@ -427,13 +482,14 @@ def main():
 # 用户排除词组的全部编码不导出，见 sources/lansan/phrase_exclusions.json。
 # 705 组评议只用于重建基线位置，最终排序不强制保留旧字词配对关系。
 # 8105 规范字表之外的单字排在全部词后，GB2312 最简码例外。
+# 用户明确的字词优先例外见 sources/lansan/candidate_prefix_overrides.json。
 # 纯单字原顺序由 lua/lansan_single_order.lua 和对应过滤器恢复。
 # 混合编码使用组内排序权重；纯词编码使用万象权重 + 1，未覆盖项为 1。
 # 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.12.7"
+version: "2026.11.13.1"
 sort: by_weight
 columns:
   - text
@@ -475,7 +531,7 @@ encoder:
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml",
                                        frequency_path, review_path, phrase_order_path, exclusion_path,
-                                       tgh_path, tgh_manifest]},
+                                       tgh_path, tgh_manifest, candidate_prefix_path]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,
@@ -490,6 +546,7 @@ encoder:
         "char_word_order": order_stats,
         "frequency_order": frequency_order_stats,
         "charset_order": charset_order_stats,
+        "candidate_prefix_order": candidate_prefix_stats,
         "single_order_output": str(single_output),
         "unique_phrases_including_personal": len({row[0] for row in rows + personal if len(row[0]) > 1}),
         "maximum_phrases_per_code": max(code_counts.values()),

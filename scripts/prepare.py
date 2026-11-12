@@ -40,6 +40,8 @@ def main():
     print(f"规范字分层调整 {report['charset_order']['changed_codes']:,} 组；"
           f"纯单字恢复表保护 {report['charset_order']['pure_order_restored_codes']} 组原字序。")
     print(f"另保留 {report['frequency_order']['manual_phrase_codes']} 组用户指定词序。")
+    print(f"应用 {report['candidate_prefix_order']['changed_codes']} 组明确的字词优先例外；"
+          "单字内部顺序和词组内部顺序保持不变。")
 
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "build_flypy_ext.py")],

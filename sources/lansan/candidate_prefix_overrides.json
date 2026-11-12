@@ -1,0 +1,937 @@
+{
+  "version": 1,
+  "description": "用户明确指定的字词优先例外；前缀按指定顺序置顶，后续候选保序；不改变单字内部顺序或词组内部顺序。",
+  "baseline_version": "2026.11.12.7",
+  "decisions": {
+    "word_first": "按列出的 102 个字、99 组编码处理，仅提前原来的第一个词；其余词保序。",
+    "hhbm": "用户要求翀首选、戳中次选、崌三选。",
+    "mnnm": "用户确认台口首选、筥次选、筶三选。",
+    "promote_characters": "用户确认仅将垚、郤提为首选；其余抢救建议维持。"
+  },
+  "prefixes": {
+    "acgd": [
+      "涤秽布新"
+    ],
+    "adss": [
+      "满目琳琅"
+    ],
+    "afbd": [
+      "五原"
+    ],
+    "afro": [
+      "五颗"
+    ],
+    "ahhk": [
+      "染风习俗"
+    ],
+    "ahip": [
+      "洞幽察微"
+    ],
+    "ahmo": [
+      "润笔"
+    ],
+    "ajfx": [
+      "渎货无厌"
+    ],
+    "ajwq": [
+      "羊角辫"
+    ],
+    "amrm": [
+      "浓痰"
+    ],
+    "amwq": [
+      "皮筋儿"
+    ],
+    "aonm": [
+      "清口"
+    ],
+    "atjr": [
+      "沙化"
+    ],
+    "atst": [
+      "海底捞"
+    ],
+    "avdo": [
+      "深聊"
+    ],
+    "axih": [
+      "汝城"
+    ],
+    "axjv": [
+      "油孔"
+    ],
+    "bkvm": [
+      "原声带"
+    ],
+    "cmxq": [
+      "香火姻缘"
+    ],
+    "ddgo": [
+      "睡眼惺松"
+    ],
+    "eaif": [
+      "止戈为武"
+    ],
+    "egnm": [
+      "调唆"
+    ],
+    "epii": [
+      "追封"
+    ],
+    "fdxw": [
+      "一尸两命"
+    ],
+    "fghm": [
+      "无情风雨"
+    ],
+    "fhhd": [
+      "无小事"
+    ],
+    "fhxh": [
+      "一饥两饱"
+    ],
+    "frfr": [
+      "无可无不可"
+    ],
+    "frol": [
+      "更凶"
+    ],
+    "fwwy": [
+      "更糟糕"
+    ],
+    "gihe": [
+      "同名小说"
+    ],
+    "gyao": [
+      "冒个泡"
+    ],
+    "gynw": [
+      "郤"
+    ],
+    "hbjo": [
+      "凤雏"
+    ],
+    "hhbm": [
+      "翀",
+      "戳中"
+    ],
+    "hhhd": [
+      "凤求凰"
+    ],
+    "hjxo": [
+      "成华区"
+    ],
+    "hlgl": [
+      "适用性"
+    ],
+    "hpwq": [
+      "雀儿"
+    ],
+    "htym": [
+      "手酸"
+    ],
+    "iiif": [
+      "垚"
+    ],
+    "ilup": [
+      "长点心"
+    ],
+    "itlx": [
+      "长点"
+    ],
+    "jdsg": [
+      "焚尸扬灰"
+    ],
+    "jlcn": [
+      "不容质疑"
+    ],
+    "jlhn": [
+      "铁窗风味"
+    ],
+    "jlii": [
+      "解封"
+    ],
+    "jmat": [
+      "政策法规"
+    ],
+    "jqge": [
+      "正当关系"
+    ],
+    "jrjj": [
+      "比较不错"
+    ],
+    "jukf": [
+      "还必须"
+    ],
+    "khyr": [
+      "催醒"
+    ],
+    "lfhl": [
+      "圈闭"
+    ],
+    "mckm": [
+      "雷倒"
+    ],
+    "mghf": [
+      "笑闹"
+    ],
+    "mnne": [
+      "零嘴"
+    ],
+    "mnnm": [
+      "台口"
+    ],
+    "mqle": [
+      "简单点说"
+    ],
+    "nfqi": [
+      "下一张"
+    ],
+    "nrvw": [
+      "唱跳"
+    ],
+    "obwq": [
+      "树儿"
+    ],
+    "ocml": [
+      "板烟"
+    ],
+    "ohym": [
+      "栉风酾雨"
+    ],
+    "pddd": [
+      "行眠立盹"
+    ],
+    "pfxx": [
+      "草黄"
+    ],
+    "pifs": [
+      "另外一个问题"
+    ],
+    "pine": [
+      "行为世范"
+    ],
+    "pugd": [
+      "行己有耻"
+    ],
+    "qeed": [
+      "直系血亲"
+    ],
+    "qgnm": [
+      "敞口"
+    ],
+    "qgyn": [
+      "真酷"
+    ],
+    "quqf": [
+      "绷直"
+    ],
+    "rdwm": [
+      "最粗"
+    ],
+    "rfah": [
+      "明于治乱"
+    ],
+    "rgfu": [
+      "遇劫"
+    ],
+    "rhgw": [
+      "时间有限"
+    ],
+    "rhmm": [
+      "晨风零雨"
+    ],
+    "rmam": [
+      "赛雪欺霜"
+    ],
+    "rmcm": [
+      "日租"
+    ],
+    "ronm": [
+      "电梯口"
+    ],
+    "sbcm": [
+      "抚掌大笑"
+    ],
+    "scpc": [
+      "摘艳薰香"
+    ],
+    "senn": [
+      "是非只为多开口"
+    ],
+    "shag": [
+      "球洞"
+    ],
+    "shhx": [
+      "琼崖"
+    ],
+    "shpg": [
+      "球帽"
+    ],
+    "siep": [
+      "持币"
+    ],
+    "siui": [
+      "按脉"
+    ],
+    "sjmv": [
+      "抖露"
+    ],
+    "sjwq": [
+      "把角儿"
+    ],
+    "smfs": [
+      "打算盘"
+    ],
+    "smmg": [
+      "拔火筒"
+    ],
+    "spxp": [
+      "碧草如茵"
+    ],
+    "ufih": [
+      "脚凳"
+    ],
+    "vgnm": [
+      "硚口"
+    ],
+    "vxfs": [
+      "砸盘"
+    ],
+    "wegc": [
+      "视频教程"
+    ],
+    "wioh": [
+      "元宝槭"
+    ],
+    "xgil": [
+      "开光"
+    ],
+    "yooq": [
+      "太平梯"
+    ],
+    "yoym": [
+      "醇酸"
+    ]
+  },
+  "review_references": {
+    "acgd": [
+      {
+        "source_id": 1,
+        "char": "澽"
+      }
+    ],
+    "adss": [
+      {
+        "source_id": 3,
+        "char": "澂"
+      }
+    ],
+    "afbd": [
+      {
+        "source_id": 5,
+        "char": "𣲘"
+      }
+    ],
+    "afro": [
+      {
+        "source_id": 7,
+        "char": "浭"
+      }
+    ],
+    "ahhk": [
+      {
+        "source_id": 9,
+        "char": "漻"
+      }
+    ],
+    "ahip": [
+      {
+        "source_id": 11,
+        "char": "漴"
+      }
+    ],
+    "ahmo": [
+      {
+        "source_id": 12,
+        "char": "峃"
+      }
+    ],
+    "ajfx": [
+      {
+        "source_id": 15,
+        "char": "漹"
+      }
+    ],
+    "ajwq": [
+      {
+        "source_id": 17,
+        "char": "㳘"
+      }
+    ],
+    "amrm": [
+      {
+        "source_id": 21,
+        "char": "溍"
+      }
+    ],
+    "amwq": [
+      {
+        "source_id": 22,
+        "char": "沇"
+      }
+    ],
+    "aonm": [
+      {
+        "source_id": 24,
+        "char": "泃"
+      }
+    ],
+    "atjr": [
+      {
+        "source_id": 27,
+        "char": "湣"
+      }
+    ],
+    "atst": [
+      {
+        "source_id": 28,
+        "char": "滧"
+      }
+    ],
+    "avdo": [
+      {
+        "source_id": 30,
+        "char": "𬒈"
+      }
+    ],
+    "axih": [
+      {
+        "source_id": 34,
+        "char": "溹"
+      }
+    ],
+    "axjv": [
+      {
+        "source_id": 35,
+        "char": "浡"
+      }
+    ],
+    "bkvm": [
+      {
+        "source_id": 40,
+        "char": "蚆"
+      }
+    ],
+    "cmxq": [
+      {
+        "source_id": 48,
+        "char": "秾"
+      }
+    ],
+    "ddgo": [
+      {
+        "source_id": 49,
+        "char": "鹔"
+      }
+    ],
+    "eaif": [
+      {
+        "source_id": 54,
+        "char": "堲"
+      }
+    ],
+    "egnm": [
+      {
+        "source_id": 56,
+        "char": "诇"
+      }
+    ],
+    "epii": [
+      {
+        "source_id": 58,
+        "char": "讱"
+      }
+    ],
+    "fdxw": [
+      {
+        "source_id": 64,
+        "char": "郪"
+      }
+    ],
+    "fghm": [
+      {
+        "source_id": 66,
+        "char": "亹"
+      }
+    ],
+    "fhhd": [
+      {
+        "source_id": 67,
+        "char": "鳛"
+      }
+    ],
+    "fhxh": [
+      {
+        "source_id": 69,
+        "char": "翾"
+      }
+    ],
+    "frfr": [
+      {
+        "source_id": 75,
+        "char": "皕"
+      }
+    ],
+    "frol": [
+      {
+        "source_id": 76,
+        "char": "甦"
+      }
+    ],
+    "fwwy": [
+      {
+        "source_id": 80,
+        "char": "𬶐"
+      }
+    ],
+    "gihe": [
+      {
+        "source_id": 82,
+        "char": "憕"
+      }
+    ],
+    "gyao": [
+      {
+        "source_id": 86,
+        "char": "忳"
+      }
+    ],
+    "gynw": [
+      {
+        "source_id": 87,
+        "char": "郤"
+      }
+    ],
+    "hbjo": [
+      {
+        "source_id": 90,
+        "char": "峂"
+      }
+    ],
+    "hhbm": [
+      {
+        "source_id": 98,
+        "char": "翀"
+      },
+      {
+        "source_id": 99,
+        "char": "崌"
+      }
+    ],
+    "hhhd": [
+      {
+        "source_id": 101,
+        "char": "嶍"
+      }
+    ],
+    "hjxo": [
+      {
+        "source_id": 106,
+        "char": "峗"
+      }
+    ],
+    "hlgl": [
+      {
+        "source_id": 107,
+        "char": "𪩘"
+      }
+    ],
+    "hpwq": [
+      {
+        "source_id": 110,
+        "char": "饸"
+      }
+    ],
+    "htym": [
+      {
+        "source_id": 111,
+        "char": "峧"
+      }
+    ],
+    "iiif": [
+      {
+        "source_id": 118,
+        "char": "垚"
+      }
+    ],
+    "ilup": [
+      {
+        "source_id": 121,
+        "char": "慭"
+      }
+    ],
+    "itlx": [
+      {
+        "source_id": 122,
+        "char": "垿"
+      }
+    ],
+    "jdsg": [
+      {
+        "source_id": 127,
+        "char": "锽"
+      }
+    ],
+    "jlcn": [
+      {
+        "source_id": 131,
+        "char": "觭"
+      }
+    ],
+    "jlhn": [
+      {
+        "source_id": 133,
+        "char": "觿"
+      }
+    ],
+    "jlii": [
+      {
+        "source_id": 134,
+        "char": "觟"
+      }
+    ],
+    "jmat": [
+      {
+        "source_id": 135,
+        "char": "铚"
+      }
+    ],
+    "jqge": [
+      {
+        "source_id": 140,
+        "char": "𬭼"
+      }
+    ],
+    "jrjj": [
+      {
+        "source_id": 141,
+        "char": "𬬹"
+      }
+    ],
+    "jukf": [
+      {
+        "source_id": 142,
+        "char": "镈"
+      }
+    ],
+    "khyr": [
+      {
+        "source_id": 146,
+        "char": "倞"
+      }
+    ],
+    "lfhl": [
+      {
+        "source_id": 151,
+        "char": "窣"
+      }
+    ],
+    "mckm": [
+      {
+        "source_id": 154,
+        "char": "煟"
+      }
+    ],
+    "mghf": [
+      {
+        "source_id": 156,
+        "char": "烔"
+      }
+    ],
+    "mnne": [
+      {
+        "source_id": 163,
+        "char": "簉"
+      }
+    ],
+    "mnnm": [
+      {
+        "source_id": 165,
+        "char": "筥"
+      },
+      {
+        "source_id": 166,
+        "char": "筶"
+      }
+    ],
+    "mqle": [
+      {
+        "source_id": 167,
+        "char": "熥"
+      }
+    ],
+    "nfqi": [
+      {
+        "source_id": 171,
+        "char": "鲝"
+      }
+    ],
+    "nrvw": [
+      {
+        "source_id": 172,
+        "char": "𫑡"
+      }
+    ],
+    "obwq": [
+      {
+        "source_id": 177,
+        "char": "𣗋"
+      }
+    ],
+    "ocml": [
+      {
+        "source_id": 178,
+        "char": "櫆"
+      }
+    ],
+    "ohym": [
+      {
+        "source_id": 186,
+        "char": "槚"
+      }
+    ],
+    "pddd": [
+      {
+        "source_id": 197,
+        "char": "藠"
+      }
+    ],
+    "pfxx": [
+      {
+        "source_id": 200,
+        "char": "蘘"
+      }
+    ],
+    "pifs": [
+      {
+        "source_id": 204,
+        "char": "萣"
+      }
+    ],
+    "pine": [
+      {
+        "source_id": 205,
+        "char": "薳"
+      }
+    ],
+    "pugd": [
+      {
+        "source_id": 213,
+        "char": "䶮"
+      }
+    ],
+    "qeed": [
+      {
+        "source_id": 214,
+        "char": "𫄧"
+      }
+    ],
+    "qgnm": [
+      {
+        "source_id": 216,
+        "char": "䌹"
+      }
+    ],
+    "qgyn": [
+      {
+        "source_id": 217,
+        "char": "绤"
+      }
+    ],
+    "quqf": [
+      {
+        "source_id": 224,
+        "char": "靸"
+      }
+    ],
+    "rdwm": [
+      {
+        "source_id": 226,
+        "char": "曈"
+      }
+    ],
+    "rfah": [
+      {
+        "source_id": 227,
+        "char": "暕"
+      }
+    ],
+    "rgfu": [
+      {
+        "source_id": 229,
+        "char": "暅"
+      }
+    ],
+    "rhgw": [
+      {
+        "source_id": 230,
+        "char": "晪"
+      }
+    ],
+    "rhmm": [
+      {
+        "source_id": 231,
+        "char": "旵"
+      }
+    ],
+    "rmam": [
+      {
+        "source_id": 234,
+        "char": "晊"
+      }
+    ],
+    "rmcm": [
+      {
+        "source_id": 235,
+        "char": "癗"
+      }
+    ],
+    "ronm": [
+      {
+        "source_id": 237,
+        "char": "昫"
+      }
+    ],
+    "sbcm": [
+      {
+        "source_id": 243,
+        "char": "璠"
+      }
+    ],
+    "scpc": [
+      {
+        "source_id": 245,
+        "char": "揳"
+      }
+    ],
+    "senn": [
+      {
+        "source_id": 246,
+        "char": "瑀"
+      }
+    ],
+    "shag": [
+      {
+        "source_id": 250,
+        "char": "玡"
+      }
+    ],
+    "shhx": [
+      {
+        "source_id": 252,
+        "char": "珝"
+      }
+    ],
+    "shpg": [
+      {
+        "source_id": 253,
+        "char": "摽"
+      }
+    ],
+    "siep": [
+      {
+        "source_id": 254,
+        "char": "琎"
+      }
+    ],
+    "siui": [
+      {
+        "source_id": 257,
+        "char": "㧑"
+      }
+    ],
+    "sjmv": [
+      {
+        "source_id": 259,
+        "char": "搒"
+      }
+    ],
+    "sjwq": [
+      {
+        "source_id": 260,
+        "char": "珫"
+      }
+    ],
+    "smfs": [
+      {
+        "source_id": 262,
+        "char": "摴"
+      },
+      {
+        "source_id": 263,
+        "char": "㻬"
+      }
+    ],
+    "smmg": [
+      {
+        "source_id": 264,
+        "char": "珇"
+      }
+    ],
+    "spxp": [
+      {
+        "source_id": 270,
+        "char": "瓘"
+      }
+    ],
+    "ufih": [
+      {
+        "source_id": 282,
+        "char": "縢"
+      }
+    ],
+    "vgnm": [
+      {
+        "source_id": 289,
+        "char": "𬳶"
+      }
+    ],
+    "vxfs": [
+      {
+        "source_id": 299,
+        "char": "𥔲"
+      }
+    ],
+    "wegc": [
+      {
+        "source_id": 300,
+        "char": "隩"
+      }
+    ],
+    "wioh": [
+      {
+        "source_id": 302,
+        "char": "翷"
+      }
+    ],
+    "xgil": [
+      {
+        "source_id": 310,
+        "char": "斠"
+      }
+    ],
+    "yooq": [
+      {
+        "source_id": 321,
+        "char": "鸧"
+      }
+    ],
+    "yoym": [
+      {
+        "source_id": 322,
+        "char": "𫌀"
+      }
+    ]
+  }
+}

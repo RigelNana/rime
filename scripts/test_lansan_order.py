@@ -3,7 +3,8 @@
 import unittest
 
 from merge_lansan_dicts import (
-    apply_char_word_order, apply_frequency_order, apply_charset_order, is_gb2312_han,
+    apply_char_word_order, apply_frequency_order, apply_charset_order,
+    apply_candidate_prefixes, is_gb2312_han,
 )
 
 
@@ -94,6 +95,51 @@ class CharsetOrderTests(unittest.TestCase):
         result, pure, _ = apply_charset_order(rows, {'甲'})
         self.assertEqual(result, rows)
         self.assertEqual(pure, {})
+
+
+class CandidatePrefixTests(unittest.TestCase):
+    def test_only_first_phrase_is_promoted_and_later_words_keep_order(self):
+        rows = group('ronm', ['昫', '电梯口', '最高领奖台', '痀'])
+        result, _ = apply_candidate_prefixes(rows, {'ronm': ['电梯口']}, {'昫'})
+        self.assertEqual(candidates(result, 'ronm'), ['电梯口', '昫', '最高领奖台', '痀'])
+
+    def test_character_exception_keeps_first_and_moves_word_to_second(self):
+        rows = group('hhbm', ['翀', '崌', '戳中', '𫊼'])
+        result, _ = apply_candidate_prefixes(rows, {'hhbm': ['翀', '戳中']}, {'翀', '崌'})
+        self.assertEqual(candidates(result, 'hhbm'), ['翀', '戳中', '崌', '𫊼'])
+
+    def test_named_character_can_be_promoted_without_reordering_words(self):
+        rows = group('iiif', ['多寡', '垚', '封土', '圡'])
+        result, stats = apply_candidate_prefixes(rows, {'iiif': ['垚']}, {'垚'})
+        self.assertEqual(candidates(result, 'iiif'), ['垚', '多寡', '封土', '圡'])
+        self.assertEqual(stats['new_character_first_codes'], 1)
+
+    def test_stale_or_duplicate_prefix_fails(self):
+        rows = group('atst', ['滧', '海底捞'])
+        for prefix in [['不存在'], ['海底捞', '海底捞']]:
+            with self.assertRaises(ValueError):
+                apply_candidate_prefixes(rows, {'atst': prefix}, {'滧'})
+
+    def test_phrase_and_character_internal_order_cannot_change(self):
+        rows = group('abcd', ['㐀', '甲词', '㐁', '乙词'])
+        for prefix in [['乙词'], ['㐁']]:
+            with self.assertRaisesRegex(ValueError, '内部顺序'):
+                apply_candidate_prefixes(rows, {'abcd': prefix}, {'㐀', '㐁'})
+
+    def test_gb2312_top_three_remains_mandatory(self):
+        rows = group('abcd', ['甲', '甲词', '乙词', '丙词'])
+        with self.assertRaisesRegex(ValueError, '前三选'):
+            apply_candidate_prefixes(rows, {'abcd': ['甲词', '乙词', '丙词']}, {'甲'})
+
+    def test_redundant_long_code_cannot_be_promoted(self):
+        rows = group('a', ['甲']) + group('abcd', ['甲词', '甲'])
+        with self.assertRaisesRegex(ValueError, '后置'):
+            apply_candidate_prefixes(rows, {'abcd': ['甲']}, {'甲'})
+
+    def test_nonstandard_non_gb_character_cannot_be_promoted(self):
+        rows = group('abcd', ['甲词', '㐀'])
+        with self.assertRaisesRegex(ValueError, '后置'):
+            apply_candidate_prefixes(rows, {'abcd': ['㐀']}, set())
 
 
 class FrequencyOrderTests(unittest.TestCase):
