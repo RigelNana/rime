@@ -489,7 +489,7 @@ def main():
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.13.1"
+version: "2026.11.13.2"
 sort: by_weight
 columns:
   - text

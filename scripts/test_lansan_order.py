@@ -114,6 +114,19 @@ class CandidatePrefixTests(unittest.TestCase):
         self.assertEqual(candidates(result, 'iiif'), ['垚', '多寡', '封土', '圡'])
         self.assertEqual(stats['new_character_first_codes'], 1)
 
+    def test_yong_moves_to_second_without_changing_phrase_order(self):
+        rows = group('oivi', ['本来以为', '素以', '栐'])
+        result, _ = apply_candidate_prefixes(rows, {'oivi': ['本来以为', '栐']}, {'栐'})
+        self.assertEqual(candidates(result, 'oivi'), ['本来以为', '栐', '素以'])
+
+    def test_xuan_second_combines_phrase_override_and_pure_order_restoration(self):
+        rows = group('sif', ['揎']) + group('sifu', ['玉面', '挂面', '揎', '瑄'])
+        rows, _ = apply_frequency_order(rows, {'玉面': 100, '挂面': 50}, {'sifu': ['挂面', '玉面']})
+        rows, pure, _ = apply_charset_order(rows, {'瑄'})
+        rows, _ = apply_candidate_prefixes(rows, {'sifu': ['挂面', '瑄']}, {'瑄'})
+        self.assertEqual(candidates(rows, 'sifu'), ['挂面', '瑄', '玉面', '揎'])
+        self.assertEqual(pure['sifu'], '揎瑄')
+
     def test_stale_or_duplicate_prefix_fails(self):
         rows = group('atst', ['滧', '海底捞'])
         for prefix in [['不存在'], ['海底捞', '海底捞']]:

@@ -16,7 +16,7 @@
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.13.1"
+version: "2026.11.13.2"
 sort: by_weight
 columns:
   - text
@@ -57991,7 +57991,7 @@ encoder:
 槟	oivg
 𰚬	oivg
 𣞿	oivh
-栐	oivi	1
+栐	oivi	2
 𬂴	oivk
 𬼦	oivv
 𰴆	oivx
@@ -76141,7 +76141,7 @@ encoder:
 琔	sifs	2
 掟	sifs	1
 揎	sifu	1
-瑄	sifu	2
+瑄	sifu	3
 𪼮	sifx	1
 掕	sig
 掕	sigb
@@ -144202,7 +144202,7 @@ encoder:
 本集	ofpo	2
 半头	qkjc	1147
 月活	uqah	1147
-玉面	sifu	4
+玉面	sifu	2
 不都	jdvw	1147
 载于	lafl	2
 宿卫	ikqf	1147
@@ -167384,7 +167384,7 @@ encoder:
 喝药	nrpq	616
 通缉令	qqnq	616
 软体	rlko	2
-挂面	sifu	3
+挂面	sifu	4
 赣州	dfli	616
 仙草	khpf	616
 不着调	jneg	616
@@ -181490,7 +181490,7 @@ encoder:
 施用	ndlq	406
 当值	qokq	406
 贴标	ylop	2
-素以	oivi	2
+素以	oivi	1
 无奇不有	fcjg	406
 一墙之隔	fixw	406
 不惑之年	jaxl	406
