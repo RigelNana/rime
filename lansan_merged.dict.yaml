@@ -6,6 +6,7 @@
 # GB2312 单字的最短字母编码保证前三选；有简码的长码仍在全部同码词后。
 # 同码词组默认按万象词频排序，可跨过单字；同频保持历史基线次序。
 # 用户指定词序优先于词频，见 sources/lansan/phrase_order_overrides.json。
+# 用户排除词组的全部编码不导出，见 sources/lansan/phrase_exclusions.json。
 # 705 组评议只用于重建基线位置，最终排序不强制保留旧字词配对关系。
 # 单字内部顺序不变；满足以上约束时尽量保留其原位置。
 # 混合编码使用组内排序权重；纯词编码使用万象权重 + 1，未覆盖项为 1。
@@ -13,7 +14,7 @@
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.12.5"
+version: "2026.11.12.6"
 sort: by_weight
 columns:
   - text
@@ -137764,7 +137765,6 @@ encoder:
 头皮屑	jadq	1445
 生搬硬套	lsvc	1445
 椒盐	owia	1445
-提个醒	syyr	1
 攥着	smnd	1445
 一部分人	fdny	1445
 还有一点	jgfl	1445

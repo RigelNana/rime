@@ -334,14 +334,23 @@ def main():
     rows, legacy_stats = apply_legacy_order(official, characters, ranked_phrases)
     review_path = SOURCES / "char_word_order.json"
     rows, order_stats = apply_char_word_order(rows, read_order_reviews(review_path))
+    # 先重建完整历史基线，再移除用户排除的词，避免改动其余编码的位置。
+    exclusion_path = SOURCES / "phrase_exclusions.json"
+    excluded_words = set(json.loads(exclusion_path.read_text(encoding="utf-8"))["words"])
+    if any(len(word) < 2 for word in excluded_words):
+        raise ValueError("排除项必须为多字词组，不能删除单字")
+    source_phrase_rows = len(phrases)
+    phrases = {key: row for key, row in phrases.items() if key[0] not in excluded_words}
+    rows = [row for row in rows if row[0] not in excluded_words]
+    phrase_words -= excluded_words
     phrase_order_path = SOURCES / "phrase_order_overrides.json"
     phrase_orders = json.loads(phrase_order_path.read_text(encoding="utf-8"))["orders"]
     rows, frequency_order_stats = apply_frequency_order(rows, frequencies, phrase_orders)
     keys = [tuple(row[:2]) for row in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("合并结果仍包含重复的词＋编码")
-    if set(keys) != {tuple(row[:2]) for row in official + standard}:
-        raise ValueError("合并结果没有完整保留两份来源词表")
+    if set(keys) != {tuple(row[:2]) for row in official + standard if row[0] not in excluded_words}:
+        raise ValueError("合并结果与来源词表及词组排除项不符")
 
     header = """# Rime dictionary
 # encoding: utf-8
@@ -351,6 +360,7 @@ def main():
 # GB2312 单字的最短字母编码保证前三选；有简码的长码仍在全部同码词后。
 # 同码词组默认按万象词频排序，可跨过单字；同频保持历史基线次序。
 # 用户指定词序优先于词频，见 sources/lansan/phrase_order_overrides.json。
+# 用户排除词组的全部编码不导出，见 sources/lansan/phrase_exclusions.json。
 # 705 组评议只用于重建基线位置，最终排序不强制保留旧字词配对关系。
 # 单字内部顺序不变；满足以上约束时尽量保留其原位置。
 # 混合编码使用组内排序权重；纯词编码使用万象权重 + 1，未覆盖项为 1。
@@ -358,7 +368,7 @@ def main():
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.12.5"
+version: "2026.11.12.6"
 sort: by_weight
 columns:
   - text
@@ -387,7 +397,7 @@ encoder:
         standard_codes[word].add(code)
     conflicts = {
         word: {"official": sorted(official_codes[word]), "standard": sorted(standard_codes[word])}
-        for word in sorted(official_codes.keys() & standard_codes.keys())
+        for word in sorted((official_codes.keys() & standard_codes.keys()) - excluded_words)
         if official_codes[word].isdisjoint(standard_codes[word])
     }
     code_counts = Counter(row[1] for row in phrases.values())
@@ -395,11 +405,13 @@ encoder:
         "output": str(args.output),
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml",
-                                       frequency_path, review_path, phrase_order_path]},
+                                       frequency_path, review_path, phrase_order_path, exclusion_path]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,
-        "duplicate_phrase_rows_removed": sum(len(row[0]) > 1 for row in official) + len(standard) - len(phrases),
+        "duplicate_phrase_rows_removed": sum(len(row[0]) > 1 for row in official) + len(standard) - source_phrase_rows,
+        "excluded_phrase_rows": source_phrase_rows - len(phrases),
+        "excluded_words": sorted(excluded_words),
         "merged_phrase_rows": len(phrases),
         "frequency_source": "wanxiang",
         "frequency_covered_words": len(phrase_words & frequencies.keys()),
