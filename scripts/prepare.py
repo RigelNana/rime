@@ -40,8 +40,20 @@ def main():
     print(f"规范字分层调整 {report['charset_order']['changed_codes']:,} 组；"
           f"纯单字恢复表保护 {report['charset_order']['pure_order_restored_codes']} 组原字序。")
     print(f"另保留 {report['frequency_order']['manual_phrase_codes']} 组用户指定词序。")
-    print(f"应用 {report['candidate_prefix_order']['changed_codes']} 组明确的字词优先例外；"
+    print(f"按 {report['reviewed_priority_order']['configured_codes']} 组字词优先评议，"
+          f"在分层结果上调整 {report['reviewed_priority_order']['changed_codes']} 组；"
+          "GB2312 前三选不固定旧名次。")
+    print(f"保留 {report['candidate_prefix_order']['configured_codes']} 组明确候选位置，"
+          f"其中 {report['candidate_prefix_order']['changed_codes']} 组需再次调整；"
           "单字内部顺序和词组内部顺序保持不变。")
+
+    result = subprocess.run(
+        [sys.executable, str(root / "scripts" / "build_lansan_decomposition.py")],
+        cwd=root, check=True, capture_output=True, text=True,
+    )
+    report = json.loads(result.stdout)
+    print(f"蓝三拆分注释：{report['characters']:,} 字，覆盖 GB2312 {report['gb2312']:,} 字；"
+          f"{report['unmatched']:,} 字待核对，暂不显示拆分。")
 
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "build_flypy_ext.py")],

@@ -1,0 +1,2868 @@
+{
+  "version": 1,
+  "description": "明确评议的混输字词优先级；词组沿用万象及人工词序例外，字序不变。词优先尽量让词在前，仅按 GB2312 最简码前三选限制单字后移；字优先保评议字首选，其余字尽量在词后。",
+  "decisions": {
+    "345": "原清单字优先126组、词优先220组，蚰重复。用户确认蚰让各区县首选，摺保首选；最终219组词优先、126组字优先（含删错词后无同码词的脎）。",
+    "324": "原98组词优先改为全部同码词尽量提前，不再只提前第一词；另外5组明确候选位置保留在 candidate_prefix_overrides.json。",
+    "gb2312": "最简码不晚于第三选；不额外保留原来的首选、二选。",
+    "unreviewed": "未列入评议的编码沿用基线，不凭规范字表序号推断字频。"
+  },
+  "groups": {
+    "acgd": {
+      "priority": "word",
+      "character": "澽",
+      "source": "324",
+      "source_ids": [
+        1
+      ]
+    },
+    "acjk": {
+      "priority": "word",
+      "character": "滟",
+      "source": "345",
+      "source_id": 1
+    },
+    "ackm": {
+      "priority": "character",
+      "character": "渭",
+      "source": "345",
+      "source_id": 2
+    },
+    "admf": {
+      "priority": "character",
+      "character": "漏",
+      "source": "345",
+      "source_id": 3
+    },
+    "adss": {
+      "priority": "word",
+      "character": "澂",
+      "source": "324",
+      "source_ids": [
+        3
+      ]
+    },
+    "aefo": {
+      "priority": "word",
+      "character": "泔",
+      "source": "345",
+      "source_id": 4
+    },
+    "afbd": {
+      "priority": "word",
+      "character": "𣲘",
+      "source": "324",
+      "source_ids": [
+        5
+      ]
+    },
+    "afom": {
+      "priority": "word",
+      "character": "漓",
+      "source": "345",
+      "source_id": 5
+    },
+    "afro": {
+      "priority": "word",
+      "character": "浭",
+      "source": "324",
+      "source_ids": [
+        7
+      ]
+    },
+    "afsm": {
+      "priority": "character",
+      "character": "溘",
+      "source": "345",
+      "source_id": 6
+    },
+    "ahhk": {
+      "priority": "word",
+      "character": "漻",
+      "source": "324",
+      "source_ids": [
+        9
+      ]
+    },
+    "ahip": {
+      "priority": "word",
+      "character": "漴",
+      "source": "324",
+      "source_ids": [
+        11
+      ]
+    },
+    "ahmo": {
+      "priority": "word",
+      "character": "峃",
+      "source": "324",
+      "source_ids": [
+        12
+      ]
+    },
+    "aifu": {
+      "priority": "word",
+      "character": "渲",
+      "source": "345",
+      "source_id": 7
+    },
+    "aihe": {
+      "priority": "character",
+      "character": "澄",
+      "source": "345",
+      "source_id": 8
+    },
+    "aivi": {
+      "priority": "character",
+      "character": "泳",
+      "source": "345",
+      "source_id": 9
+    },
+    "aiwy": {
+      "priority": "word",
+      "character": "滓",
+      "source": "345",
+      "source_id": 10
+    },
+    "ajfx": {
+      "priority": "word",
+      "character": "漹",
+      "source": "324",
+      "source_ids": [
+        15
+      ]
+    },
+    "ajwq": {
+      "priority": "word",
+      "character": "㳘",
+      "source": "324",
+      "source_ids": [
+        17
+      ]
+    },
+    "alff": {
+      "priority": "word",
+      "character": "汩",
+      "source": "345",
+      "source_id": 11
+    },
+    "alfh": {
+      "priority": "word",
+      "character": "瀚",
+      "source": "345",
+      "source_id": 12
+    },
+    "amfk": {
+      "priority": "word",
+      "character": "濡",
+      "source": "345",
+      "source_id": 13
+    },
+    "ammo": {
+      "priority": "character",
+      "character": "沮",
+      "source": "345",
+      "source_id": 14
+    },
+    "amrm": {
+      "priority": "word",
+      "character": "溍",
+      "source": "324",
+      "source_ids": [
+        21
+      ]
+    },
+    "amwq": {
+      "priority": "word",
+      "character": "沇",
+      "source": "324",
+      "source_ids": [
+        22
+      ]
+    },
+    "aogm": {
+      "priority": "word",
+      "character": "淞",
+      "source": "345",
+      "source_id": 15
+    },
+    "aonm": {
+      "priority": "word",
+      "character": "泃",
+      "source": "324",
+      "source_ids": [
+        24
+      ]
+    },
+    "apgw": {
+      "priority": "character",
+      "character": "粱",
+      "source": "345",
+      "source_id": 16
+    },
+    "apwq": {
+      "priority": "word",
+      "character": "浼",
+      "source": "345",
+      "source_id": 17
+    },
+    "apxu": {
+      "priority": "word",
+      "character": "懑",
+      "source": "345",
+      "source_id": 18
+    },
+    "arfo": {
+      "priority": "word",
+      "character": "汀",
+      "source": "345",
+      "source_id": 19
+    },
+    "asfo": {
+      "priority": "word",
+      "character": "涑",
+      "source": "345",
+      "source_id": 20
+    },
+    "astg": {
+      "priority": "character",
+      "character": "敖",
+      "source": "345",
+      "source_id": 21
+    },
+    "ateg": {
+      "priority": "word",
+      "character": "濂",
+      "source": "345",
+      "source_id": 22
+    },
+    "atfq": {
+      "priority": "character",
+      "character": "鲨",
+      "source": "345",
+      "source_id": 23
+    },
+    "atfx": {
+      "priority": "word",
+      "character": "裟",
+      "source": "345",
+      "source_id": 24
+    },
+    "atjr": {
+      "priority": "word",
+      "character": "湣",
+      "source": "324",
+      "source_ids": [
+        27
+      ]
+    },
+    "atst": {
+      "priority": "word",
+      "character": "滧",
+      "source": "324",
+      "source_ids": [
+        28
+      ]
+    },
+    "auqo": {
+      "priority": "word",
+      "character": "汲",
+      "source": "345",
+      "source_id": 25
+    },
+    "avdo": {
+      "priority": "word",
+      "character": "𬒈",
+      "source": "324",
+      "source_ids": [
+        30
+      ]
+    },
+    "awob": {
+      "priority": "word",
+      "character": "溆",
+      "source": "345",
+      "source_id": 26
+    },
+    "axih": {
+      "priority": "word",
+      "character": "溹",
+      "source": "324",
+      "source_ids": [
+        34
+      ]
+    },
+    "axjv": {
+      "priority": "word",
+      "character": "浡",
+      "source": "324",
+      "source_ids": [
+        35
+      ]
+    },
+    "axlk": {
+      "priority": "word",
+      "character": "溽",
+      "source": "345",
+      "source_id": 27
+    },
+    "axll": {
+      "priority": "word",
+      "character": "渌",
+      "source": "345",
+      "source_id": 28
+    },
+    "axxg": {
+      "priority": "word",
+      "character": "黉",
+      "source": "345",
+      "source_id": 29
+    },
+    "ayeg": {
+      "priority": "word",
+      "character": "浍",
+      "source": "345",
+      "source_id": 30
+    },
+    "banf": {
+      "priority": "word",
+      "character": "蜮",
+      "source": "345",
+      "source_id": 31
+    },
+    "bbby": {
+      "priority": "word",
+      "character": "颡",
+      "source": "345",
+      "source_id": 32
+    },
+    "bbcm": {
+      "priority": "word",
+      "character": "蟠",
+      "source": "345",
+      "source_id": 33
+    },
+    "bcii": {
+      "priority": "word",
+      "character": "蝰",
+      "source": "345",
+      "source_id": 34
+    },
+    "bhtm": {
+      "priority": "word",
+      "character": "蛞",
+      "source": "345",
+      "source_id": 35
+    },
+    "bkvm": {
+      "priority": "word",
+      "character": "蚆",
+      "source": "324",
+      "source_ids": [
+        40
+      ]
+    },
+    "bupw": {
+      "priority": "character",
+      "character": "悉",
+      "source": "345",
+      "source_id": 36
+    },
+    "bxmm": {
+      "priority": "word",
+      "character": "蚰",
+      "source": "345",
+      "source_id": 37
+    },
+    "cbih": {
+      "priority": "character",
+      "character": "嵇",
+      "source": "345",
+      "source_id": 38
+    },
+    "cfof": {
+      "priority": "word",
+      "character": "秣",
+      "source": "345",
+      "source_id": 39
+    },
+    "chiq": {
+      "priority": "word",
+      "character": "秽",
+      "source": "345",
+      "source_id": 40
+    },
+    "chkc": {
+      "priority": "word",
+      "character": "尕",
+      "source": "345",
+      "source_id": 41
+    },
+    "cicb": {
+      "priority": "word",
+      "character": "稂",
+      "source": "345",
+      "source_id": 42
+    },
+    "ciio": {
+      "priority": "word",
+      "character": "畹",
+      "source": "345",
+      "source_id": 43
+    },
+    "cjat": {
+      "priority": "word",
+      "character": "秕",
+      "source": "345",
+      "source_id": 44
+    },
+    "cjvc": {
+      "priority": "character",
+      "character": "孕",
+      "source": "345",
+      "source_id": 45
+    },
+    "cldm": {
+      "priority": "word",
+      "character": "畎",
+      "source": "345",
+      "source_id": 46
+    },
+    "cmfm": {
+      "priority": "word",
+      "character": "魑",
+      "source": "345",
+      "source_id": 47
+    },
+    "cmmb": {
+      "priority": "word",
+      "character": "燮",
+      "source": "345",
+      "source_id": 48
+    },
+    "cmup": {
+      "priority": "character",
+      "character": "愁",
+      "source": "345",
+      "source_id": 49
+    },
+    "cmxh": {
+      "priority": "word",
+      "character": "魉",
+      "source": "345",
+      "source_id": 50
+    },
+    "cmxq": {
+      "priority": "word",
+      "character": "秾",
+      "source": "324",
+      "source_ids": [
+        48
+      ]
+    },
+    "cqgw": {
+      "priority": "word",
+      "character": "稹",
+      "source": "345",
+      "source_id": 51
+    },
+    "cqkg": {
+      "priority": "word",
+      "character": "畔",
+      "source": "345",
+      "source_id": 52
+    },
+    "cuch": {
+      "priority": "word",
+      "character": "虏",
+      "source": "345",
+      "source_id": 53
+    },
+    "cxcm": {
+      "priority": "character",
+      "character": "魏",
+      "source": "345",
+      "source_id": 54
+    },
+    "dbif": {
+      "priority": "word",
+      "character": "瞠",
+      "source": "345",
+      "source_id": 55
+    },
+    "dclh": {
+      "priority": "word",
+      "character": "翱",
+      "source": "345",
+      "source_id": 56
+    },
+    "ddgo": {
+      "priority": "word",
+      "character": "鹔",
+      "source": "324",
+      "source_ids": [
+        49
+      ]
+    },
+    "ddwm": {
+      "priority": "character",
+      "character": "瞳",
+      "source": "345",
+      "source_id": 57
+    },
+    "djar": {
+      "priority": "character",
+      "character": "皂",
+      "source": "345",
+      "source_id": 58
+    },
+    "dpdi": {
+      "priority": "word",
+      "character": "屦",
+      "source": "345",
+      "source_id": 59
+    },
+    "dpkm": {
+      "priority": "character",
+      "character": "熨",
+      "source": "345",
+      "source_id": 60
+    },
+    "dpku": {
+      "priority": "character",
+      "character": "慰",
+      "source": "345",
+      "source_id": 61
+    },
+    "drff": {
+      "priority": "character",
+      "character": "耵",
+      "source": "345",
+      "source_id": 62
+    },
+    "dvfm": {
+      "priority": "character",
+      "character": "睹",
+      "source": "345",
+      "source_id": 63
+    },
+    "eaif": {
+      "priority": "word",
+      "character": "堲",
+      "source": "324",
+      "source_ids": [
+        54
+      ]
+    },
+    "eekp": {
+      "priority": "word",
+      "character": "谫",
+      "source": "345",
+      "source_id": 64
+    },
+    "efff": {
+      "priority": "character",
+      "character": "韭",
+      "source": "345",
+      "source_id": 65
+    },
+    "efir": {
+      "priority": "character",
+      "character": "睾",
+      "source": "345",
+      "source_id": 66
+    },
+    "egii": {
+      "priority": "word",
+      "character": "诼",
+      "source": "345",
+      "source_id": 67
+    },
+    "egmi": {
+      "priority": "character",
+      "character": "诙",
+      "source": "345",
+      "source_id": 68
+    },
+    "egnm": {
+      "priority": "word",
+      "character": "诇",
+      "source": "324",
+      "source_ids": [
+        56
+      ]
+    },
+    "eiif": {
+      "priority": "word",
+      "character": "诖",
+      "source": "345",
+      "source_id": 69
+    },
+    "eiiu": {
+      "priority": "character",
+      "character": "慈",
+      "source": "345",
+      "source_id": 70
+    },
+    "ejgo": {
+      "priority": "word",
+      "character": "鹣",
+      "source": "345",
+      "source_id": 71
+    },
+    "eofl": {
+      "priority": "character",
+      "character": "颦",
+      "source": "345",
+      "source_id": 72
+    },
+    "epii": {
+      "priority": "word",
+      "character": "讱",
+      "source": "324",
+      "source_ids": [
+        58
+      ]
+    },
+    "epmf": {
+      "priority": "character",
+      "character": "幕",
+      "source": "345",
+      "source_id": 73
+    },
+    "erfb": {
+      "priority": "character",
+      "character": "谩",
+      "source": "345",
+      "source_id": 74
+    },
+    "eyke": {
+      "priority": "character",
+      "character": "诊",
+      "source": "345",
+      "source_id": 75
+    },
+    "fdxw": {
+      "priority": "word",
+      "character": "郪",
+      "source": "324",
+      "source_ids": [
+        64
+      ]
+    },
+    "feih": {
+      "priority": "word",
+      "character": "鲧",
+      "source": "345",
+      "source_id": 76
+    },
+    "fghm": {
+      "priority": "word",
+      "character": "亹",
+      "source": "324",
+      "source_ids": [
+        66
+      ]
+    },
+    "fhhd": {
+      "priority": "word",
+      "character": "鳛",
+      "source": "324",
+      "source_ids": [
+        67
+      ]
+    },
+    "fhxh": {
+      "priority": "word",
+      "character": "翾",
+      "source": "324",
+      "source_ids": [
+        69
+      ]
+    },
+    "finq": {
+      "priority": "character",
+      "character": "舵",
+      "source": "345",
+      "source_id": 77
+    },
+    "fofi": {
+      "priority": "word",
+      "character": "桊",
+      "source": "345",
+      "source_id": 78
+    },
+    "frfr": {
+      "priority": "word",
+      "character": "皕",
+      "source": "324",
+      "source_ids": [
+        75
+      ]
+    },
+    "frol": {
+      "priority": "word",
+      "character": "甦",
+      "source": "324",
+      "source_ids": [
+        76
+      ]
+    },
+    "fudf": {
+      "priority": "character",
+      "character": "亓",
+      "source": "345",
+      "source_id": 79
+    },
+    "fudr": {
+      "priority": "word",
+      "character": "鲚",
+      "source": "345",
+      "source_id": 80
+    },
+    "fwio": {
+      "priority": "character",
+      "character": "鳞",
+      "source": "345",
+      "source_id": 81
+    },
+    "fwwy": {
+      "priority": "word",
+      "character": "𬶐",
+      "source": "324",
+      "source_ids": [
+        80
+      ]
+    },
+    "fxfm": {
+      "priority": "word",
+      "character": "罟",
+      "source": "345",
+      "source_id": 82
+    },
+    "gbmf": {
+      "priority": "character",
+      "character": "蛰",
+      "source": "345",
+      "source_id": 83
+    },
+    "gcmi": {
+      "priority": "word",
+      "character": "愀",
+      "source": "345",
+      "source_id": 84
+    },
+    "gfym": {
+      "priority": "character",
+      "character": "颊",
+      "source": "345",
+      "source_id": 85
+    },
+    "ghto": {
+      "priority": "character",
+      "character": "恬",
+      "source": "345",
+      "source_id": 86
+    },
+    "ghub": {
+      "priority": "character",
+      "character": "恺",
+      "source": "345",
+      "source_id": 87
+    },
+    "gihe": {
+      "priority": "word",
+      "character": "憕",
+      "source": "324",
+      "source_ids": [
+        82
+      ]
+    },
+    "gmfk": {
+      "priority": "word",
+      "character": "懦",
+      "source": "345",
+      "source_id": 88
+    },
+    "gyao": {
+      "priority": "word",
+      "character": "忳",
+      "source": "324",
+      "source_ids": [
+        86
+      ]
+    },
+    "gyym": {
+      "priority": "character",
+      "character": "惯",
+      "source": "345",
+      "source_id": 89
+    },
+    "hanf": {
+      "priority": "character",
+      "character": "馘",
+      "source": "345",
+      "source_id": 90
+    },
+    "hbjo": {
+      "priority": "word",
+      "character": "峂",
+      "source": "324",
+      "source_ids": [
+        90
+      ]
+    },
+    "hcep": {
+      "priority": "word",
+      "character": "闼",
+      "source": "345",
+      "source_id": 91
+    },
+    "hdfq": {
+      "priority": "character",
+      "character": "饵",
+      "source": "345",
+      "source_id": 92
+    },
+    "heio": {
+      "priority": "word",
+      "character": "豌",
+      "source": "345",
+      "source_id": 93
+    },
+    "helb": {
+      "priority": "word",
+      "character": "豉",
+      "source": "345",
+      "source_id": 94
+    },
+    "hfke": {
+      "priority": "word",
+      "character": "遄",
+      "source": "345",
+      "source_id": 95
+    },
+    "hfxq": {
+      "priority": "character",
+      "character": "裘",
+      "source": "345",
+      "source_id": 96
+    },
+    "hhfl": {
+      "priority": "character",
+      "character": "翠",
+      "source": "345",
+      "source_id": 97
+    },
+    "hhfw": {
+      "priority": "character",
+      "character": "饶",
+      "source": "345",
+      "source_id": 98
+    },
+    "hhfx": {
+      "priority": "word",
+      "character": "崴",
+      "source": "345",
+      "source_id": 99
+    },
+    "hhhd": {
+      "priority": "word",
+      "character": "嶍",
+      "source": "324",
+      "source_ids": [
+        101
+      ]
+    },
+    "hhpr": {
+      "priority": "character",
+      "character": "翟",
+      "source": "345",
+      "source_id": 100
+    },
+    "hhxc": {
+      "priority": "word",
+      "character": "崾",
+      "source": "345",
+      "source_id": 101
+    },
+    "hhyo": {
+      "priority": "word",
+      "character": "鹨",
+      "source": "345",
+      "source_id": 102
+    },
+    "hifk": {
+      "priority": "character",
+      "character": "尘",
+      "source": "345",
+      "source_id": 103
+    },
+    "hiid": {
+      "priority": "word",
+      "character": "戍",
+      "source": "345",
+      "source_id": 104
+    },
+    "hiif": {
+      "priority": "character",
+      "character": "闺",
+      "source": "345",
+      "source_id": 105
+    },
+    "hiin": {
+      "priority": "character",
+      "character": "幽",
+      "source": "345",
+      "source_id": 106
+    },
+    "hipc": {
+      "priority": "word",
+      "character": "馏",
+      "source": "345",
+      "source_id": 107
+    },
+    "hjxo": {
+      "priority": "word",
+      "character": "峗",
+      "source": "324",
+      "source_ids": [
+        106
+      ]
+    },
+    "hlgl": {
+      "priority": "word",
+      "character": "𪩘",
+      "source": "324",
+      "source_ids": [
+        107
+      ]
+    },
+    "hmgu": {
+      "priority": "character",
+      "character": "闫",
+      "source": "345",
+      "source_id": 108
+    },
+    "hofq": {
+      "priority": "character",
+      "character": "朵",
+      "source": "345",
+      "source_id": 109
+    },
+    "hoqt": {
+      "priority": "word",
+      "character": "鸹",
+      "source": "345",
+      "source_id": 110
+    },
+    "hprk": {
+      "priority": "character",
+      "character": "雀",
+      "source": "345",
+      "source_id": 111
+    },
+    "hpwq": {
+      "priority": "word",
+      "character": "饸",
+      "source": "324",
+      "source_ids": [
+        110
+      ]
+    },
+    "htym": {
+      "priority": "word",
+      "character": "峧",
+      "source": "324",
+      "source_ids": [
+        111
+      ]
+    },
+    "hubm": {
+      "priority": "character",
+      "character": "屺",
+      "source": "345",
+      "source_id": 112
+    },
+    "hupw": {
+      "priority": "character",
+      "character": "怂",
+      "source": "345",
+      "source_id": 113
+    },
+    "hvds": {
+      "priority": "character",
+      "character": "阚",
+      "source": "345",
+      "source_id": 114
+    },
+    "hvmm": {
+      "priority": "word",
+      "character": "岬",
+      "source": "345",
+      "source_id": 115
+    },
+    "hwhs": {
+      "priority": "word",
+      "character": "蹙",
+      "source": "345",
+      "source_id": 116
+    },
+    "hywq": {
+      "priority": "word",
+      "character": "阋",
+      "source": "345",
+      "source_id": 117
+    },
+    "idgv": {
+      "priority": "word",
+      "character": "赭",
+      "source": "345",
+      "source_id": 118
+    },
+    "iiac": {
+      "priority": "word",
+      "character": "畿",
+      "source": "345",
+      "source_id": 119
+    },
+    "iiup": {
+      "priority": "word",
+      "character": "恚",
+      "source": "345",
+      "source_id": 120
+    },
+    "ilup": {
+      "priority": "word",
+      "character": "慭",
+      "source": "324",
+      "source_ids": [
+        121
+      ]
+    },
+    "ioof": {
+      "priority": "character",
+      "character": "桀",
+      "source": "345",
+      "source_id": 121
+    },
+    "ipdf": {
+      "priority": "word",
+      "character": "垅",
+      "source": "345",
+      "source_id": 122
+    },
+    "irfb": {
+      "priority": "character",
+      "character": "墁",
+      "source": "345",
+      "source_id": 123
+    },
+    "itlx": {
+      "priority": "word",
+      "character": "垿",
+      "source": "324",
+      "source_ids": [
+        122
+      ]
+    },
+    "iuee": {
+      "priority": "word",
+      "character": "宓",
+      "source": "345",
+      "source_id": 124
+    },
+    "ivir": {
+      "priority": "word",
+      "character": "昶",
+      "source": "345",
+      "source_id": 125
+    },
+    "jcmt": {
+      "priority": "word",
+      "character": "钿",
+      "source": "345",
+      "source_id": 126
+    },
+    "jdik": {
+      "priority": "word",
+      "character": "锵",
+      "source": "345",
+      "source_id": 127
+    },
+    "jdsg": {
+      "priority": "word",
+      "character": "锽",
+      "source": "324",
+      "source_ids": [
+        127
+      ]
+    },
+    "jeff": {
+      "priority": "character",
+      "character": "铥",
+      "source": "345",
+      "source_id": 128
+    },
+    "jegs": {
+      "priority": "word",
+      "character": "镒",
+      "source": "345",
+      "source_id": 129
+    },
+    "jfin": {
+      "priority": "character",
+      "character": "铉",
+      "source": "345",
+      "source_id": 130
+    },
+    "jfiq": {
+      "priority": "character",
+      "character": "锣",
+      "source": "345",
+      "source_id": 131
+    },
+    "jhfw": {
+      "priority": "word",
+      "character": "铙",
+      "source": "345",
+      "source_id": 132
+    },
+    "jhii": {
+      "priority": "word",
+      "character": "钒",
+      "source": "345",
+      "source_id": 133
+    },
+    "jihe": {
+      "priority": "word",
+      "character": "镫",
+      "source": "345",
+      "source_id": 134
+    },
+    "jjdr": {
+      "priority": "word",
+      "character": "锴",
+      "source": "345",
+      "source_id": 135
+    },
+    "jjwq": {
+      "priority": "word",
+      "character": "铳",
+      "source": "345",
+      "source_id": 136
+    },
+    "jlcn": {
+      "priority": "word",
+      "character": "觭",
+      "source": "324",
+      "source_ids": [
+        131
+      ]
+    },
+    "jlhn": {
+      "priority": "word",
+      "character": "觿",
+      "source": "324",
+      "source_ids": [
+        133
+      ]
+    },
+    "jlii": {
+      "priority": "word",
+      "character": "觟",
+      "source": "324",
+      "source_ids": [
+        134
+      ]
+    },
+    "jlql": {
+      "priority": "word",
+      "character": "觯",
+      "source": "345",
+      "source_id": 137
+    },
+    "jlqt": {
+      "priority": "character",
+      "character": "钦",
+      "source": "345",
+      "source_id": 138
+    },
+    "jmat": {
+      "priority": "word",
+      "character": "铚",
+      "source": "324",
+      "source_ids": [
+        135
+      ]
+    },
+    "jqge": {
+      "priority": "word",
+      "character": "𬭼",
+      "source": "324",
+      "source_ids": [
+        140
+      ]
+    },
+    "jqnb": {
+      "priority": "word",
+      "character": "镪",
+      "source": "345",
+      "source_id": 139
+    },
+    "jrfb": {
+      "priority": "character",
+      "character": "镘",
+      "source": "345",
+      "source_id": 140
+    },
+    "jrjj": {
+      "priority": "word",
+      "character": "𬬹",
+      "source": "324",
+      "source_ids": [
+        141
+      ]
+    },
+    "jukf": {
+      "priority": "word",
+      "character": "镈",
+      "source": "324",
+      "source_ids": [
+        142
+      ]
+    },
+    "jwwy": {
+      "priority": "word",
+      "character": "铫",
+      "source": "345",
+      "source_id": 141
+    },
+    "jyaj": {
+      "priority": "word",
+      "character": "铡",
+      "source": "345",
+      "source_id": 142
+    },
+    "jymt": {
+      "priority": "character",
+      "character": "钡",
+      "source": "345",
+      "source_id": 143
+    },
+    "kcmx": {
+      "priority": "word",
+      "character": "傀",
+      "source": "345",
+      "source_id": 144
+    },
+    "kgin": {
+      "priority": "word",
+      "character": "倜",
+      "source": "345",
+      "source_id": 145
+    },
+    "kgnq": {
+      "priority": "word",
+      "character": "佬",
+      "source": "345",
+      "source_id": 146
+    },
+    "khfr": {
+      "priority": "word",
+      "character": "俅",
+      "source": "345",
+      "source_id": 147
+    },
+    "khfw": {
+      "priority": "word",
+      "character": "侥",
+      "source": "345",
+      "source_id": 148
+    },
+    "khyr": {
+      "priority": "word",
+      "character": "倞",
+      "source": "324",
+      "source_ids": [
+        146
+      ]
+    },
+    "klvv": {
+      "priority": "word",
+      "character": "仡",
+      "source": "345",
+      "source_id": 149
+    },
+    "kmee": {
+      "priority": "word",
+      "character": "俨",
+      "source": "345",
+      "source_id": 150
+    },
+    "knom": {
+      "priority": "character",
+      "character": "煲",
+      "source": "345",
+      "source_id": 151
+    },
+    "komb": {
+      "priority": "character",
+      "character": "侵",
+      "source": "345",
+      "source_id": 152
+    },
+    "kubi": {
+      "priority": "word",
+      "character": "蠃",
+      "source": "345",
+      "source_id": 153
+    },
+    "kwfx": {
+      "priority": "character",
+      "character": "袋",
+      "source": "345",
+      "source_id": 154
+    },
+    "kwmr": {
+      "priority": "word",
+      "character": "俚",
+      "source": "345",
+      "source_id": 155
+    },
+    "kwvm": {
+      "priority": "character",
+      "character": "郧",
+      "source": "345",
+      "source_id": 156
+    },
+    "lcuc": {
+      "priority": "character",
+      "character": "甥",
+      "source": "345",
+      "source_id": 157
+    },
+    "lfhl": {
+      "priority": "word",
+      "character": "窣",
+      "source": "324",
+      "source_ids": [
+        151
+      ]
+    },
+    "lgrl": {
+      "priority": "character",
+      "character": "献",
+      "source": "345",
+      "source_id": 158
+    },
+    "ljsh": {
+      "priority": "character",
+      "character": "繁",
+      "source": "345",
+      "source_id": 159
+    },
+    "lvvh": {
+      "priority": "word",
+      "character": "乩",
+      "source": "345",
+      "source_id": 160
+    },
+    "lyao": {
+      "priority": "word",
+      "character": "窀",
+      "source": "345",
+      "source_id": 161
+    },
+    "mbcg": {
+      "priority": "word",
+      "character": "烽",
+      "source": "345",
+      "source_id": 162
+    },
+    "mchw": {
+      "priority": "word",
+      "character": "筮",
+      "source": "345",
+      "source_id": 163
+    },
+    "mckm": {
+      "priority": "word",
+      "character": "煟",
+      "source": "324",
+      "source_ids": [
+        154
+      ]
+    },
+    "mfin": {
+      "priority": "character",
+      "character": "炫",
+      "source": "345",
+      "source_id": 164
+    },
+    "mgba": {
+      "priority": "character",
+      "character": "皴",
+      "source": "345",
+      "source_id": 165
+    },
+    "mghf": {
+      "priority": "word",
+      "character": "烔",
+      "source": "324",
+      "source_ids": [
+        156
+      ]
+    },
+    "mhhd": {
+      "priority": "character",
+      "character": "熠",
+      "source": "345",
+      "source_id": 166
+    },
+    "mjlf": {
+      "priority": "word",
+      "character": "筚",
+      "source": "345",
+      "source_id": 167
+    },
+    "mmmi": {
+      "priority": "word",
+      "character": "焱",
+      "source": "345",
+      "source_id": 168
+    },
+    "mnne": {
+      "priority": "word",
+      "character": "簉",
+      "source": "324",
+      "source_ids": [
+        163
+      ]
+    },
+    "mnnm": {
+      "priority": "word",
+      "character": "筥",
+      "source": "324",
+      "source_ids": [
+        165,
+        166
+      ]
+    },
+    "mqge": {
+      "priority": "word",
+      "character": "燧",
+      "source": "345",
+      "source_id": 169
+    },
+    "mqle": {
+      "priority": "word",
+      "character": "熥",
+      "source": "324",
+      "source_ids": [
+        167
+      ]
+    },
+    "mrwv": {
+      "priority": "character",
+      "character": "郓",
+      "source": "345",
+      "source_id": 170
+    },
+    "muuc": {
+      "priority": "character",
+      "character": "筋",
+      "source": "345",
+      "source_id": 171
+    },
+    "mxgs": {
+      "priority": "word",
+      "character": "箧",
+      "source": "345",
+      "source_id": 172
+    },
+    "nfqi": {
+      "priority": "word",
+      "character": "鲝",
+      "source": "324",
+      "source_ids": [
+        171
+      ]
+    },
+    "ngfy": {
+      "priority": "word",
+      "character": "旃",
+      "source": "345",
+      "source_id": 173
+    },
+    "ngin": {
+      "priority": "word",
+      "character": "啁",
+      "source": "345",
+      "source_id": 174
+    },
+    "ngya": {
+      "priority": "character",
+      "character": "剐",
+      "source": "345",
+      "source_id": 175
+    },
+    "nlfu": {
+      "priority": "character",
+      "character": "嘲",
+      "source": "345",
+      "source_id": 176
+    },
+    "nmfk": {
+      "priority": "character",
+      "character": "嚅",
+      "source": "345",
+      "source_id": 177
+    },
+    "nnog": {
+      "priority": "word",
+      "character": "堇",
+      "source": "345",
+      "source_id": 178
+    },
+    "nnvo": {
+      "priority": "word",
+      "character": "喋",
+      "source": "345",
+      "source_id": 179
+    },
+    "nrvw": {
+      "priority": "word",
+      "character": "𫑡",
+      "source": "324",
+      "source_ids": [
+        172
+      ]
+    },
+    "oald": {
+      "priority": "character",
+      "character": "械",
+      "source": "345",
+      "source_id": 180
+    },
+    "obwq": {
+      "priority": "word",
+      "character": "𣗋",
+      "source": "324",
+      "source_ids": [
+        177
+      ]
+    },
+    "ocmi": {
+      "priority": "word",
+      "character": "楸",
+      "source": "345",
+      "source_id": 181
+    },
+    "ocml": {
+      "priority": "word",
+      "character": "櫆",
+      "source": "324",
+      "source_ids": [
+        178
+      ]
+    },
+    "ogmw": {
+      "priority": "character",
+      "character": "郄",
+      "source": "345",
+      "source_id": 182
+    },
+    "ohym": {
+      "priority": "word",
+      "character": "槚",
+      "source": "324",
+      "source_ids": [
+        186
+      ]
+    },
+    "oifu": {
+      "priority": "word",
+      "character": "楦",
+      "source": "345",
+      "source_id": 183
+    },
+    "oipm": {
+      "priority": "character",
+      "character": "棺",
+      "source": "345",
+      "source_id": 184
+    },
+    "ojdr": {
+      "priority": "character",
+      "character": "楷",
+      "source": "345",
+      "source_id": 185
+    },
+    "ojsi": {
+      "priority": "word",
+      "character": "孰",
+      "source": "345",
+      "source_id": 186
+    },
+    "ojst": {
+      "priority": "character",
+      "character": "敦",
+      "source": "345",
+      "source_id": 187
+    },
+    "ojxo": {
+      "priority": "word",
+      "character": "桅",
+      "source": "345",
+      "source_id": 188
+    },
+    "omfs": {
+      "priority": "word",
+      "character": "樗",
+      "source": "345",
+      "source_id": 189
+    },
+    "omgb": {
+      "priority": "word",
+      "character": "梭",
+      "source": "345",
+      "source_id": 190
+    },
+    "ompr": {
+      "priority": "word",
+      "character": "榷",
+      "source": "345",
+      "source_id": 191
+    },
+    "oooc": {
+      "priority": "character",
+      "character": "樊",
+      "source": "345",
+      "source_id": 192
+    },
+    "oooo": {
+      "priority": "word",
+      "character": "橇",
+      "source": "345",
+      "source_id": 193
+    },
+    "ooot": {
+      "priority": "character",
+      "character": "毳",
+      "source": "345",
+      "source_id": 194
+    },
+    "oqha": {
+      "priority": "word",
+      "character": "橼",
+      "source": "345",
+      "source_id": 195
+    },
+    "oudb": {
+      "priority": "word",
+      "character": "栌",
+      "source": "345",
+      "source_id": 196
+    },
+    "pccc": {
+      "priority": "word",
+      "character": "莠",
+      "source": "345",
+      "source_id": 197
+    },
+    "pddd": {
+      "priority": "word",
+      "character": "藠",
+      "source": "324",
+      "source_ids": [
+        197
+      ]
+    },
+    "pdif": {
+      "priority": "word",
+      "character": "蒌",
+      "source": "345",
+      "source_id": 198
+    },
+    "pdis": {
+      "priority": "word",
+      "character": "徽",
+      "source": "345",
+      "source_id": 199
+    },
+    "pepj": {
+      "priority": "word",
+      "character": "孽",
+      "source": "345",
+      "source_id": 200
+    },
+    "pfxx": {
+      "priority": "word",
+      "character": "蘘",
+      "source": "324",
+      "source_ids": [
+        200
+      ]
+    },
+    "pfym": {
+      "priority": "word",
+      "character": "颌",
+      "source": "345",
+      "source_id": 201
+    },
+    "pgdr": {
+      "priority": "word",
+      "character": "荞",
+      "source": "345",
+      "source_id": 202
+    },
+    "phfm": {
+      "priority": "word",
+      "character": "蕈",
+      "source": "345",
+      "source_id": 203
+    },
+    "piff": {
+      "priority": "word",
+      "character": "苎",
+      "source": "345",
+      "source_id": 204
+    },
+    "pifs": {
+      "priority": "word",
+      "character": "萣",
+      "source": "324",
+      "source_ids": [
+        204
+      ]
+    },
+    "pifu": {
+      "priority": "character",
+      "character": "萱",
+      "source": "345",
+      "source_id": 205
+    },
+    "pine": {
+      "priority": "word",
+      "character": "薳",
+      "source": "324",
+      "source_ids": [
+        205
+      ]
+    },
+    "pinf": {
+      "priority": "character",
+      "character": "苄",
+      "source": "345",
+      "source_id": 206
+    },
+    "piug": {
+      "priority": "character",
+      "character": "葵",
+      "source": "345",
+      "source_id": 207
+    },
+    "pjfm": {
+      "priority": "character",
+      "character": "薰",
+      "source": "345",
+      "source_id": 208
+    },
+    "pjfx": {
+      "priority": "character",
+      "character": "蔫",
+      "source": "345",
+      "source_id": 209
+    },
+    "pjmv": {
+      "priority": "word",
+      "character": "蒡",
+      "source": "345",
+      "source_id": 210
+    },
+    "pkkf": {
+      "priority": "word",
+      "character": "茌",
+      "source": "345",
+      "source_id": 211
+    },
+    "pknm": {
+      "priority": "word",
+      "character": "薹",
+      "source": "345",
+      "source_id": 212
+    },
+    "plbb": {
+      "priority": "word",
+      "character": "葭",
+      "source": "345",
+      "source_id": 213
+    },
+    "plfy": {
+      "priority": "word",
+      "character": "蓣",
+      "source": "345",
+      "source_id": 214
+    },
+    "plhf": {
+      "priority": "word",
+      "character": "苫",
+      "source": "345",
+      "source_id": 215
+    },
+    "pmjc": {
+      "priority": "character",
+      "character": "牍",
+      "source": "345",
+      "source_id": 216
+    },
+    "pmme": {
+      "priority": "word",
+      "character": "徂",
+      "source": "345",
+      "source_id": 217
+    },
+    "poff": {
+      "priority": "character",
+      "character": "苯",
+      "source": "345",
+      "source_id": 218
+    },
+    "pofx": {
+      "priority": "word",
+      "character": "蓑",
+      "source": "345",
+      "source_id": 219
+    },
+    "pogm": {
+      "priority": "word",
+      "character": "菘",
+      "source": "345",
+      "source_id": 220
+    },
+    "pogo": {
+      "priority": "word",
+      "character": "藁",
+      "source": "345",
+      "source_id": 221
+    },
+    "pokf": {
+      "priority": "word",
+      "character": "荨",
+      "source": "345",
+      "source_id": 222
+    },
+    "pono": {
+      "priority": "word",
+      "character": "檠",
+      "source": "345",
+      "source_id": 223
+    },
+    "poru": {
+      "priority": "character",
+      "character": "葱",
+      "source": "345",
+      "source_id": 224
+    },
+    "powi": {
+      "priority": "character",
+      "character": "菊",
+      "source": "345",
+      "source_id": 225
+    },
+    "ppes": {
+      "priority": "word",
+      "character": "蓰",
+      "source": "345",
+      "source_id": 226
+    },
+    "ppfa": {
+      "priority": "word",
+      "character": "茚",
+      "source": "345",
+      "source_id": 227
+    },
+    "pugd": {
+      "priority": "word",
+      "character": "䶮",
+      "source": "324",
+      "source_ids": [
+        213
+      ]
+    },
+    "pwie": {
+      "priority": "character",
+      "character": "逸",
+      "source": "345",
+      "source_id": 228
+    },
+    "pwms": {
+      "priority": "word",
+      "character": "蔹",
+      "source": "345",
+      "source_id": 229
+    },
+    "pwof": {
+      "priority": "word",
+      "character": "荼",
+      "source": "345",
+      "source_id": 230
+    },
+    "pwuq": {
+      "priority": "character",
+      "character": "荫",
+      "source": "345",
+      "source_id": 231
+    },
+    "pxoy": {
+      "priority": "character",
+      "character": "庶",
+      "source": "345",
+      "source_id": 232
+    },
+    "pxpr": {
+      "priority": "character",
+      "character": "荒",
+      "source": "345",
+      "source_id": 233
+    },
+    "pxxf": {
+      "priority": "character",
+      "character": "菇",
+      "source": "345",
+      "source_id": 234
+    },
+    "pyeg": {
+      "priority": "word",
+      "character": "荟",
+      "source": "345",
+      "source_id": 235
+    },
+    "qeed": {
+      "priority": "word",
+      "character": "𫄧",
+      "source": "324",
+      "source_ids": [
+        214
+      ]
+    },
+    "qefn": {
+      "priority": "word",
+      "character": "绀",
+      "source": "345",
+      "source_id": 236
+    },
+    "qegs": {
+      "priority": "word",
+      "character": "缢",
+      "source": "345",
+      "source_id": 237
+    },
+    "qgnm": {
+      "priority": "word",
+      "character": "䌹",
+      "source": "324",
+      "source_ids": [
+        216
+      ]
+    },
+    "qgno": {
+      "priority": "word",
+      "character": "氅",
+      "source": "345",
+      "source_id": 238
+    },
+    "qgyn": {
+      "priority": "word",
+      "character": "绤",
+      "source": "324",
+      "source_ids": [
+        217
+      ]
+    },
+    "qkfn": {
+      "priority": "character",
+      "character": "纣",
+      "source": "345",
+      "source_id": 239
+    },
+    "qkny": {
+      "priority": "word",
+      "character": "缬",
+      "source": "345",
+      "source_id": 240
+    },
+    "qlvv": {
+      "priority": "word",
+      "character": "纥",
+      "source": "345",
+      "source_id": 241
+    },
+    "qnbu": {
+      "priority": "word",
+      "character": "犟",
+      "source": "345",
+      "source_id": 242
+    },
+    "qqra": {
+      "priority": "character",
+      "character": "剃",
+      "source": "345",
+      "source_id": 243
+    },
+    "qrja": {
+      "priority": "character",
+      "character": "绲",
+      "source": "345",
+      "source_id": 244
+    },
+    "qtfn": {
+      "priority": "word",
+      "character": "缃",
+      "source": "345",
+      "source_id": 245
+    },
+    "quqf": {
+      "priority": "word",
+      "character": "靸",
+      "source": "324",
+      "source_ids": [
+        224
+      ]
+    },
+    "qxel": {
+      "priority": "word",
+      "character": "鞴",
+      "source": "345",
+      "source_id": 246
+    },
+    "rdwm": {
+      "priority": "word",
+      "character": "曈",
+      "source": "324",
+      "source_ids": [
+        226
+      ]
+    },
+    "refh": {
+      "priority": "word",
+      "character": "痱",
+      "source": "345",
+      "source_id": 247
+    },
+    "rfah": {
+      "priority": "word",
+      "character": "暕",
+      "source": "324",
+      "source_ids": [
+        227
+      ]
+    },
+    "rgfu": {
+      "priority": "word",
+      "character": "暅",
+      "source": "324",
+      "source_ids": [
+        229
+      ]
+    },
+    "rhgw": {
+      "priority": "word",
+      "character": "晪",
+      "source": "324",
+      "source_ids": [
+        230
+      ]
+    },
+    "rhhe": {
+      "priority": "word",
+      "character": "遢",
+      "source": "345",
+      "source_id": 248
+    },
+    "rhhk": {
+      "priority": "word",
+      "character": "瘳",
+      "source": "345",
+      "source_id": 249
+    },
+    "rhmm": {
+      "priority": "word",
+      "character": "旵",
+      "source": "324",
+      "source_ids": [
+        231
+      ]
+    },
+    "rhof": {
+      "priority": "word",
+      "character": "痫",
+      "source": "345",
+      "source_id": 250
+    },
+    "rkcf": {
+      "priority": "word",
+      "character": "痉",
+      "source": "345",
+      "source_id": 251
+    },
+    "rlbb": {
+      "priority": "word",
+      "character": "瘕",
+      "source": "345",
+      "source_id": 252
+    },
+    "rmam": {
+      "priority": "word",
+      "character": "晊",
+      "source": "324",
+      "source_ids": [
+        234
+      ]
+    },
+    "rmcm": {
+      "priority": "word",
+      "character": "癗",
+      "source": "324",
+      "source_ids": [
+        235
+      ]
+    },
+    "rmra": {
+      "priority": "character",
+      "character": "晖",
+      "source": "345",
+      "source_id": 253
+    },
+    "rmrb": {
+      "priority": "word",
+      "character": "暝",
+      "source": "345",
+      "source_id": 254
+    },
+    "ronm": {
+      "priority": "word",
+      "character": "昫",
+      "source": "324",
+      "source_ids": [
+        237
+      ]
+    },
+    "rora": {
+      "priority": "character",
+      "character": "剔",
+      "source": "345",
+      "source_id": 255
+    },
+    "roye": {
+      "priority": "character",
+      "character": "遏",
+      "source": "345",
+      "source_id": 256
+    },
+    "rqgn": {
+      "priority": "word",
+      "character": "耥",
+      "source": "345",
+      "source_id": 257
+    },
+    "rrnm": {
+      "priority": "word",
+      "character": "疴",
+      "source": "345",
+      "source_id": 258
+    },
+    "rwyk": {
+      "priority": "word",
+      "character": "瘠",
+      "source": "345",
+      "source_id": 259
+    },
+    "ryke": {
+      "priority": "word",
+      "character": "轸",
+      "source": "345",
+      "source_id": 260
+    },
+    "ryyx": {
+      "priority": "word",
+      "character": "瘿",
+      "source": "345",
+      "source_id": 261
+    },
+    "sbcm": {
+      "priority": "word",
+      "character": "璠",
+      "source": "324",
+      "source_ids": [
+        243
+      ]
+    },
+    "sbib": {
+      "priority": "word",
+      "character": "搔",
+      "source": "345",
+      "source_id": 262
+    },
+    "sckf": {
+      "priority": "word",
+      "character": "捋",
+      "source": "345",
+      "source_id": 263
+    },
+    "scpc": {
+      "priority": "word",
+      "character": "揳",
+      "source": "324",
+      "source_ids": [
+        245
+      ]
+    },
+    "scrn": {
+      "priority": "character",
+      "character": "琦",
+      "source": "345",
+      "source_id": 264
+    },
+    "sdbl": {
+      "priority": "character",
+      "character": "掘",
+      "source": "345",
+      "source_id": 265
+    },
+    "sddb": {
+      "priority": "word",
+      "character": "攫",
+      "source": "345",
+      "source_id": 266
+    },
+    "sdwv": {
+      "priority": "word",
+      "character": "揶",
+      "source": "345",
+      "source_id": 267
+    },
+    "senn": {
+      "priority": "word",
+      "character": "瑀",
+      "source": "324",
+      "source_ids": [
+        246
+      ]
+    },
+    "sfic": {
+      "priority": "word",
+      "character": "搐",
+      "source": "345",
+      "source_id": 268
+    },
+    "sgsa": {
+      "priority": "character",
+      "character": "拷",
+      "source": "345",
+      "source_id": 269
+    },
+    "shag": {
+      "priority": "word",
+      "character": "玡",
+      "source": "324",
+      "source_ids": [
+        250
+      ]
+    },
+    "shhd": {
+      "priority": "character",
+      "character": "摺",
+      "source": "345",
+      "source_id": 270
+    },
+    "shhx": {
+      "priority": "word",
+      "character": "珝",
+      "source": "324",
+      "source_ids": [
+        252
+      ]
+    },
+    "shpg": {
+      "priority": "word",
+      "character": "摽",
+      "source": "324",
+      "source_ids": [
+        253
+      ]
+    },
+    "shpr": {
+      "priority": "character",
+      "character": "璀",
+      "source": "345",
+      "source_id": 271
+    },
+    "siep": {
+      "priority": "word",
+      "character": "琎",
+      "source": "324",
+      "source_ids": [
+        254
+      ]
+    },
+    "siug": {
+      "priority": "word",
+      "character": "揆",
+      "source": "345",
+      "source_id": 272
+    },
+    "siui": {
+      "priority": "word",
+      "character": "㧑",
+      "source": "324",
+      "source_ids": [
+        257
+      ]
+    },
+    "sjlq": {
+      "priority": "word",
+      "character": "揿",
+      "source": "345",
+      "source_id": 273
+    },
+    "sjmv": {
+      "priority": "word",
+      "character": "搒",
+      "source": "324",
+      "source_ids": [
+        259
+      ]
+    },
+    "sjwq": {
+      "priority": "word",
+      "character": "珫",
+      "source": "324",
+      "source_ids": [
+        260
+      ]
+    },
+    "sknm": {
+      "priority": "word",
+      "character": "拮",
+      "source": "345",
+      "source_id": 274
+    },
+    "slbb": {
+      "priority": "word",
+      "character": "瑕",
+      "source": "345",
+      "source_id": 275
+    },
+    "slcu": {
+      "priority": "character",
+      "character": "摁",
+      "source": "345",
+      "source_id": 276
+    },
+    "slsi": {
+      "priority": "word",
+      "character": "掴",
+      "source": "345",
+      "source_id": 277
+    },
+    "smfs": {
+      "priority": "word",
+      "character": "摴",
+      "source": "324",
+      "source_ids": [
+        262,
+        263
+      ]
+    },
+    "smmg": {
+      "priority": "word",
+      "character": "珇",
+      "source": "324",
+      "source_ids": [
+        264
+      ]
+    },
+    "smmi": {
+      "priority": "character",
+      "character": "琰",
+      "source": "345",
+      "source_id": 278
+    },
+    "snwg": {
+      "priority": "word",
+      "character": "玢",
+      "source": "345",
+      "source_id": 279
+    },
+    "sowi": {
+      "priority": "word",
+      "character": "掬",
+      "source": "345",
+      "source_id": 280
+    },
+    "spaj": {
+      "priority": "word",
+      "character": "捌",
+      "source": "345",
+      "source_id": 281
+    },
+    "spdg": {
+      "priority": "word",
+      "character": "珑",
+      "source": "345",
+      "source_id": 282
+    },
+    "spwq": {
+      "priority": "character",
+      "character": "挽",
+      "source": "345",
+      "source_id": 283
+    },
+    "spxp": {
+      "priority": "word",
+      "character": "瓘",
+      "source": "324",
+      "source_ids": [
+        270
+      ]
+    },
+    "sqkm": {
+      "priority": "character",
+      "character": "捎",
+      "source": "345",
+      "source_id": 284
+    },
+    "srmq": {
+      "priority": "word",
+      "character": "旮",
+      "source": "345",
+      "source_id": 285
+    },
+    "ssja": {
+      "priority": "word",
+      "character": "琵",
+      "source": "345",
+      "source_id": 286
+    },
+    "sstf": {
+      "priority": "word",
+      "character": "敕",
+      "source": "345",
+      "source_id": 287
+    },
+    "stlh": {
+      "priority": "word",
+      "character": "掂",
+      "source": "345",
+      "source_id": 288
+    },
+    "svds": {
+      "priority": "word",
+      "character": "撖",
+      "source": "345",
+      "source_id": 289
+    },
+    "sykg": {
+      "priority": "character",
+      "character": "捧",
+      "source": "345",
+      "source_id": 290
+    },
+    "thhk": {
+      "priority": "character",
+      "character": "廖",
+      "source": "345",
+      "source_id": 291
+    },
+    "tiff": {
+      "priority": "word",
+      "character": "茔",
+      "source": "345",
+      "source_id": 292
+    },
+    "tihk": {
+      "priority": "word",
+      "character": "萦",
+      "source": "345",
+      "source_id": 293
+    },
+    "tjbb": {
+      "priority": "word",
+      "character": "狰",
+      "source": "345",
+      "source_id": 294
+    },
+    "tjih": {
+      "priority": "word",
+      "character": "縻",
+      "source": "345",
+      "source_id": 295
+    },
+    "tjsu": {
+      "priority": "word",
+      "character": "愍",
+      "source": "345",
+      "source_id": 296
+    },
+    "tlmf": {
+      "priority": "word",
+      "character": "荥",
+      "source": "345",
+      "source_id": 297
+    },
+    "tlxc": {
+      "priority": "character",
+      "character": "姿",
+      "source": "345",
+      "source_id": 298
+    },
+    "tonm": {
+      "priority": "character",
+      "character": "狗",
+      "source": "345",
+      "source_id": 299
+    },
+    "ttyw": {
+      "priority": "character",
+      "character": "庚",
+      "source": "345",
+      "source_id": 300
+    },
+    "twmo": {
+      "priority": "word",
+      "character": "猃",
+      "source": "345",
+      "source_id": 301
+    },
+    "tyeg": {
+      "priority": "word",
+      "character": "狯",
+      "source": "345",
+      "source_id": 302
+    },
+    "tymq": {
+      "priority": "word",
+      "character": "狈",
+      "source": "345",
+      "source_id": 303
+    },
+    "ucrn": {
+      "priority": "word",
+      "character": "犄",
+      "source": "345",
+      "source_id": 304
+    },
+    "ucua": {
+      "priority": "word",
+      "character": "劓",
+      "source": "345",
+      "source_id": 305
+    },
+    "ucup": {
+      "priority": "character",
+      "character": "腮",
+      "source": "345",
+      "source_id": 306
+    },
+    "ucuq": {
+      "priority": "word",
+      "character": "鼾",
+      "source": "345",
+      "source_id": 307
+    },
+    "uefd": {
+      "priority": "word",
+      "character": "齑",
+      "source": "345",
+      "source_id": 308
+    },
+    "ufih": {
+      "priority": "word",
+      "character": "縢",
+      "source": "324",
+      "source_ids": [
+        282
+      ]
+    },
+    "ugwv": {
+      "priority": "word",
+      "character": "邾",
+      "source": "345",
+      "source_id": 309
+    },
+    "uhgr": {
+      "priority": "word",
+      "character": "膈",
+      "source": "345",
+      "source_id": 310
+    },
+    "uifs": {
+      "priority": "word",
+      "character": "腚",
+      "source": "345",
+      "source_id": 311
+    },
+    "ullb": {
+      "priority": "word",
+      "character": "卣",
+      "source": "345",
+      "source_id": 312
+    },
+    "uloc": {
+      "priority": "word",
+      "character": "鹾",
+      "source": "345",
+      "source_id": 313
+    },
+    "uoof": {
+      "priority": "character",
+      "character": "脎",
+      "source": "345",
+      "source_id": 314
+    },
+    "uudb": {
+      "priority": "character",
+      "character": "胪",
+      "source": "345",
+      "source_id": 315
+    },
+    "uwly": {
+      "priority": "character",
+      "character": "腻",
+      "source": "345",
+      "source_id": 316
+    },
+    "vdsu": {
+      "priority": "character",
+      "character": "憨",
+      "source": "345",
+      "source_id": 317
+    },
+    "velu": {
+      "priority": "word",
+      "character": "骢",
+      "source": "345",
+      "source_id": 318
+    },
+    "vgnm": {
+      "priority": "word",
+      "character": "𬳶",
+      "source": "324",
+      "source_ids": [
+        289
+      ]
+    },
+    "vhbm": {
+      "priority": "character",
+      "character": "踞",
+      "source": "345",
+      "source_id": 319
+    },
+    "vjmp": {
+      "priority": "word",
+      "character": "碲",
+      "source": "345",
+      "source_id": 320
+    },
+    "vleo": {
+      "priority": "word",
+      "character": "蹂",
+      "source": "345",
+      "source_id": 321
+    },
+    "vnvo": {
+      "priority": "word",
+      "character": "蹀",
+      "source": "345",
+      "source_id": 322
+    },
+    "vojs": {
+      "priority": "word",
+      "character": "礅",
+      "source": "345",
+      "source_id": 323
+    },
+    "vxfs": {
+      "priority": "word",
+      "character": "𥔲",
+      "source": "324",
+      "source_ids": [
+        299
+      ]
+    },
+    "wegc": {
+      "priority": "word",
+      "character": "隩",
+      "source": "324",
+      "source_ids": [
+        300
+      ]
+    },
+    "wgki": {
+      "priority": "character",
+      "character": "堕",
+      "source": "345",
+      "source_id": 324
+    },
+    "wioh": {
+      "priority": "word",
+      "character": "翷",
+      "source": "324",
+      "source_ids": [
+        302
+      ]
+    },
+    "wkao": {
+      "priority": "word",
+      "character": "毹",
+      "source": "345",
+      "source_id": 325
+    },
+    "wlhv": {
+      "priority": "word",
+      "character": "阽",
+      "source": "345",
+      "source_id": 326
+    },
+    "woqa": {
+      "priority": "word",
+      "character": "鸢",
+      "source": "345",
+      "source_id": 327
+    },
+    "wyxo": {
+      "priority": "word",
+      "character": "禚",
+      "source": "345",
+      "source_id": 328
+    },
+    "xfso": {
+      "priority": "word",
+      "character": "鹗",
+      "source": "345",
+      "source_id": 329
+    },
+    "xgil": {
+      "priority": "word",
+      "character": "斠",
+      "source": "324",
+      "source_ids": [
+        310
+      ]
+    },
+    "xgiw": {
+      "priority": "word",
+      "character": "觏",
+      "source": "345",
+      "source_id": 330
+    },
+    "xhjo": {
+      "priority": "character",
+      "character": "枣",
+      "source": "345",
+      "source_id": 331
+    },
+    "xiui": {
+      "priority": "word",
+      "character": "妫",
+      "source": "345",
+      "source_id": 332
+    },
+    "xken": {
+      "priority": "word",
+      "character": "髭",
+      "source": "345",
+      "source_id": 333
+    },
+    "xkip": {
+      "priority": "word",
+      "character": "鬃",
+      "source": "345",
+      "source_id": 334
+    },
+    "xlob": {
+      "priority": "word",
+      "character": "蜃",
+      "source": "345",
+      "source_id": 335
+    },
+    "xmmh": {
+      "priority": "word",
+      "character": "龃",
+      "source": "345",
+      "source_id": 336
+    },
+    "xwmc": {
+      "priority": "word",
+      "character": "娌",
+      "source": "345",
+      "source_id": 337
+    },
+    "xxgi": {
+      "priority": "word",
+      "character": "媾",
+      "source": "345",
+      "source_id": 338
+    },
+    "xygb": {
+      "priority": "word",
+      "character": "嫒",
+      "source": "345",
+      "source_id": 339
+    },
+    "ycch": {
+      "priority": "word",
+      "character": "褫",
+      "source": "345",
+      "source_id": 340
+    },
+    "ykni": {
+      "priority": "word",
+      "character": "醭",
+      "source": "345",
+      "source_id": 341
+    },
+    "yooq": {
+      "priority": "word",
+      "character": "鸧",
+      "source": "324",
+      "source_ids": [
+        321
+      ]
+    },
+    "yoym": {
+      "priority": "word",
+      "character": "𫌀",
+      "source": "324",
+      "source_ids": [
+        322
+      ]
+    },
+    "yrff": {
+      "priority": "character",
+      "character": "酊",
+      "source": "345",
+      "source_id": 342
+    },
+    "yrov": {
+      "priority": "character",
+      "character": "褐",
+      "source": "345",
+      "source_id": 343
+    },
+    "ysmf": {
+      "priority": "word",
+      "character": "醍",
+      "source": "345",
+      "source_id": 344
+    },
+    "yvfp": {
+      "priority": "character",
+      "character": "褚",
+      "source": "345",
+      "source_id": 345
+    }
+  }
+}

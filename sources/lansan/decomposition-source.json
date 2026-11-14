@@ -1,0 +1,28 @@
+{
+  "description": "用户提供的拆分分析结果；按当前编码筛选并用附件字根键位复算，不代表官方审定拆分。",
+  "inputs": [
+    {
+      "filename": "蓝宝石_完整拆分表.tsv",
+      "sha256": "25b0d7e3db85dd9e7512cdabf5773db1b6d0b2b9a6ff049ee1774e806a41ce79"
+    },
+    {
+      "filename": "蓝宝石_差异核对与字根表.xlsx",
+      "sha256": "9272730f2d5ff41f0748afdbf01783d0b42b45ad4168ec5074ed3021e127cc34"
+    }
+  ],
+  "selection": "修正版全码相符优先；仅用全码相符的扩展试验版补缺；其余不显示拆分。",
+  "display": "字根＋全码；保留命名字根，不显示小码和识别码数字。",
+  "dictionary_characters": 92841,
+  "matched_characters": 82313,
+  "matched_gb2312": 6763,
+  "unmatched_characters": 10528,
+  "selected_variants": {
+    "修正版": 72089,
+    "扩展试验版": 10224
+  },
+  "files": {
+    "decomposition.tsv": "32175b555d4510905f6820f813d64cd3b304588a12daeef3cca16e62e11c6355",
+    "decomposition_roots.json": "29f8f0261a0a24e5da4ac74e3f1d745c13d4d78f853410ae29c31db826806677",
+    "decomposition_unmatched.tsv": "832b4be9fe38f012ceaee6cc89b317762e7e749fed276f3958438352bfc1a6c8"
+  }
+}

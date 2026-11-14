@@ -393,6 +393,57 @@ def apply_candidate_prefixes(rows, prefixes, tgh_characters):
     return result, stats
 
 
+def apply_reviewed_priorities(rows, priorities, tgh_characters):
+    """按人工字/词优先评议重排；GB2312 前三选只是上限，不固定旧名次。"""
+    groups, shortest = defaultdict(list), {}
+    for row in rows:
+        text, code = row[:2]
+        groups[code].append(row)
+        if len(text) == 1 and re.fullmatch(r"[a-z]+", code):
+            shortest[text] = min(shortest.get(text, len(code)), len(code))
+    prefixes = {}
+    for code, review in priorities.items():
+        if (not re.fullmatch(r"[a-z]{1,4}", code) or not isinstance(review, dict)
+                or review.get("priority") not in ("word", "character")
+                or not isinstance(review.get("character"), str)
+                or len(review["character"]) != 1):
+            raise ValueError(f"{code}: 无效的字词优先评议")
+        ordered = sorted(groups.get(code, []), key=lambda r: -int(r[2]) if len(r) > 2 else 0)
+        characters = [r for r in ordered if len(r[0]) == 1]
+        words = [r for r in ordered if len(r[0]) > 1]
+        if not characters or characters[0][0] != review["character"]:
+            raise ValueError(f"{code}: 评议首字不存在或单字顺序已改变，请复核来源更新")
+        if review["priority"] == "word" and not words:
+            raise ValueError(f"{code}: 词优先评议已无词组，请复核来源更新")
+
+        # 尽量让全部词在字前，仅为受保护字预留前三选的位置。
+        # 保持字序时，后面受保护字的限制也约束前面的字。
+        slots = [len(words)] * len(characters)
+        for i, row in enumerate(characters):
+            if is_gb2312_han(row[0]) and len(code) == shortest[row[0]]:
+                slots[i] = min(slots[i], 2 - i)
+        for i in range(len(characters) - 2, -1, -1):
+            slots[i] = min(slots[i], slots[i + 1])
+        if any(slot < 0 for slot in slots):
+            raise ValueError(f"{code}: 字序与 GB2312 最简码前三选冲突")
+        if review["priority"] == "character":
+            slots[0] = 0
+        elif slots[0] == 0:
+            raise ValueError(f"{code}: 词首选与 GB2312 最简码前三选冲突")
+        buckets = [[] for _ in range(len(words) + 1)]
+        for row, slot in zip(characters, slots):
+            buckets[slot].append(row[0])
+        prefix = []
+        for i, row in enumerate(words):
+            prefix.extend(buckets[i])
+            prefix.append(row[0])
+        prefix.extend(buckets[-1])
+        prefixes[code] = prefix
+
+    # 复用完整约束检查，拒绝破坏词序、字序、长码及表外字后置规则。
+    return apply_candidate_prefixes(rows, prefixes, tgh_characters)
+
+
 def write_pure_orders(path, orders):
     lines = ["-- 自动生成：scripts/merge_lansan_dicts.py；仅用于纯单字恢复原顺序。", "return {"]
     for code, chars in sorted(orders.items()):
@@ -462,6 +513,9 @@ def main():
     tgh_characters = read_tgh_characters(tgh_path, tgh_manifest)
     rows, pure_orders, charset_order_stats = apply_charset_order(
         rows, tgh_characters)
+    priority_path = SOURCES / "mixed_priority_reviews.json"
+    priorities = json.loads(priority_path.read_text(encoding="utf-8"))["groups"]
+    rows, priority_stats = apply_reviewed_priorities(rows, priorities, tgh_characters)
     candidate_prefix_path = SOURCES / "candidate_prefix_overrides.json"
     candidate_prefixes = json.loads(candidate_prefix_path.read_text(encoding="utf-8"))["prefixes"]
     rows, candidate_prefix_stats = apply_candidate_prefixes(rows, candidate_prefixes, tgh_characters)
@@ -483,13 +537,14 @@ def main():
 # 705 组评议只用于重建基线位置，最终排序不强制保留旧字词配对关系。
 # 8105 规范字表之外的单字排在全部词后，GB2312 最简码例外。
 # 用户明确的字词优先例外见 sources/lansan/candidate_prefix_overrides.json。
+# 字词优先评议见 sources/lansan/mixed_priority_reviews.json；前三选不固定旧名次。
 # 纯单字原顺序由 lua/lansan_single_order.lua 和对应过滤器恢复。
 # 混合编码使用组内排序权重；纯词编码使用万象权重 + 1，未覆盖项为 1。
 # 按“词＋编码”去重；同词异码保留；个人词库由可选的本机入口接入。
 # 原始词库不作修改。更新来源词库后重新生成并部署。
 ---
 name: lansan_merged
-version: "2026.11.13.2"
+version: "2026.11.13.3"
 sort: by_weight
 columns:
   - text
@@ -531,7 +586,7 @@ encoder:
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in [SOURCES / "lansan_guanfang.dict.yaml", SOURCES / "ls_ci.dict.yaml",
                                        frequency_path, review_path, phrase_order_path, exclusion_path,
-                                       tgh_path, tgh_manifest, candidate_prefix_path]},
+                                       tgh_path, tgh_manifest, priority_path, candidate_prefix_path]},
         "official_character_rows": len(characters),
         "standard_phrase_rows": len(standard_pairs),
         "official_supplement_rows": supplements,
@@ -546,6 +601,7 @@ encoder:
         "char_word_order": order_stats,
         "frequency_order": frequency_order_stats,
         "charset_order": charset_order_stats,
+        "reviewed_priority_order": priority_stats,
         "candidate_prefix_order": candidate_prefix_stats,
         "single_order_output": str(single_output),
         "unique_phrases_including_personal": len({row[0] for row in rows + personal if len(row[0]) > 1}),

@@ -4,7 +4,7 @@ import unittest
 
 from merge_lansan_dicts import (
     apply_char_word_order, apply_frequency_order, apply_charset_order,
-    apply_candidate_prefixes, is_gb2312_han,
+    apply_candidate_prefixes, apply_reviewed_priorities, is_gb2312_han,
 )
 
 
@@ -95,6 +95,42 @@ class CharsetOrderTests(unittest.TestCase):
         result, pure, _ = apply_charset_order(rows, {'甲'})
         self.assertEqual(result, rows)
         self.assertEqual(pure, {})
+
+
+class ReviewedPriorityTests(unittest.TestCase):
+    def apply(self, texts, priority, tgh):
+        return apply_reviewed_priorities(group('abcd', texts),
+                                        {'abcd': {'priority': priority, 'character': texts[0]}},
+                                        set(tgh))[0]
+
+    def test_word_priority_uses_top_three_as_limit_not_original_position(self):
+        rows = self.apply(['甲', '甲词', '乙词', '丙词'], 'word', '甲')
+        self.assertEqual(candidates(rows, 'abcd'), ['甲词', '乙词', '甲', '丙词'])
+
+    def test_multiple_protected_characters_reserve_enough_positions(self):
+        rows = self.apply(['甲', '乙', '甲词', '乙词'], 'word', '甲乙')
+        self.assertEqual(candidates(rows, 'abcd'), ['甲词', '甲', '乙', '乙词'])
+
+    def test_non_gb_word_priority_promotes_all_words(self):
+        # 汕有更短码，其长码在全部词后；非 GB2312 的峃可以到第四选。
+        source = group('abcd', ['峃', '润笔', '海岸炮', '学习雷锋好榜样', '汕']) + group('abc', ['汕'])
+        rows, _ = apply_reviewed_priorities(source, {'abcd': {'priority': 'word', 'character': '峃'}}, set('峃汕'))
+        self.assertEqual(candidates(rows, 'abcd'), ['润笔', '海岸炮', '学习雷锋好榜样', '峃', '汕'])
+
+    def test_character_priority_moves_words_before_later_non_gb_characters(self):
+        rows = self.apply(['饶', '峣', '闻风而逃'], 'character', '饶峣')
+        self.assertEqual(candidates(rows, 'abcd'), ['饶', '闻风而逃', '峣'])
+
+    def test_priority_uses_current_word_order_instead_of_saved_phrase_names(self):
+        rows = self.apply(['昫', '最高领奖台', '电梯口'], 'word', '昫')
+        self.assertEqual(candidates(rows, 'abcd'), ['最高领奖台', '电梯口', '昫'])
+
+    def test_stale_review_and_impossible_word_first_fail(self):
+        with self.assertRaisesRegex(ValueError, '首字'):
+            apply_reviewed_priorities(group('abcd', ['甲', '甲词']),
+                                     {'abcd': {'priority': 'word', 'character': '乙'}}, set('甲乙'))
+        with self.assertRaisesRegex(ValueError, '冲突'):
+            self.apply(['甲', '乙', '丙', '甲词'], 'word', '甲乙丙')
 
 
 class CandidatePrefixTests(unittest.TestCase):
