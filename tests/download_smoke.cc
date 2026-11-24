@@ -83,13 +83,16 @@ int main(int argc, char** argv) {
     check("nirx", "你");
     check(";w", "？");
     check("aary", "");
+    check("tiga", "");
     check("aary{Control+h}", "𠼞");
     check("aary", "𠼞");
+    exact("tiga", {"體", "䪆"});
     api->set_option(session, "charset_comment_filter", true);
     api->set_option(session, "udpf_switch", true);
     check("~aary", "𠼞", "[扩B] U+20F1E");
     api->set_option(session, "extended_char", true);
     check("~aary", "");
+    check("tiga", "");
     check("`ni", "你", "nirx");
     select("tiger");
     if (!api->get_option(session, "dz_ci")) throw std::runtime_error("Tiger should default to characters");
@@ -121,6 +124,9 @@ int main(int argc, char** argv) {
     // 扩展字是一个 Unicode 字符，不能按 UTF-8 字节数误删。
     api->set_option(session, "extended_char", false);
     exact("weiu", {"𫃕"});
+    check("iboa{space}", "鿍");
+    check("vcmd{space}", "鿬");
+    check("uyll", "鿿");
     api->set_option(session, "extended_char", true);
     exact("weiu", {});
     check("aipg{Control+Shift+D}{space}", "演示");

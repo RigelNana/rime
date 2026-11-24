@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""从固定版本的社区码表提取小鹤缺失的扩展区单字；仅依赖标准库。"""
+"""从固定版本的社区码表提取小鹤缺失的基本区（含繁体／生僻字）与扩展区单字；仅依赖标准库。"""
 
 from collections import Counter
 import hashlib
@@ -9,7 +9,8 @@ import re
 import shlex
 
 
-EXTENSIONS = (
+BLOCKS = (
+    ("基本区", 0x4E00, 0x9FFF),
     ("A", 0x3400, 0x4DBF),
     ("B", 0x20000, 0x2A6DF),
     ("C", 0x2A700, 0x2B73F),
@@ -21,10 +22,11 @@ EXTENSIONS = (
     ("I", 0x2EBF0, 0x2EE5F),
     ("J", 0x323B0, 0x3347F),
 )
+BLOCK_PRIORITY = {name: index for index, (name, _, _) in enumerate(BLOCKS)}
 
 
-def extension(char):
-    return next((name for name, first, last in EXTENSIONS
+def cjk_block(char):
+    return next((name for name, first, last in BLOCKS
                  if first <= ord(char) <= last), None)
 
 
@@ -107,7 +109,7 @@ def build(root, include_personal=False):
         code = raw_code.lower()
         if code != raw_code:
             normalized.append({"line": number, "text": char, "from": raw_code, "to": code})
-        if extension(char) is None:
+        if cjk_block(char) is None:
             continue
         if char in existing:
             skipped.add(char)
@@ -116,6 +118,7 @@ def build(root, include_personal=False):
         if pair not in seen:
             seen.add(pair)
             rows.append(pair)
+    rows.sort(key=lambda pair: BLOCK_PRIORITY[cjk_block(pair[0])])
     name = "flypy_ext.local" if include_personal else "flypy_ext"
     output = root / (name + ".dict.yaml")
     content = (
@@ -130,11 +133,12 @@ def build(root, include_personal=False):
         temporary.write_text(content, encoding="utf-8")
         temporary.replace(output)
     chars = {char for char, _ in rows}
+    counts = Counter(cjk_block(char) for char in chars)
     return {
         "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
         "rows": len(rows),
         "characters": len(chars),
-        "by_block": dict(sorted(Counter(extension(char) for char in chars).items())),
+        "by_block": {name: counts[name] for name, _, _ in BLOCKS if counts[name]},
         "skipped_existing_characters": len(skipped),
         "normalized_codes": normalized,
     }

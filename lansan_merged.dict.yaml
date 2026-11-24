@@ -2846,7 +2846,7 @@ encoder:
 灪	aovk
 淘	aovt	1
 㳐	aovv
-淗	aowi	1
+淗	aowi	2
 㲼	aowo
 㶇	aox
 㶇	aoxg	1
@@ -13288,10 +13288,10 @@ encoder:
 𤾒	dcmh
 瞅	dcmi
 䎿	dcmi
-䁦	dcmm	4
-𡳆	dcmm	3
-𥈿	dcmm	2
-𥍏	dcmm	1
+䁦	dcmm	5
+𡳆	dcmm	4
+𥈿	dcmm	3
+𥍏	dcmm	2
 畠	dcmr
 矁	dcmu
 魄	dcmx
@@ -17017,7 +17017,7 @@ encoder:
 𥇥	dwny
 楽	dwof
 䞮	dwof
-𰴏	dwon	1
+𰴏	dwon	2
 覐	dwoo
 氃	dwot
 𧠑	dwot
@@ -22153,7 +22153,7 @@ encoder:
 㱻	fkui	1
 𢟄	fkul
 亱	fkum
-恧	fkup	1
+恧	fkup	2
 鲃	fkv
 𣧜	fkvd
 舥	fkve
@@ -28784,7 +28784,7 @@ encoder:
 𧯞	het
 𧯞	hete	1
 𰠡	hetg
-𰶢	hetu	1
+𰶢	hetu	2
 憇	heu
 䜴	heub
 憇	heup	1
@@ -32974,10 +32974,10 @@ encoder:
 摰	igih	3
 𢴸	igih	2
 𢸧	igih	1
-埶	igii	4
-㙇	igii	3
-𡉋	igii	2
-𡑫	igii	1
+埶	igii	5
+㙇	igii	4
+𡉋	igii	3
+𡑫	igii	2
 𤮅	igij
 燅	igim	5
 䞇	igim	4
@@ -33446,7 +33446,7 @@ encoder:
 𨓁	iiep
 㙟	iieu	2
 𠓇	iieu	1
-𪤼	iiew	1
+𪤼	iiew	2
 㚊	iiey	1
 圭	iif
 蠿	iifb
@@ -62450,9 +62450,9 @@ encoder:
 䱍	pffq	3
 𩸋	pffq	2
 𩸕	pffq	1
-𠼞	pffw	3
-𦾒	pffw	2
-𮪁	pffw	1
+𠼞	pffw	4
+𦾒	pffw	3
+𮪁	pffw	2
 𬵹	pffx
 蕹	pfg
 𧄬	pfgb
@@ -62608,17 +62608,17 @@ encoder:
 𨞯	pfmk	1
 𡗐	pfml
 𮓏	pfml
-幁	pfmm	11
-蕒	pfmm	10
-頜	pfmm	9
-顀	pfmm	8
-顭	pfmm	7
-䓣	pfmm	6
-䪳	pfmm	5
-𩖎	pfmm	4
-𩴲	pfmm	3
-𬰿	pfmm	2
-𮏭	pfmm	1
+幁	pfmm	12
+蕒	pfmm	11
+頜	pfmm	10
+顀	pfmm	9
+顭	pfmm	8
+䓣	pfmm	7
+䪳	pfmm	6
+𩖎	pfmm	5
+𩴲	pfmm	4
+𬰿	pfmm	3
+𮏭	pfmm	2
 薨	pfmn
 藣	pfmn
 虈	pfmn
@@ -62815,8 +62815,8 @@ encoder:
 𫈶	pfxx	1
 衡	pfy
 𠂀	pfyf	1
-颌	pfym	2
-𱂭	pfym	1
+颌	pfym	3
+𱂭	pfym	2
 𦾠	pfyp	1
 𰲍	pfyr	1
 衡	pfys	1
@@ -66048,7 +66048,7 @@ encoder:
 衎	pqsg	1
 𢽔	pqst
 蒻	pqt
-𢓓	pqte	1
+𢓓	pqte	2
 苲	pqtf	1
 𢂃	pqtm
 鮓	pqtq	1
@@ -73649,7 +73649,7 @@ encoder:
 㫣	rrv
 𩙾	rrvd	1
 𤵺	rrve
-𤻃	rrvf	1
+𤻃	rrvf	2
 㫣	rrvv	1
 曝	rrw
 𣌈	rrwc
@@ -86577,7 +86577,7 @@ encoder:
 𢝰	uoru	3
 𤙹	uoru	2
 𦝰	uoru	1
-𬪌	uorw	1
+𬪌	uorw	2
 𤋁	uorx	1
 胓	uos
 胓	uosq
@@ -87914,7 +87914,7 @@ encoder:
 夨	vcdv
 跶	vce
 𥓓	vcel
-跶	vcep	2
+跶	vcep	3
 蹆	vcep	1
 跨	vcf
 矼	vcfd
@@ -92510,7 +92510,7 @@ encoder:
 祓	wgbi	3
 𥹔	wgbi	2
 𪊝	wgbi	1
-𥹉	wgbx	1
+𥹉	wgbx	2
 隋	wgc
 隓	wgcc
 䜐	wgcc
@@ -104071,6 +104071,97 @@ encoder:
 𮖜	yyyw
 𦦦	yyyx	1
 𦦚	yyyy
+龦	mbpm
+龧	rrvf	1
+龨	xpra
+龩	pqte	1
+龪	dywf
+龫	xyqg
+龬	tgex
+龭	fcwf
+龮	fhhw
+龯	thdw	1
+龰	shi
+龱	lowm	1
+龲	ttxf
+龳	igii	1
+龴	qxi
+龵	lte
+龶	ogf
+龷	xff
+龸	mlv
+龹	fii
+龺	lfmf
+龻	ncnn
+龼	iumd
+龽	mpqi
+龾	aowi	1
+龿	pkii
+鿀	pxby
+鿁	cwfy
+鿂	xrrf
+鿃	dcmm	1
+鿄	apio
+鿅	wmnq
+鿆	wgbx	1
+鿇	kjbb
+鿈	pbbe
+鿉	pafe	1
+鿊	paeh
+鿋	ycnm
+鿌	afrh
+鿍	iboa
+鿍	ibo
+鿎	vcep	2
+鿏	jobq
+鿐	payf
+鿑	tsii
+鿒	pfym	1
+鿓	pfmm	1
+鿔	jrnn	1
+鿕	fgfy
+鿖	pffw	1
+鿗	ykpf
+鿘	kppw
+鿙	kpxw	1
+鿚	kpon
+鿛	tigo	1
+鿜	sdfo
+鿝	ofvo
+鿞	fafo	1
+鿟	cajh
+鿠	cafo	1
+鿡	fnpo
+鿢	dwpw	1
+鿣	dwxw
+鿤	dwon	1
+鿥	iewo
+鿦	pgcs
+鿧	wbfo
+鿨	mcfo
+鿩	prfo
+鿪	qgex
+鿫	yegc
+鿬	vcmd
+鿭	jjhk
+鿮	tvfp
+鿯	uorw	1
+鿰	alfb
+鿱	skvg
+鿲	hetu	1
+鿳	pfin
+鿴	fbjo
+鿵	fkup	1
+鿶	ficb
+鿷	fwyq
+鿸	ffin
+鿹	fiuh
+鿺	oboq	1
+鿻	yfgp
+鿼	yfun	1
+鿽	nlqt
+鿾	iiew	1
+鿿	uyll
 就是	hbsm	2081315
 一个	fjyj	2
 但是	kusm	1766995
@@ -107200,7 +107291,7 @@ encoder:
 交换	tysj	23306
 西班牙	gsha	23306
 本来就是	oihs	2
-耐心	fkup	2
+耐心	fkup	3
 早在	fmki	23300
 发射	mbyk	23294
 将军	dimr	23287
@@ -126501,7 +126592,7 @@ encoder:
 交锋	tyjb	4
 夹着	gsnd	2485
 软骨	rltm	3
-不可靠	jrnn	2485
+不可靠	jrnn	3
 归因	tolc	2485
 节操	pqsn	2485
 酣畅淋漓	yraa	2485
@@ -134683,7 +134774,7 @@ encoder:
 完好	iwxj	1640
 一岁	fjhi	1640
 首饰	hihl	1640
-跟谁	vcep	3
+跟谁	vcep	4
 慵懒	gtgs	1640
 铁匠	jext	1640
 办公桌	ugur	5
@@ -144802,7 +144893,7 @@ encoder:
 盛泽	hvab	1125
 尾气	doyt	1125
 电源线	raqe	1125
-淘米	aowi	2
+淘米	aowi	3
 物价上涨	ukwa	3
 莫文蔚	eupd	1125
 当道	qohe	1125
@@ -150205,7 +150296,7 @@ encoder:
 单位时间	qkrh	962
 拯救地球	shis	962
 去哪儿网	fnwg	962
-地域歧视	iiew	3
+地域歧视	iiew	4
 套种	cxcb	2
 光点	illx	961
 极快	ougu	2
@@ -155670,7 +155761,7 @@ encoder:
 英亩	pgfc	833
 协约国	lqls	833
 艳女	cjxc	2
-醉驾	yfun	833
+醉驾	yfun	2
 商鞅变法	jqua	833
 另存为	pkiu	833
 刮刀	hapc	833
@@ -164809,7 +164900,7 @@ encoder:
 礼单	wvqr	660
 遥相呼应	ctnt	660
 学艺不精	apjw	2
-草酸	pfym	4
+草酸	pfym	5
 凯尔特	hjui	660
 多劳多得	itip	660
 肛裂	ucfa	660
@@ -167784,7 +167875,7 @@ encoder:
 斧钺	etjm	610
 矛盾激化	lcaj	2
 生物碱	luvh	610
-蓟县	pfmm	12
+蓟县	pfmm	13
 合乎逻辑	pvfr	610
 洋炮	aamo	609
 箭袋	mekw	3
@@ -168662,7 +168753,7 @@ encoder:
 百货公司	fjgv	594
 专稿	lvco	594
 临沂	trat	2
-荒无人烟	pfym	3
+荒无人烟	pfym	4
 禁欲	jpgy	594
 无所不知	fcjb	594
 既非	eref	594
@@ -174837,7 +174928,7 @@ encoder:
 露珠	mvsu	497
 皇朝	dslf	2
 义理	iosw	497
-树梢	oboq	497
+树梢	oboq	2
 绯红	qeqc	497
 外力	iauc	497
 布阵	gpwr	497
@@ -184408,7 +184499,7 @@ encoder:
 打对	srbk	3
 戎机	agoh	369
 几间	hqhr	369
-多试	iiew	2
+多试	iiew	3
 泛青	aeok	2
 每队	ljwy	369
 抽着	sxnd	369
@@ -187222,7 +187313,7 @@ encoder:
 风风光光	hhii	7
 浴场	agiv	337
 因循守旧	lpij	337
-广域网	tigo	337
+广域网	tigo	3
 百无禁忌	ffju	337
 摆谱	sfee	337
 眼睫毛	ddot	5
@@ -189732,7 +189823,7 @@ encoder:
 十二金牌	lltp	311
 舞勺之年	loxl	311
 燕燕轻盈	nnrc	311
-千红万紫	pqte	2
+千红万紫	pqte	3
 行之不远	pxjw	2
 红巾翠袖	qphy	311
 约之以礼	qxvw	311
@@ -198425,7 +198516,7 @@ encoder:
 不知自量	jbuu	231
 正复为奇	jlic	231
 巴巴儿地	kkwi	3
-佳节如意	kpxw	231
+佳节如意	kpxw	2
 穷通得失	lqpe	231
 窃玉偷香	lskc	231
 南陈北李	lwvo	231
@@ -199144,7 +199235,7 @@ encoder:
 鼎力扶持	duss	226
 讽一劝百	efbf	226
 说长论短	eieb	226
-更深夜静	fafo	226
+更深夜静	fafo	2
 无所依归	fckt	226
 夜眠八尺	fdgb	3
 一壶千金	fkpt	226
@@ -206813,7 +206904,7 @@ encoder:
 欲笑还颦	gmje	172
 慎始慎终	gxgq	172
 崇论宏议	heie	3
-风云万变	hetu	2
+风云万变	hetu	3
 凡事要好	hhhx	2
 风不鸣条	hjnb	172
 闹红一舸	hqff	3
@@ -217294,7 +217385,7 @@ encoder:
 敲冰求火	othm	118
 高飞远翔	ovwn	118
 千思百虑	pcfc	2
-席卷而逃	pffw	4
+席卷而逃	pffw	5
 兔死犬饥	pflh	118
 英雄入彀	pgmo	2
 别有肺肠	pguu	118
@@ -225203,7 +225294,7 @@ encoder:
 内标	gyop	83
 高名	ogin	1
 流砂	akvt	83
-眼炎	dcmm	5
+眼炎	dcmm	6
 井圈	iglf	83
 环管	sjmi	83
 顶推	rfsp	83
@@ -232302,7 +232393,7 @@ encoder:
 日征月迈	rput	51
 轩轩甚得	rrap	51
 疤瘌眼儿	rrdw	51
-连日带夜	rrvf	2
+连日带夜	rrvf	3
 可可儿的	rrwd	51
 疾电之光	rrxi	51
 愚者一得	rvfp	51
@@ -232856,7 +232947,7 @@ encoder:
 去无踪	ffvi	48
 大力弘扬	cuqs	48
 朗然	iewl	2
-共同愿望	wgbx	2
+共同愿望	wgbx	3
 半部分	qdnw	48
 有话好说	gexe	48
 盘锦市	fjfp	48
@@ -238122,7 +238213,7 @@ encoder:
 外财	iayl	26
 多层住宅	idki	26
 实而不华	ifjj	26
-名垂宇宙	igii	5
+名垂宇宙	igii	6
 名门大族	ihcn	26
 密密层层	iidd	3
 寝不安席	ijip	26
@@ -244920,7 +245011,7 @@ encoder:
 泉石膏肓	dvox	7
 聊以自娱	dvux	7
 目迷五色	dwaj	3
-越陌度阡	dwpw	7
+越陌度阡	dwpw	2
 屋上架屋	dwud	7
 新媳妇儿	dxxw	7
 卑躬屈节	dydp	7
@@ -255266,7 +255357,7 @@ encoder:
 中央书记处书记	bgve	1
 为什么可以	ikev	1
 传统意义上	kqww	1
-决定性因素	tigo	1
+决定性因素	tigo	2
 已经去了	jqfu	1
 法律面前一律平等	apfm	2
 马上就可以	vwhv	1
@@ -256255,7 +256346,7 @@ encoder:
 这个杀手不太冷	uyot	1
 青龙偃月刀	opkp	1
 一个都不能少	fyvt	1
-不可分割的一部分	jrnn	1
+不可分割的一部分	jrnn	2
 不敢想像	jvtk	1
 京东自营	htut	1
 只有改革开放才能发展中国	ngul	1
@@ -256734,7 +256825,7 @@ encoder:
 水泥森林	laoj	1
 生活不止眼前的苟且	lajm	1
 神一般的存在	wffk	1
-科学与技术	cafo	1
+科学与技术	cafo	2
 类风湿关节炎	wham	1
 美式足球	ywns	1
 花钱如流水	pjxl	1
@@ -260166,7 +260257,7 @@ encoder:
 童便	dwkf	3
 皎阳似火	dwkm	1
 瞒神吓鬼	dwnc	1
-尸禄素食	dwon	2
+尸禄素食	dwon	3
 超类绝伦	dwqk	1
 臀疣	dwrb	1
 眄视指使	dwsk	1
@@ -264540,7 +264631,7 @@ encoder:
 圊肥	louk	1
 水平天远	louw	1
 南棹北辕	lovr	1
-含毫命简	lowm	1
+含毫命简	lowm	2
 究根儿	lowq	1
 才高意广	lowt	1
 柔枝嫩条	loxb	1
@@ -266455,7 +266546,7 @@ encoder:
 愆期	paau	1
 愆尤	pabi	1
 行滥短狭	pabt	1
-微收残暮	pafe	1
+微收残暮	pafe	2
 迁善去恶	pafm	5
 蒸沙成饭	pahh	1
 蒸汽锤	pajg	2
@@ -269063,7 +269154,7 @@ encoder:
 相门出相	thbt	1
 归邪反正	thcj	1
 眉尖眼角	thdj	1
-临事屡断	thdw	1
+临事屡断	thdw	2
 庐山面目	thfd	1
 冲风冒雨	thgm	1
 东飘西徙	thgp	1
@@ -269798,7 +269889,7 @@ encoder:
 改柱张弦	uoqq	2
 承包经营责任制	uoqw	1
 承平日久	uorj	1
-天高日远	uorw	2
+天高日远	uorw	3
 量枘制凿	uowk	1
 脖梗儿	uowq	1
 群枉之门	uoxh	1
