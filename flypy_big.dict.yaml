@@ -16,5 +16,6 @@ import_tables:
   - 'flypy/flypy.primary.short.word'      # 一简词
   - 'flypy/flypy.whimsicality'            # 随心所欲
   - 'flypy/flypy.rime_ice'                # 雾凇大词库（小鹤四码词）
+  - 'flypy/flypy.moegirl'                 # 萌娘百科二次元词库（小鹤四码词）
   - flypy_ext                            # 扩展区补充，仅“全字集”模式显示
 ...

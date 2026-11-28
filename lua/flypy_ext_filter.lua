@@ -6,7 +6,9 @@ local function init(env)
 end
 
 local function filter(input, env)
+  local seg = env.engine.context.composition:back()
   local common_only = env.engine.context:get_option("extended_char")
+      and not (seg and seg:has_tag("flypy_yehe"))
   for cand in input:iter() do
     if not common_only or utf8.len(cand.text) ~= 1
         or env.extensions:lookup(cand.text) == "" then

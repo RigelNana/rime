@@ -67,7 +67,9 @@ local function should_yield(text, option, coredb)
 end
 
 local function filter(input, env)
+  local seg = env.engine.context.composition:back()
   local on = env.engine.context:get_option("extended_char")
+      and not (seg and seg:has_tag("flypy_yehe"))
   for cand in input:iter() do
     if should_yield(cand.text, on, env.coredb) then
       yield(cand)

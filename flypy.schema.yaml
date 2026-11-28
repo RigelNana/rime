@@ -13,11 +13,13 @@ schema:
     反引号 ` 引导拼音反查，候选注释显示小鹤音形码。
     单引号 ' 引导临时英文，方括号 [ 或 ] 重复上屏。
     ~ 引导原小鹤通配反查，例如 ~ni``，反引号代表未知码位。
+    & 引导野鹤组字码（覆盖基本区至扩展 J 区），例如 &hguu。
     “全字集”启用社区字集补充（基本区繁体／生僻字与扩展区）；“常用字”保持原有候选。
   dependencies:
     - flypydz
     - flypy_ext
     - flypy_big
+    - flypy_yehe
     - core2022
     - PY_c
     - easy_english
@@ -70,6 +72,7 @@ engine:
     - ascii_segmentor
     - matcher
     - affix_segmentor@easy_english
+    - affix_segmentor@flypy_yehe
     - abc_segmentor
     - punct_segmentor
     - fallback_segmentor
@@ -80,6 +83,7 @@ engine:
     - reverse_lookup_translator@flypy_ext_lookup
     - lua_translator@*flypy_mode_translator
     - table_translator@easy_english
+    - table_translator@flypy_yehe
     - history_translator@history
     - history_translator@historyDM
     - history_translator@historyDM2
@@ -158,6 +162,7 @@ recognizer:
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     reverse_lookup: "^`[a-z]*$" # 单引号保留给三选，避免被反查识别器吞掉
     easy_english: "^'[A-Za-z]*`?$"
+    flypy_yehe: "^&[a-z]*$"
     flypy_lookup: "^~[a-z`]+$"
     expression: "^=.*$"
     number: '^S[0-9]+[.]?[0-9]*$'
@@ -211,6 +216,17 @@ easy_english:
     - "xlit|_| |"
   comment_format:
     - "xform/~/ /"
+
+flypy_yehe:
+  dictionary: flypy_yehe
+  tag: flypy_yehe
+  prefix: "&"
+  tips: "〔组字〕"
+  enable_completion: true
+  enable_sentence: false
+  enable_user_dict: false
+  enable_encoder: false
+  encode_commit_history: false
 
 menu:
   page_size: 9

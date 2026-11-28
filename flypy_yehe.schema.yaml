@@ -1,0 +1,13 @@
+# 编译野鹤组字码词典依赖，不加入输入方案菜单。
+schema:
+  schema_id: flypy_yehe
+  name: 野鹤组字码索引
+  version: "1.0"
+
+translator:
+  dictionary: flypy_yehe
+  enable_user_dict: false
+  enable_encoder: false
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba

@@ -22,8 +22,14 @@
 
 更新时应同时记录新的来源提交、文件哈希和字数，并提交公共生成表；不要直接修改生成文件。新增个人单字后重新运行部署脚本，会自动从本机扩展表排除该字。
 
-## 小鹤四码大词库来源（`flypy/flypy.rime_ice.dict.yaml`）
+## 小鹤四码大词库来源（`flypy/flypy.rime_ice.dict.yaml`、`flypy/flypy.moegirl.dict.yaml`）
 
-- 来源：[iDvel/rime-ice](https://github.com/iDvel/rime-ice) 的 `cn_dicts/base.dict.yaml` 与 `cn_dicts/ext.dict.yaml`（GPL-3.0）。
-- 转换规则：保持小鹤音形四码定长词规则（二字词双拼＋双拼，三字词声＋声＋双拼，四字及以上前三声＋末声），剔除原小鹤主库已有词条，按雾凇词频降序排列，共 831,582 条。
+- 通用大词库：[iDvel/rime-ice](https://github.com/iDvel/rime-ice) 的 `cn_dicts/base.dict.yaml` 与 `cn_dicts/ext.dict.yaml`（GPL-3.0），转换并去重后共 831,582 条。
+- 二次元词库：[suiginko/moetype](https://github.com/suiginko/moetype)（`20261025`）的 `toneless_moe.dict.yaml`（萌娘百科），转换并去重后共 162,007 条。
+- 转换规则：保持小鹤音形四码定长词规则（二字词双拼＋双拼，三字词声＋声＋双拼，四字及以上前三声＋末声），剔除原小鹤主库已有词条，按词频降序排列。
 - 通过 `flypy_big` 依赖方案与 `lua/flypy_mode_translator.lua` 接入，默认关闭（标准词库），可在 Rime 方案选单（Switcher）或 `Ctrl+Shift+B` 随时切换。
+
+## 野鹤组字码来源（`flypy_yehe.dict.yaml`）
+
+- 来源：[qqj-jj/yehe](https://github.com/qqj-jj/yehe)（野鹤）的组字码部分，共 103,902 字（137,531 条编码），覆盖基本区及扩展 A–J。
+- 在 `flypy` 方案中通过 `&` 前缀引导使用（如 `&hguu` → `丁`），不受“常用字”字集过滤限制。

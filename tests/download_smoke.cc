@@ -89,9 +89,12 @@ int main(int argc, char** argv) {
     api->simulate_key_sequence(session, "4");
     if (!api->get_option(session, "flypy_big")) throw std::runtime_error("Switcher did not toggle Flypy big dict");
     check("mhwv", "门户网站");
+    check("gdyg", "孤独摇滚");
     check("ni", "你");
     api->set_option(session, "flypy_big", false);
     check("mhwv", "");
+    check("&hguu", "丁");
+    check("&xxve", "\U000323b0");
     check("aary", "");
     check("tiga", "");
     check("aary{Control+h}", "𠼞");
