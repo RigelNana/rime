@@ -1,150 +1,119 @@
-# Rime 配置（元书 / Fcitx5 等）
+# Rime 个人配置
 
-源码已包含部署所需的公共词库、Lua 和公共配置，**下载后可以直接在元书等 Rime 客户端部署，不需要先运行 Python 或 Bash**。当前维护四个主方案：
+开箱即用的跨平台 Rime 输入法配置，支持 **Fcitx5（Linux）**、**元书 / Hamster（iOS）**、**小狼毫（Windows）** 与 **鼠须管（macOS）**。
 
-| 菜单名称 | Schema ID | 主词库 |
-| --- | --- | --- |
-| 小鹤音形 | `flypy` | `flypy`，原分表在 `flypy/`，另导入生成的 `flypy_ext` |
-| 虎码官方 | `tiger` | 纯单字使用 `tiger`；字词混输使用 `tigress.full` |
-| 蓝三官方 | `lansanguanfang` | `lansan_merged`，官方字表与两套词组合并 |
-| 日本語ローマ字 | `jaroomaji` | `jaroomaji` 及其分表 |
+仓库已内置所有公共词库、Lua 插件与 OpenCC 转换表，**下载即可直接部署，无需在手机或目标设备上运行脚本**（需要客户端支持 `librime-lua`）。
 
-启用顺序和切换行为在 `default.custom.yaml` 中维护。`tigress` 保留为虎码字词表的编译依赖，不在方案选单中单列。`PY_c`、`core2022`、`easy_english`、`flypydz`、`flypy_ext` 和 `stroke` 是反查、字符过滤等功能的依赖；它们不是重复的主输入方案。
+---
 
-## 元书：下载并部署
+## 包含方案
 
-1. 下载[最新源码 ZIP](https://github.com/RigelNana/rime/archive/refs/heads/main.zip)。
-2. 在元书「输入方案」右上角菜单选择「导入方案」，选择 ZIP；也可使用「下载方案」添加上面的下载地址。
-3. 进入「方案目录切换」，选中解压后包含 `default.custom.yaml`、`flypy.schema.yaml`、`lua/` 的目录（通常是 `rime-main`），然后重新部署。
-4. 选择小鹤，输入 `ni` 应出现「你」；虎码输入 `n` 应出现「在」，蓝三输入 `n` 应出现「你」。
+| 方案名称 | Schema ID | 说明 |
+| :--- | :--- | :--- |
+| **小鹤音形** | `flypy` | 四码定长、分号快符、可切四码大词库（雾凇 + 萌娘百科）、`&` 组字码打遍扩 J |
+| **虎码官方** | `tiger` | 默认纯单字，支持一键切字词混输，覆盖基本区至扩展 I（9.9 万字） |
+| **蓝三官方** | `lansanguanfang` | 蓝宝石官方字表 + 万象词频混输，基本区满覆盖，支持 8.2 万字拆分提示 |
+| **日本語ローマ字** | `jaroomaji` | 基于 [lazyfoxchan/rime-jaroomaji](https://github.com/lazyfoxchan/rime-jaroomaji) 的日语罗马字方案 |
 
-导入方式见[元书官方说明](https://ihsiao.com/apps/hamster/v3/docs/guides/schema/)。建议更新时导入到新目录，再切换方案目录，避免旧配置和编译缓存混用。客户端需要支持 librime-lua。
+> 方案顺序与按键习惯在 [default.custom.yaml](default.custom.yaml) 中配置。`flypy_big`、`flypy_ext`、`flypy_yehe`、`tigress`、`PY_c`、`core2022`、`easy_english`、`stroke` 等为内部依赖，不单独出现在方案选单中。
 
-早期提交 `8515732` 及以前需要先运行电脑上的准备脚本，直接导入当时的源码会因缺词库而没有候选；请重新下载当前版本。
+---
 
-## 目录约定
+## 快速安装
 
-| 位置 | 用途 | Git 管理 |
-| --- | --- | --- |
-| 根目录 `*.schema.yaml`、`*.custom.yaml`、公共 `*.dict.yaml` | 当前方案和 Rime 需要按名称查找的资源 | 是 |
-| `flypy/` | 小鹤分表 | 公共分表是；个人词条否 |
-| `lua/`、`opencc/` | 共用功能与转换资源 | 是 |
-| `sources/lansan/` | 蓝三原表、万象词频子集与来源记录 | 是 |
-| `sources/flypy/` | 小鹤社区生僻字原表与版本记录 | 是 |
-| `sources/prelude/` | 随包公共配置的来源和许可证 | 是 |
-| `scripts/`、`tests/` | 准备、部署及源码下载回归检查 | 是 |
-| `templates/local/` | 个人词库的空模板 | 是 |
-| `lansan_merged.dict.yaml` | 自动生成的蓝三公共合并表 | 是，随源码提供 |
-| `flypy_ext.dict.yaml` | 自动提取的小鹤公共扩展表 | 是，随源码提供 |
-| `local.yaml`、`*.local.dict.yaml` | 可选的本机个人词库入口和生成表 | 否 |
-| `build/` | Rime 编译产物 | 否 |
-| `sync/`、`*.userdb/`、`user.yaml`、`installation.yaml` | 同步副本、学习记录、本机状态 | 否 |
-| `archive/`、`backups/` | 未启用方案的本地归档、修改前备份 | 否 |
+### iOS（元书 / Hamster）
 
-方案入口保留在根目录，避免更改 Rime 的查找规则。未启用的旧蓝三、简单鹤、旧拼音和旧日语方案已经归档到 `archive/standardize-*/`，目录中的清单记录原路径和 SHA-256。归档可用于恢复旧方案，不参与当前部署。
+1. 下载最新源码压缩包：[main.zip](https://github.com/RigelNana/rime/archive/refs/heads/main.zip)
+2. 在元书「输入方案」右上角选择 **导入方案**（或使用「下载方案」填入上述链接）。
+3. 进入「方案目录切换」，选中解压后包含 `default.custom.yaml` 的目录（通常为 `rime-main`），点击 **重新部署**。
+4. 简单验证：小鹤输入 `ni` 出「你」，虎码输入 `n` 出「在」，蓝三输入 `n` 出「你」。
 
-## 电脑维护与部署
+> 建议每次更新时导入到新目录再切换，避免旧编译缓存残留。详细导入步骤可参考[元书官方文档](https://ihsiao.com/apps/hamster/v3/docs/guides/schema/)。
 
-手机直接使用公共配置无需运行以下脚本。电脑上的维护脚本需要 Python 3、Bash 和带 Lua 支持的 librime；Fcitx5 重新加载需要 `busctl`。脚本不依赖额外 Python 包。默认配置、标点和笔画依赖已经随源码提供。
+### Linux（Fcitx5-Rime）
 
-```sh
-# 创建缺失的个人词库空模板、生成蓝三词库及拆分表、小鹤扩展表、编译配置
-bash scripts/deploy.sh
-
-# 编译后立即重新加载当前用户的 Fcitx5 Rime
+```bash
+git clone https://github.com/RigelNana/rime.git ~/.local/share/fcitx5/rime
+cd ~/.local/share/fcitx5/rime
 bash scripts/deploy.sh --reload
 ```
 
-非默认共享资源路径可以通过 `RIME_SHARED_DATA_DIR` 指定。脚本会创建缺失的个人词库空模板，并生成 `local.yaml` 与本机词库入口；已有的个人词库不会被覆盖。没有 `local.yaml` 时，四个主方案直接使用公共词库。
+### Windows（小狼毫）/ macOS（鼠须管）
 
-只准备词库而暂不编译：
+将仓库内容放到对应的 Rime 用户目录中，右键点击输入法图标执行 **重新部署** 即可。
 
-```sh
+---
+
+## 功能与快捷键
+
+所有开关均可在 **Rime 方案选单（Switcher）** 中操作：电脑按 `F4` 或 ``Ctrl+` ``，手机直接点客户端菜单。
+
+### 通用快捷键
+
+| 快捷键 / 引导符 | 功能 | 说明 |
+| :--- | :--- | :--- |
+| `F4` / ``Ctrl+` `` | 打开方案选单 | 切换方案及各项开关 |
+| `` ` `` | 拼音反查 | 反查当前方案的编码 |
+| `'` | 临时英文 | 输入英文词句，无需切换中英 |
+| `=` | 计算器 | 支持基础四则运算，如 `=1+1` |
+| `[` / `]` | 重复上屏 | 重复输出上一次上屏的内容 |
+| `Ctrl+O` | 简繁切换 | 简体 / 繁体输出 |
+| `Ctrl+H` | 常用字 / 全字集 | 控制生僻字与扩展区显示 |
+| `Ctrl+U` / `Ctrl+Y` | U 区 / U 编注释 | 候选词旁显示 Unicode 分区与码位 |
+| `Ctrl+P` / `Ctrl+I` | 拼音 / Emoji | 候选词旁显示注音或 Emoji |
+
+### 小鹤音形（`flypy`）
+
+* **大词库开关（`Ctrl+Shift+B` 或 Switcher）**：默认使用纯净四码小鹤；开启 **大词库** 后，在保留原库全部候选在前的前提下，追加 **雾凇（83.2 万）+ 萌娘百科二次元（16.2 万）** 四码词，依然保持四码定长与顶功手感，不改整句。
+* **`&` 组字码（覆盖基本区至扩展 J，共 10.3 万字）**：遇到不认识读音的生僻字，按 `&` 开头依次输入部件的小鹤双拼即可（例如 `&riyt` → `明`、`&mulb` → `森`、`&hguu` → `丁`）。支持自动补全，且在「常用字」模式下也可直接使用。
+* **全字集补充（`Ctrl+H`）**：全字集模式下额外提供 **3.5 万+** 基本区繁体/生僻字与扩展区音形四码；日常默认「常用字」模式完全不受干扰。
+* **通配反查（`~`）**：用反引号代替未知码位，如 ``` ~ni`` ```。
+
+### 虎码（`tiger`）与蓝三（`lansanguanfang`）
+
+* **纯单字 / 字词混输（`Ctrl+Shift+D` 或 Switcher）**：
+  * **虎码**默认纯单字，切混输后自动切换至词库权重；
+  * **蓝三**默认字词混输（融合万象词频、保护 GB2312 最简码前三选、表外字后置），切纯单字时自动恢复官方原字序。
+* **蓝三拆分提示（`Ctrl+J` 或 Switcher）**：默认隐藏，开启后单字候选显示「字根 · 全码」（如 `摺〔扌习习白 · shhd〕`），已覆盖 **82,403 字**（含全部 GB2312 及基本区增补 90 字）。
+
+---
+
+## 本机维护与测试
+
+仅在电脑端更新词库或修改规则时需要（依赖 Python 3、Bash、`librime` 与 `librime-lua`）：
+
+```bash
+# 准备个人词库模板、重新生成合并词库与拆分表并编译
+bash scripts/deploy.sh
+
+# 编译后立即重载本机 Fcitx5-Rime
+bash scripts/deploy.sh --reload
+
+# 仅生成词库（不编译）
 python3 scripts/prepare.py
-```
 
-## 蓝三、虎码：纯单字与字词混输
-
-手机打开客户端的 Rime 方案选单，展开选项后切换 **字词混输／纯单字**。电脑按 **F4** 或 **Ctrl+反引号** 打开同一选单，也可按 **Ctrl+Shift+D** 直接切换；正在输入的候选会即时更新。
-
-- **蓝三**默认字词混输。纯单字模式过滤普通字母编码下的多字候选，保留单字的原有顺序；切回混输即恢复原候选。例如 `aipg` 从“演示、淙、泳帽”变为“淙”。
-- **虎码**只显示一个“虎码官方”，默认纯单字。两种模式分别调用原单字版、原词库版的词典及权重；例如 `djd` 在纯单字模式下“哈”在前，在字词模式下“呌”在前。
-- “纯单字”与“常用字／全字集”是两个独立开关。扩展区汉字也按一个字保留；临时英文、拼音反查、日期、计算器、快符和重复上屏沿用原来的行为。
-- 本机虎码个人词条继续分别来自 `tiger.extended.dict.yaml` 和 `tigress.extended.dict.yaml`；纯单字模式会隐藏正常字母编码的个人多字词条。辅助功能的多字输出不受此开关限制。
-
-两方案的 `dz_ci` 开关分别设有上述默认值，重新选择方案时会回到该方案的默认模式。
-
-## 蓝三拆分提示
-
-在 Rime 选单中切换 **拆隐／拆显**；电脑输入过程中也可按 **Ctrl+J**。默认隐藏，开启后只给单字候选追加“字根＋全码”，如 `摺〔扌习习白 · shhd〕`、`没〔氵几又 · ahbx〕`。简码候选同样显示全码，拼音反查也支持；已有拼音、反查编码、U 区和 U 编提示继续保留。
-
-拆分来自用户提供的蓝宝石核对表：优先采用修正版中与现有码表全码相符的 72,089 字，再以扩展试验版匹配项补充 10,224 字，共 **82,313 字**，包含全部 **6,763 个 GB2312 汉字**。另有 10,528 字尚未对齐，暂不显示拆分；例如 `𪜶` 的现有码为 `kgcd`，附件拆分算出 `klcd`，未强行套用。此功能不改变字词编码及排序。
-
-运行使用 `opencc/lansan_cf.json`、`opencc/lansan_cf.txt` 和 `lua/lansan_decomposition_filter.lua`，均随源码提供，手机无需运行脚本。来源、匹配规则及待核对清单见 [蓝三拆分来源](sources/lansan/README.md#拆分注释)。
-
-## 小鹤扩展字与切换
-
-沿用虎码的 `extended_char` 开关。手机使用客户端的 Rime 方案选单，选择“全字集／常用字”或 U 区、U 编；电脑按 **F4** 或 **Ctrl+反引号** 打开选单，正在输入时也可按 **Ctrl+H** 或 **Ctrl+Shift+H** 切换字集。
-
-- **常用字**（默认）：保持原有字集过滤和候选，隐藏全部新增补充字。
-- **全字集**：显示原库全部候选，并在相同编码的原有候选之后补充扩展字。仍然只匹配完整编码，不开启编码补全。
-- **Ctrl+U** 切换 U 区标注，**Ctrl+Y** 切换 Unicode 编码标注；原来的拼音反查和 `~` 通配反查继续可用。
-
-例如全字集模式下，`aary` 可输入 `𠼞`（U+20F1E，扩展 B 区）。四码唯一候选会自动上屏；需要查看候选注释时可用 `~aary` 反查。
-
-来源、固定版本及提取规则见 [小鹤扩展字来源](sources/flypy/README.md)。生成时跳过原库已有的单字，补充项使用低权重；这是社区扩展表，不代表小鹤官方审定。
-
-## 蓝三合并规则
-
-输入为 `sources/lansan/lansan_guanfang.dict.yaml` 和 `sources/lansan/ls_ci.dict.yaml`，输出为根目录 `lansan_merged.dict.yaml`：
-
-- 单字编码沿用官方字表；纯单字模式保持原有字序。
-- GB2312 单字的最短字母编码保证在前三选；按全字集候选约束，常用集过滤后也不会超过第三。前三选是名次上限，不固定原来的首选、二选。
-- 单字只要在字表中存在更短的字母编码，其长码就排在同码全部词组之后，不要求简码必须是首选；最短码不因此降权。
-- 同码词组默认按万象词频降序排列，允许跨过单字；同频词保持历史基线中的相对次序。万象覆盖 144,008 个现有词组（85.77%）；未覆盖的 23,894 个词继续保留，使用低词频兜底。
-- 混输时，《通用规范汉字表》8105 字之外的单字排在全部同码词组后；GB2312 最简码以前三选为约束，具体位置由评议和明确例外决定。8105 字表来自 Unicode Unihan 的 `kTGH` 属性，随仓库保存并校验，不用码表行号代替字频。表内字按已确认的字词优先评议处理，未评议编码沿用基线。
-- 用户指定词序保存在 `sources/lansan/phrase_order_overrides.json`，优先于词频；`syyr` 的词序为“护身、搜身”，`sifu` 的词序为“挂面、玉面”。重新生成时继续保留。
-- `sources/lansan/mixed_priority_reviews.json` 保存 443 组字词优先评议。词优先让全部词尽量前移，仅为 GB2312 最简码预留前三选位置；字优先保评议字首选，其余字尽量在词后。词与词、字与字的内部顺序保持。
-- `sources/lansan/candidate_prefix_overrides.json` 保存 6 组明确位置：翀首选、戳中次选；垚、郤首选；栐、瑄次选；摺首选。`bxmm` 按用户确认改为“各区县、蚰、賮”。本版 GB2312 最简码为 6407 字首选、281 字次选、75 字三选，纯单字原序不变。
-- 用户删除的词组记录在 `sources/lansan/phrase_exclusions.json`，全部编码均不导出；目前排除“提个醒”和错词“心机梗死”，保留正确的“心肌梗死”。
-- 旧官方位置与 `sources/lansan/char_word_order.json` 中的 705 组评议只用于重建调整前的位置；最终排序不再强制保留其中“某词必须在某字前”的配对关系。先保护前三选、处理简码后置、统一词频，再执行表外字后置、字词优先评议和明确候选位置例外。
-- 例如 `alyw` 为“法国人、河南人、泅、湖南人、欺人”，泅仍为三选；`ofrm` 为“那一日、橹、氇、本日、栢……”，橹二选、氇三选。纯单字模式下的字序不变。
-- 混合编码写入明确的组内排序权重，使 `by_weight` 落实上述字词关系；不导入外部字频重排单字。
-- 表外字后置会改变少量混输候选的单字相对位置。生成的 `lua/lansan_single_order.lua` 与对应过滤器在纯单字模式恢复原序；它们和公共词库一起提供，手机直接下载源码也可部署。
-- 按“词条＋编码”去重，同词异码保留。
-- `lansan_user.dict.yaml` 只在可选的本机入口中导入一次。
-
-词频固定版本、许可证、覆盖范围和同频规则见 [蓝三词频来源](sources/lansan/README.md)。更新来源词库后运行准备或部署脚本，将公共生成表与来源改动一并提交。不要直接修改生成表或 `build/` 下的文件。
-
-## 个人词条与版本控制
-
-以下文件保留在本机，由 `.gitignore` 排除；空模板只在文件缺失时创建：
-
-- `lansan_user.dict.yaml`
-- `jaroomaji.user.dict.yaml`
-- `tiger.extended.dict.yaml`、`tigress.extended.dict.yaml`
-- `flypy/flypy.user.dict.yaml`、`flypy/flypy.user.top.dict.yaml`
-
-Git 保存配置和公共词库，迁移个人输入习惯时还需单独复制上述个人词库及需要的 `.userdb` 数据。运行准备脚本后，可将本机 `local.yaml` 和 `*.local.dict.yaml` 一起复制到手机。日语学习词库名称保持 `jaroomaji`。`sync/` 和 `backups/` 也属于本机数据，不包含在 Git 提交中。
-
-## 源码下载回归检查
-
-```sh
-# 从 Git 导出全新目录，不运行准备脚本，用空共享资源目录编译并检查实际候选
-python3 tests/check_download.py
-
-# 检查已暂存但尚未提交的版本
-python3 tests/check_download.py --index
-
-# 检查工作区的公共文件，不包含被 Git 忽略的个人数据
+# 回归测试：模拟纯净源码下载部署并验证各方案实际候选
 python3 tests/check_download.py --worktree
 ```
 
-检查额外需要 C++ 编译器、librime 开发头文件和 librime-lua 动态库；非默认动态库路径通过 `--lua-library` 指定。检查覆盖四个主方案、蓝三和虎码的实际 Rime 菜单切换、单字模式与字词排序、小鹤字集切换、反查和 Unicode 注释。
+---
 
-```sh
-git status
-git diff
-git add <修改的配置文件>
-git commit -m "说明本次配置变更"
-```
+## 个人词库与目录结构
+
+个人词条与运行缓存已通过 `.gitignore` 排除，不会随 Git 提交：
+
+* **个人词库**：`flypy/flypy.user.dict.yaml`、`flypy/flypy.user.top.dict.yaml`、`lansan_user.dict.yaml`、`tiger.extended.dict.yaml`、`tigress.extended.dict.yaml`、`jaroomaji.user.dict.yaml`
+* **本机生成入口**：`local.yaml`、`*.local.dict.yaml`（运行 `scripts/prepare.py` 自动生成；缺失时方案自动回退到公共词库）
+* **运行数据**：`build/`、`sync/`、`*.userdb/`、`backups/`、`archive/`
+
+迁移到新设备或手机时，如需保留个人词条，额外复制上述个人词库文件及 `local.yaml`、`*.local.dict.yaml` 即可。
+
+---
+
+## 词库来源与致谢
+
+各方案词库、词频与拆分表的固定版本、处理规则及许可证详见：
+
+* 小鹤扩展字、雾凇 / 萌娘四码大词库与野鹤组字码：[sources/flypy/README.md](sources/flypy/README.md)
+* 蓝三官方字词合并规则、万象词频与拆分来源：[sources/lansan/README.md](sources/lansan/README.md)
+* 公共基础配置来源：[sources/prelude/](sources/prelude/)
