@@ -10,9 +10,9 @@ schema:
     - 方案设计：何海峰 flypy.cc
   description: |
     小鹤音形输入法，保留四码上屏和分号快符。
-    反引号 ` 引导拼音反查，候选注释显示小鹤音形码。
+    ~ 引导拼音反查，候选注释显示小鹤音形码，例如 ~ni。
+    反引号 ` 作为通配位直接反查小鹤编码，支持前缀与后缀，例如 jx``、``rx。
     单引号 ' 引导临时英文，方括号 [ 或 ] 重复上屏。
-    ~ 引导原小鹤通配反查，例如 ~ni``，反引号代表未知码位。
     & 引导野鹤组字码（覆盖基本区至扩展 J 区），例如 &hguu。
     “全字集”启用社区字集补充（基本区繁体／生僻字与扩展区）；“常用字”保持原有候选。
   dependencies:
@@ -124,11 +124,11 @@ translator:
   comment_format:
     - "xform/~/ /"
 
-# 拼音词库沿用虎码；反查目标是上面的小鹤音形词典。
+# 拼音词库沿用虎码；用 ~ 引导，与反引号 ` 小鹤通配反查彻底分开。
 reverse_lookup:
   dictionary: PY_c
   target: translator
-  prefix: "`"
+  prefix: "~"
   tips: "〔拼音〕"
   preedit_format:
     - "xform/([nl])v/$1ü/"
@@ -160,10 +160,10 @@ recognizer:
   import_preset: default
   patterns:
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    reverse_lookup: "^`[a-z]*$" # 单引号保留给三选，避免被反查识别器吞掉
+    reverse_lookup: "^~[a-z]*$"
     easy_english: "^'[A-Za-z]*`?$"
     flypy_yehe: "^&[a-z]*$"
-    flypy_lookup: "^~[a-z`]+$"
+    flypy_lookup: "^[a-z`]*`[a-z`]*$"
     expression: "^=.*$"
     number: '^S[0-9]+[.]?[0-9]*$'
 
@@ -235,12 +235,11 @@ menu:
 punctuator:
   import_preset: symbols
 
-# 原小鹤通配反查加 ~ 前缀，避免与虎码式拼音反查争用反引号。
+# 原小鹤通配反查：无需前缀，直接用反引号 ` 代替未知码位（如 jx``、``rx）。
 flypy_lookup:
   tag: flypy_lookup
   dictionary: flypydz
   target: translator
-  prefix: "~"
   tips: "〔小鹤通配〕"
   comment_format:
     - "xform/^/ /"
@@ -250,7 +249,6 @@ flypy_ext_lookup:
   dictionary: flypy_ext
   __patch: local:/flypy_ext?
   target: translator
-  prefix: "~"
   tips: "〔小鹤通配〕"
   initial_quality: -1 # 扩展字反查排在原有反查候选之后
   comment_format:

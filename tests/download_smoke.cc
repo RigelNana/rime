@@ -102,11 +102,13 @@ int main(int argc, char** argv) {
     exact("tiga", {"體", "䪆"});
     api->set_option(session, "charset_comment_filter", true);
     api->set_option(session, "udpf_switch", true);
-    check("~aary", "𠼞", "[扩B] U+20F1E");
+    check("aar`", "𠼞", "[扩B] U+20F1E");
     api->set_option(session, "extended_char", true);
-    check("~aary", "");
+    check("aar`", "");
     check("tiga", "");
-    check("`ni", "你", "nirx");
+    check("ni``", "泥", "nidb");
+    check("jx``", "夹", "jxan");
+    check("~ni", "你", "nirx");
     select("tiger");
     if (!api->get_option(session, "dz_ci")) throw std::runtime_error("Tiger should default to characters");
     check("n", "在");
