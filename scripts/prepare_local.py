@@ -20,6 +20,12 @@ def prepare_local(root):
     flypy = flypy.replace("  - flypy_ext ", "  - flypy/flypy.user\n  - flypy_ext.local ", 1)
     write_if_changed(root / "flypy.local.dict.yaml", flypy)
 
+    flypy_big = (root / "flypy_big.dict.yaml").read_text(encoding="utf-8")
+    flypy_big = flypy_big.replace("name: flypy_big\n", "name: flypy_big.local\n", 1)
+    flypy_big = flypy_big.replace("import_tables:\n", "import_tables:\n  - flypy/flypy.user.top\n", 1)
+    flypy_big = flypy_big.replace("  - flypy_ext ", "  - flypy/flypy.user\n  - flypy_ext.local ", 1)
+    write_if_changed(root / "flypy_big.local.dict.yaml", flypy_big)
+
     lansan = (root / "lansan_merged.dict.yaml").read_text(encoding="utf-8")
     lansan = lansan.replace("name: lansan_merged\n", "name: lansan.local\n", 1)
     lansan = lansan.replace("sort: by_weight\n", "sort: by_weight\nimport_tables:\n  - lansan_user\n", 1)
@@ -36,6 +42,8 @@ flypy:
   dictionary: flypy.local
 flypy_ext:
   dictionary: flypy_ext.local
+flypy_big:
+  dictionary: flypy_big.local
 tiger:
   dictionary: tiger.extended
 tigress:

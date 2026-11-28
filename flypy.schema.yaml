@@ -17,6 +17,7 @@ schema:
   dependencies:
     - flypydz
     - flypy_ext
+    - flypy_big
     - core2022
     - PY_c
     - easy_english
@@ -30,6 +31,9 @@ switches:
   - name: extended_char
     reset: 1
     states: [ 全字集, 常用字 ]
+  - name: flypy_big
+    reset: 0
+    states: [ 标准词库, 大词库 ]
   - name: pinyin
     reset: 0
     states: [ 拼, pīn ]
@@ -74,7 +78,7 @@ engine:
     - reverse_lookup_translator
     - reverse_lookup_translator@flypy_lookup
     - reverse_lookup_translator@flypy_ext_lookup
-    - table_translator
+    - lua_translator@*flypy_mode_translator
     - table_translator@easy_english
     - history_translator@history
     - history_translator@historyDM
@@ -143,6 +147,7 @@ key_binder:
     - { when: composing, accept: "Control+y", toggle: udpf_switch }
     - { when: composing, accept: "Control+h", toggle: extended_char }
     - { when: composing, accept: "Control+Shift+H", toggle: extended_char }
+    - { when: composing, accept: "Control+Shift+B", toggle: flypy_big }
     - { when: has_menu, accept: Right, send: Down }
     - { when: has_menu, accept: Left, send: Up }
     - { when: always, accept: "Control+period", toggle: ascii_punct }

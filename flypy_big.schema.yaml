@@ -1,0 +1,20 @@
+# 编译小鹤大词库模式的词典依赖，不加入输入方案菜单。
+schema:
+  schema_id: flypy_big
+  name: 小鹤音形大词库索引
+  version: "1.0"
+
+translator:
+  dictionary: flypy_big
+  __patch: local:/flypy_big?
+  enable_charset_filter: false
+  enable_completion: false
+  enable_sentence: false
+  enable_user_dict: false
+  enable_encoder: false
+  encode_commit_history: false
+  comment_format:
+    - "xform/~/ /"
+
+speller:
+  __include: flypy.schema:/speller

@@ -79,9 +79,19 @@ int main(int argc, char** argv) {
     if (!single_tiger) throw std::runtime_error("Expected four schemes with one visible Tiger");
 
     select("flypy");
+    if (api->get_option(session, "flypy_big")) throw std::runtime_error("Flypy should default to standard dict");
     check("ni", "你");
     check("nirx", "你");
     check(";w", "？");
+    check("mhwv", "");
+    // 从真正的 Rime switcher 展开选项并切到大词库。
+    check("{F4}2", "标准词库", "大词库");
+    api->simulate_key_sequence(session, "4");
+    if (!api->get_option(session, "flypy_big")) throw std::runtime_error("Switcher did not toggle Flypy big dict");
+    check("mhwv", "门户网站");
+    check("ni", "你");
+    api->set_option(session, "flypy_big", false);
+    check("mhwv", "");
     check("aary", "");
     check("tiga", "");
     check("aary{Control+h}", "𠼞");
